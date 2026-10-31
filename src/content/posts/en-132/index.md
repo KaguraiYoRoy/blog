@@ -2,7 +2,7 @@
 title: "OneManISP - Ep.2 Announcing Our Own IP Prefix to the World"
 published: 2025-08-20T15:59:00.000Z
 updated: 2025-11-06T06:37:31.000Z
-description: "Learn how to announce your own IPv6 address block to the global internet using BGP, RIPE database setup, Vultr BGP sessions, and Bird2 configuration for your ASN."
+description: "Announcing an IPv6 prefix through Vultr with my own ASN, from creating RIPE Database objects and requesting a BGP session to configuring BIRD and testing connectivity."
 image: ""
 tags: ["BGP", "BIRD", "Network Technology", "Clearnet", "ASN"]
 category: "Network"

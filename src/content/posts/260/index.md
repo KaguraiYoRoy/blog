@@ -2,7 +2,7 @@
 title: "2026软件系统安全赛 - 流量分析traffic_hunt - WriteUp"
 published: 2026-03-15T12:20:00.000Z
 updated: 2026-03-16T10:02:33.000Z
-description: "本文详细记录了2026软件系统安全赛流量分析题traffic_hunt的完整WriteUp。从Shiro反序列化漏洞（CVE-2016-4437）的AES密钥爆破开始，逐步分析攻击者如何注入冰蝎内存马、分片上传ELF木马，并最终通过AES-GCM加密的TCP反弹连接获取flag。包含详细的流量解密、Java反编译和攻击链复盘。"
+description: "2026 软件系统安全赛 traffic_hunt 题解，沿抓包还原 Shiro 利用、冰蝎内存马和载荷上传过程，再解密自定义 Shell 的通信提取 flag。"
 image: ""
 tags: ["Web", "CTF", "网络安全", "Misc", "流量分析", "取证", "WebShell", "后门"]
 category: "专题向研究"

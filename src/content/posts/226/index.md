@@ -2,7 +2,7 @@
 title: "为Typecho配置简易多语言方案"
 published: 2025-11-19T14:10:00.000Z
 updated: 2025-11-19T23:31:33.000Z
-description: "本文详细介绍如何为Typecho博客配置简易多语言方案，通过创建独立英文实例、开发文章同步插件、修改SiteMap结构、添加hreflang标签及同步评论数据等步骤，实现中英文内容分离与搜索引擎优化，助力博客国际化。"
+description: "用两个 Typecho 实例维护中英文博客，通过插件同步文章 cid，配置语言切换、sitemap 和 hreflang，并处理浏览量与评论同步。"
 image: ""
 tags: ["Typecho", "博客", "国际化"]
 category: "开发"

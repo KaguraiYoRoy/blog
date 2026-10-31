@@ -2,7 +2,7 @@
 title: "为黑群晖迁移RR引导盘"
 published: 2025-01-29T16:36:00.000Z
 updated: 2025-06-27T03:29:28.000Z
-description: "为黑群晖迁移RR引导盘"
+description: "将 RR 引导盘从 U 盘迁移到实际容量稍小的傲腾盘：复制前两个分区，重建第三个分区，再迁移文件及 UUID、卷标。"
 image: ""
 tags: ["Linux", "群晖"]
 category: "NAS"
@@ -31,7 +31,7 @@ RR引导盘一共有三个分区：
 因为前两个分区大小很小，所以直接用dd将两个分区完整拷贝到目标磁盘；第三个分区手动创建并格式化后将UUID、Label同步过来  
 
 
-:::warning
+:::info
 折腾过程使用Linux操作
 :::
 
@@ -59,7 +59,7 @@ Device     Boot  Start      End  Sectors  Size Id Type
 
 ## 将前两个分区和磁盘分区表信息拷贝到目标盘
 ```bash
-sudo dd if=/dev/sda of=dev/sdb count=206848 # 此处count的数值为上面第三个分区的起始请根据你的磁盘修改
+sudo dd if=/dev/sda of=/dev/sdb bs=512 count=206848 # 本例扇区大小为 512 字节，count 为第三个分区的起始扇区，请按实际磁盘修改
 ```
 输出：
 ```text
@@ -91,7 +91,7 @@ sudo file -s /dev/sda3
 ```
 记录下`UUID`和`volume name`（即"RR3"），并使用如下指令将UUID和volume name写入新盘：
 ```bash
-sudo tune2fs /dev/sdb3 -U df39b1f3-b846-49dc-a317-ce329ec87ca2 # 写入UUID
+sudo tune2fs /dev/sdb3 -U 617a3aca-4b56-42d7-8558-54411b344a7d # 写入原分区的 UUID，请替换为你记录的值
 sudo tune2fs /dev/sdb3 -L RR3 # 写入volume name
 ```
 

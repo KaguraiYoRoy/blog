@@ -2,7 +2,7 @@
 title: "Using Infrared Camera for Face Recognition on Xiaomi 845 Series with Custom ROMs"
 published: 2025-03-06T14:57:00.000Z
 updated: 2025-11-09T05:47:17.000Z
-description: "A technical guide explaining how to enable the infrared camera for face unlock on Xiaomi 845 series devices (Mi 8) under custom ROMs like LineageOS, by configuring the correct CameraID and modifying the vendor.camera.aux.packagelist system property."
+description: "Investigating infrared face unlock on Xiaomi Snapdragon 845 devices running custom ROMs, including camera IDs, auxiliary camera access, and ParanoidSense properties."
 image: ""
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"

@@ -2,7 +2,7 @@
 title: "The Reverse Engineering Journey: Analyzing a Server Compromise via RCE from CVE-2025-66478 and CVE-2025-55182"
 published: 2025-12-06T15:53:00.000Z
 updated: 2026-01-05T03:15:53.000Z
-description: "A detailed technical analysis of a server hack exploiting the CVE-2025-55182 RCE vulnerability in Next.js via Umami. This post covers reverse engineering of the loader and Golang botnet payload, examining its C2 communication, data exfiltration via Aliyun OSS, and modular attack capabilities like InjectRun and PluginRun."
+description: "Following a compromised Umami container's alert from a shell script to an ELF loader and Go payload, with notes on C2 communication, file uploads, and plugin execution."
 image: ""
 tags: ["Cybersecurity", "Reverse Engineering", "CVE", "RCE"]
 category: "Ops"

@@ -2,7 +2,7 @@
 title: "记服务器因CVE-2025-66478,CVE-2025-55182被挂C2的逆向分析经历"
 published: 2025-12-06T15:53:00.000Z
 updated: 2026-04-28T03:10:18.000Z
-description: "本文详细分析了通过Umami中的CVE-2025-55182 Next.js RCE漏洞实施的服务器入侵。内容包括对加载器和Golang僵尸网络Payload的逆向工程，剖析其C2通信、通过阿里云OSS进行数据外泄以及InjectRun、PluginRun等模块化攻击功能。"
+description: "Umami 容器被入侵后，沿告警中的 Shell 脚本分析 ELF 加载器和 Go 编写的载荷，记录 C2 通信、文件上传与插件执行逻辑的逆向过程。"
 image: ""
 tags: ["网络安全", "逆向", "CVE", "RCE"]
 category: "运维"

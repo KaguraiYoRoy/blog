@@ -2,7 +2,7 @@
 title: "Adapting NFC Functionality for QWRT on Xiaomi BE10000 Router"
 published: 2026-05-25T15:18:00.000Z
 updated: 2026-05-25T15:18:54.000Z
-description: "This article details how to restore and adapt NFC tap-to-connect Wi-Fi functionality for the Xiaomi BE10000 router flashed with QWRT. It covers locating the NFC EEPROM chip via I2C bus scanning, constructing NDEF/WSC-compliant Wi-Fi configuration tokens, performing fragmented writes using i2ctransfer, and implementing a three-layer auto-trigger mechanism based on UCI, hotplug, and cron jobs, with MD5 hash verification to protect EEPROM lifespan. Full code repository link included."
+description: "Restoring NFC Wi-Fi tap-to-connect on a Xiaomi BE10000 running QWRT by writing NDEF credentials over I2C, syncing wireless changes, and reducing unnecessary EEPROM writes."
 image: ""
 tags: ["OpenWRT", "Router", "NFC", "IoT", "Wi-Fi"]
 category: "Develop"
@@ -16,7 +16,7 @@ lang: "en_US"
 **Title:** Adapting NFC Functionality for QWRT on Xiaomi BE10000 Router
 
 # Analysis
-After flashing the Xiaomi BE10000 with QWRT, the device's network potential is indeed greatly unleashed. Advanced features such as 2.5G optical modules and SFP+ interfaces work perfectly. The only drawback is that the factory NFC "tap to connect to Wi-Fi" feature no longer works. After researching, the NFC tag is essentially an EEPROM chip mounted on the motherboard. Using `i2cdetect` for scanning:
+After flashing the Xiaomi BE10000 with QWRT, the GPON stick and SFP+ interface worked in my setup, but the factory NFC Wi-Fi tap-to-connect feature stopped working. Research suggested that I could update the Wi-Fi credentials by accessing the onboard NFC EEPROM over I2C. I started by scanning with `i2cdetect`:
 
 ```bash
 root@QWRT:~# i2cdetect -l
@@ -65,7 +65,7 @@ To closely follow OpenWrt's architecture, we initially tried using hooks but fou
 Additionally, considering that the NFC EEPROM has limited write endurance, if the network interface restarts even once and triggers a full rewrite, the chip would soon wear out. Therefore, a simple hash check mechanism is introduced in the underlying `nfc-sync` script:  
 1. When the script is awakened, it first extracts the current `wireless` configuration and calculates its MD5 hash.  
 2. It compares this hash with the old hash cached in `/var/run/nfc-wireless.md5`.  
-3. **Only when the MD5 value actually changes does it issue the I2C write command.** Otherwise, the process terminates immediately. Combined with a concurrent file lock (`/var/lock/nfc-sync.lock`), this logic ensures that the NFC hardware's lifespan is absolutely protected against any network flapping or multiple concurrent events.
+3. **Only when the MD5 value actually changes does it issue the I2C write command.** Otherwise, the process terminates immediately. Together with the file lock at `/var/lock/nfc-sync.lock`, this reduces unnecessary writes from repeated events and prevents concurrent sync tasks from accessing the chip. MD5 is only used to detect configuration changes here, not for security verification; these measures cannot guarantee the EEPROM's lifespan.
 
 ---
 After testing, automatic updating works as expected:

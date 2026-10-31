@@ -2,7 +2,7 @@
 title: "给Android 4.9内核添加KernelSU支持"
 published: 2024-12-26T16:18:00.000Z
 updated: 2025-06-27T03:29:33.000Z
-description: "为Android 4.9非GKI内核添加KernelSU支持"
+description: "为小米 8 屏幕指纹版的非 GKI 4.9 内核集成 KernelSU，记录源码修改、kprobe 配置、AnyKernel3 打包和 GitHub Actions 编译流程。"
 image: ""
 tags: ["C&C++", "Android", "Kernel"]
 category: "Android"

@@ -2,7 +2,7 @@
 title: "记一次手动安装Proxmox VE, 配置多路iSCSI与NAT转发的经历"
 published: 2025-11-29T09:39:00.000Z
 updated: 2025-11-29T15:33:42.000Z
-description: "一份详细指南，介绍通过 DD 重装脚本重装成纯净 Debian 13 后，在 Debian 13 上手动安装 Proxmox VE，为数据盘配置多路 iSCSI 存储，以及使用单个公网 IP 为虚拟机设置 NAT 转发和端口转发。"
+description: "将一台没有预装 PVE 镜像的物理机重装为 Debian 13，再手动安装 Proxmox VE，恢复多路 iSCSI 数据盘，并配置虚拟机的 NAT 和端口转发。"
 image: ""
 tags: ["网络技术", "PVE", "iSCSI"]
 category: "运维"

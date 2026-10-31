@@ -2,7 +2,7 @@
 title: "[Fun Experiment] A LAN Spanning 20km: Seamlessly Merging Remote Networks on OpenWrt Using ZeroTier + OSPF"
 published: 2026-02-10T15:36:00.000Z
 updated: 2026-02-11T03:14:31.000Z
-description: "Learn how to establish a dynamic routed overlay network between two remote OpenWrt routers using ZeroTier for the L2 tunnel and Bird2 with OSPF for intelligent internal routing. This guide covers installation, configuration of a self-hosted Planet, and step-by-step OSPF setup for seamless, NAT-free interconnection of separate LANs."
+description: "Connecting two home networks 20 km apart with ZeroTier on OpenWrt and OSPF in BIRD, exchanging LAN routes so devices can reach each other without NAT between the LANs."
 image: ""
 tags: ["BIRD", "IGP", "OSPF"]
 category: "Network"

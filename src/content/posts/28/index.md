@@ -2,7 +2,7 @@
 title: "在TrueNAS上使用Docker安装1Panel"
 published: 2025-03-07T05:18:00.000Z
 updated: 2025-06-27T03:29:09.000Z
-description: "在TrueNAS上使用Docker安装1Panel"
+description: "在 TrueNAS 上用 Docker 部署 1Panel，并让它管理宿主机的 Docker 服务，记录目录映射、镜像源和面板创建的容器无法启动等问题。"
 image: ""
 tags: ["Linux", "TrueNAS", "Docker", "Web", "1Panel"]
 category: "NAS"

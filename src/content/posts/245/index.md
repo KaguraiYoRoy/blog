@@ -2,7 +2,7 @@
 title: "PolarCTF 2025冬季赛 Web Polarflag WriteUp"
 published: 2025-12-06T23:55:30.000Z
 updated: 2025-12-06T23:55:30.000Z
-description: "本文详细记录了PolarCTF 2025冬季赛Web题目\"Polarflag\"的完整解题过程，涵盖目录扫描、代码分析、密码爆破、MD5绕过及命令注入技巧，最终获取flag。"
+description: "PolarCTF 2025 冬季赛 Web 题 Polarflag 的解题记录，从目录扫描和源码分析，到密码爆破、MD5 校验绕过与命令注入。"
 image: ""
 tags: []
 category: "专题向研究"

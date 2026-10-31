@@ -2,7 +2,7 @@
 title: "2025古剑山 Misc 水果 WriteUp"
 published: 2025-11-29T06:02:00.000Z
 updated: 2025-11-29T14:38:06.000Z
-description: "2025古剑山CTF杂项挑战“水果”的解题报告，涉及使用010 Editor进行文件分析、Base64解码和OurSecret隐写技术，最终提取出隐藏的标志。"
+description: "2025 古剑山 Misc 题「水果」的解题记录：从文件末尾提取 ZIP，识别 OurSecret 隐写，再根据文本中的水果对话还原 flag。"
 image: ""
 tags: ["CTF", "Misc", "隐写", "图片隐写"]
 category: "CTF"

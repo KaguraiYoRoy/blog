@@ -2,7 +2,7 @@
 title: "Enabling EROFS Support for an Android ROM with Kernel 4.9"
 published: 2024-12-25T15:26:00.000Z
 updated: 2025-11-05T14:28:48.000Z
-description: "Enable erofs support for ROM in Android 4.9 kernel"
+description: "Backporting EROFS to the Xiaomi Mi 8 Pro's Linux 4.9 kernel, updating the LineageOS device tree and fstab, and troubleshooting build and boot issues."
 image: ""
 tags: ["Android", "AOSP", "Kernel"]
 category: "Android"

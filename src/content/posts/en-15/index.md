@@ -2,7 +2,7 @@
 title: "Migrating RR Loader for Synology DSM"
 published: 2025-01-29T16:36:00.000Z
 updated: 2025-11-06T01:06:02.000Z
-description: "Step-by-step guide to migrate RR bootloader for Synology DSM from a larger USB drive to a smaller Optane disk, using Linux tools like dd and fdisk, with cautions for data safety."
+description: "Moving an RR boot drive from USB to a slightly smaller Optane disk by copying the first two partitions, recreating the third, and transferring its files, UUID, and label."
 image: ""
 tags: ["Linux", "Synology"]
 category: "NAS"
@@ -29,7 +29,7 @@ The first partition is the boot partition and is bootable (marked with an asteri
 # Approach
 Since the first two partitions are small, we can use `dd` to copy them entirely to the target disk. For the third partition, we'll manually create and format it, then synchronize the UUID and Label.
 
-:::warning
+:::info
 This process uses Linux operations.
 :::
 
@@ -58,7 +58,7 @@ Device     Boot  Start      End  Sectors  Size Id Type
 
 ## Copy the First Two Partitions and Disk Partition Table to the Target Disk
 ```bash
-sudo dd if=/dev/sda of=dev/sdb count=206848 # Note: The count value here is the start of the third partition above. Adjust according to your disk.
+sudo dd if=/dev/sda of=/dev/sdb bs=512 count=206848 # This example uses 512-byte sectors; count is the third partition's starting sector. Adjust for your disk.
 ```
 
 Output:  
@@ -94,7 +94,7 @@ Output:
 
 Note down the `UUID` and `volume name` (i.e., "RR3"), and use the following commands to write them to the new disk:
 ```bash
-sudo tune2fs /dev/sdb3 -U df39b1f3-b846-49dc-a317-ce329ec87ca2 # Write UUID
+sudo tune2fs /dev/sdb3 -U 617a3aca-4b56-42d7-8558-54411b344a7d # Use the UUID recorded from your source partition.
 sudo tune2fs /dev/sdb3 -L RR3 # Write volume name
 ```
 

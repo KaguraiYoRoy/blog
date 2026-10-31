@@ -2,7 +2,7 @@
 title: "DN42&OneManISP - 共存环境下的OSPF源地址故障排除"
 published: 2025-10-29T12:42:00.000Z
 updated: 2025-11-09T05:57:24.000Z
-description: "记录在DN42与公网BGP共存环境中部署BIRD路由时遇到的OSPF源地址选择问题。详细分析多协议路由共存场景下的内核路由表冲突，通过调整OSPF导入阶段的krt_prefsrc参数，解决内部节点间通信故障，实现DN42与公网BGP的稳定并行运行。"
+description: "将 DN42 与公网路由放入同一主路由表后，内部节点互相 ping 不通。从 ip route get 的源地址异常入手，记录调整 BIRD krt_prefsrc 的排障过程。"
 image: ""
 tags: ["DN42", "BGP", "BIRD", "OSPF"]
 category: "网络技术"

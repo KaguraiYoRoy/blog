@@ -2,7 +2,7 @@
 title: "Using Home Broadband without Public IP + CDNfly to Host a Website"
 published: 2025-03-09T06:33:00.000Z
 updated: 2025-11-22T04:01:34.000Z
-description: "Learn how to host a website using home broadband without a public IP by implementing NAT penetration with Lucky and dynamically updating CDNfly for origin IP and port changes. A step-by-step guide for setting up secure web hosting with dynamic IP handling.\r\n\r\n"
+description: "Hosting a site without a dedicated public IP, where the NAT setup permits inbound mappings, using Lucky and a webhook to update CDNfly's origin address and port."
 image: ""
 tags: []
 category: "Ops"

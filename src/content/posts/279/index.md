@@ -2,7 +2,7 @@
 title: "充分利用systemd的特性构建多租户CodeServer"
 published: 2026-06-06T07:34:00.000Z
 updated: 2026-06-06T07:36:04.000Z
-description: "本文详细介绍如何利用 systemd 的特性（资源限制、沙盒隔离、Path 单元）构建多租户 CodeServer 环境，实现用户独立运行、密码自助修改、Python 环境隔离，并意外防御 CopyFail/DirtyFrag 等内核漏洞。适合希望在 Linux 服务器上为多个用户安全提供浏览器 VSCode 的运维人员。"
+description: "为朋友共用的服务器部署按用户运行的 code-server，用 systemd 限制资源、监听密码配置变化，并为每个用户配置 Python venv，讨论这套方案的隔离边界。"
 image: ""
 tags: ["systemd", "codeserver"]
 category: "运维"
@@ -12,24 +12,24 @@ lang: "zh_CN"
 ---
 
 # 分析
-起因是大学Python课，不想每次课都带笔记本过去太重了，尝试能不能一个平板就搞定。找来找去发现[coder/code-server: VS Code in the browser](https://github.com/coder/code-server)很符合要求，同时还能兼顾跨平台。当时自己部署了一个玩玩，后来朋友他们也想要，就在思考怎么弄能够兼顾多租户和安全性。最开始想到的是容器化，但是因为涉及到pip安装新的包，容器化不太好做，可能得把python的site-package什么的一堆都给持久化，而且性能也不好，所以还是打算使用二进制部署。  
+起因是大学Python课，不想每次课都带笔记本过去太重了，尝试能不能一个平板就搞定。找来找去发现[coder/code-server: VS Code in the browser](https://github.com/coder/code-server)很符合要求，同时还能兼顾跨平台。当时自己部署了一个玩玩，后来朋友他们也想要，就在思考怎么弄能够兼顾多用户使用和安全性。最开始考虑过容器化，后来想先用 Linux 用户和 venv 管理各自的文件与 Python 包，就选择了二进制部署。这里没有做容器和直接部署的性能对比。  
 需求很简单，大致概括如下：
 1. 每个用户可以用自己的域名登录进入CodeServer
 2. 每个用户可以自己修改登录密码
-3. 每个用户的Python环境完全隔离，可独立安装pip包
+3. 每个用户有独立的 Python 包环境，可自行安装 pip 包
 4. 用户间不应该能互相访问到对方的文件
 5. 防止用户误操作删掉系统关键组件
 6. 防止用户误操作写出死循环之类的耗尽服务器资源
 7. 防止用户利用服务器挖矿/做跳板攻击别人
 
 经过分析和与ai的讨论，最终定下来的方案大致是这样：
-1. 利用Linux自己的多用户机制，每个用户在自己的家目录下运行一个CodeServer做最基础的隔离。这样需求145可以很轻松的实现；  
+1. 利用 Linux 多用户机制，每个用户在自己的家目录下运行一个 CodeServer，通过文件所有权和权限限制互相访问。家目录应设置为仅本人可访问（如 `0700`），仅仅创建不同用户并不会自动隐藏所有文件；域名接入还需要另外配置反向代理。  
 2. 监听端口根据uid计算。每个用户下手动创建一个venv，并通过.bashrc让用户启动shell的时候自动启用，解决需求3；  
-3. 利用systemd的限制来限制进程的行为，实现一定程度上实现需求6-7
+3. 利用 systemd 限制资源占用和部分进程行为，减少误操作的影响。这不能阻止所有挖矿或滥用网络的行为。
 4. 利用systemd的Path机制监听`$HOME/.config/code-server/config.yaml`的修改并自动重启daemon，使得用户可以通过修改配置文件来改登录密码，较为优雅地实现需求2。
 
 ~~对于7，我觉得根据大一同学的计算机水平倒是不用太担心（应该吧？）~~  
-没有直接断网是因为考虑到有些需求需要联网下软件包，或者可能涉及到爬虫操作什么的。systemd的限制应该已经能拦截绝大部分恶意操作了。  
+没有直接断网是因为考虑到有些需求需要联网下软件包，或者可能涉及到爬虫操作什么的。目前仍允许普通 IPv4/IPv6 出站连接，因此这些限制不能代替出站访问控制和对滥用行为的管理。  
 本文讨论不涉及SELinux，因为个人认为当前需求使用SELinux有点过度设计了，并且我也对SELinux/SEPolicy不太熟（这才是主要原因吧233），同时也想尽量让用户在合理使用过程中不受限制，因此并未使用SELinux来限制。
 # 部署
 ## 配置systemd
@@ -51,6 +51,7 @@ CPUQuota=150%
 TasksMax=200
 IOWeight=50
 ProtectSystem=strict
+ReadWritePaths=/home/%i
 PrivateTmp=yes
 PrivateDevices=yes
 NoNewPrivileges=yes
@@ -67,6 +68,8 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 这里创建的文件名是`code-server@.service`，`@`之后的内容会被当作`%i`替换。设计上是利用`%i`传递用户名称，计算端口并自启动。端口计算逻辑是`7000+uid%10000`，一般创建的uid是1000开始，因此正好按照创建顺序从8000开始监听端口。  
+
+`ProtectSystem=strict` 会让家目录也变成只读，因此用 `ReadWritePaths=/home/%i` 显式允许当前用户的工作目录写入。这个选项不会授予额外的文件权限，仍需正确设置家目录的所有权和权限。venv 只用于分开管理 Python 包，不是阻止用户访问宿主机或其他文件的安全沙盒。
 
 值得注意的是这部分配置：
 ```toml
@@ -85,8 +88,8 @@ RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
 ### 一、 资源限制 (Resource Control)
 这部分利用 Linux 的 cgroups 机制，防止该服务消耗过多系统资源，影响其他程序运行。
 - **`MemoryMax=1G`**
-    - **作用：** 限制该服务最多只能使用 1GB 的内存。
-    - **结果：** 如果服务尝试使用的内存超过 1GB，系统（OOM Killer）会强制杀死该进程以保护系统。
+    - **作用：** 将该服务所在 cgroup 的内存使用上限设为 1 GiB。
+    - **结果：** 当服务所在 cgroup 的内存使用达到限制且无法通过回收缓解时，可能触发该组内的 OOM 处理。`1G` 在这里表示 1 GiB。
 - **`CPUQuota=150%`**
     - **作用：** 限制该服务的 CPU 使用率最高为 150%。
     - **结果：** 100% 代表一个完整的 CPU 核心。150% 意味着该服务最多可以占满一个核心，并使用第二个核心的一半（即最多使用 1.5 个 CPU 核心的算力）。
@@ -95,28 +98,28 @@ RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
     - **结果：** 防止服务因为遭遇漏洞或死循环（如 Fork Bomb）而无限创建子进程，从而耗尽系统 PID 资源使系统崩溃。
 - **`IOWeight=50`**
     - **作用：** 设置磁盘 I/O（输入/输出）的权重。默认值通常是 100。
-    - **结果：** 设置为 50 意味着当系统 I/O 繁忙时，该服务获得磁盘读写资源的优先级低于默认服务，防止它在大量读写文件时卡死整个系统。
+    - **结果：** 在底层设备和 I/O 控制器支持权重调度时，设置为 50 会降低它在竞争中的相对份额。这不是固定的读写速率上限，也不能保证其他服务不受影响。
 ### 二、 安全与隔离 (Security & Isolation)
-这部分通过 Linux 命名空间（Namespaces）和其他内核安全机制，将服务“关在笼子里”，即使服务被黑客攻破，也能将破坏降到最低。
+这部分限制服务对文件系统、设备和套接字的访问，用于减少误操作的影响及部分攻击路径。
 - **`ProtectSystem=strict`**
     - **作用：** 严格保护系统文件。
-    - **结果：** 将整个操作系统的文件系统（`/` 根目录及其下的所有内容，除了 `/dev`, `/proc` 和 `/sys` 等特殊 API 目录）对该服务设为**只读**。该服务无法修改、覆盖或删除任何系统核心文件。
+    - **结果：** 将文件系统层级设为只读，特殊 API 文件系统及显式配置的可写路径除外。这里通过 `ReadWritePaths` 保留用户家目录的写入能力；这种挂载限制不能替代内核漏洞修补。
 - **`PrivateTmp=yes`**
     - **作用：** 为该服务提供独立的临时文件目录。
     - **结果：** 服务会看到一个自己专属的 `/tmp` 和 `/var/tmp` 目录。它无法看到或修改其他用户/服务放在全局 `/tmp` 中的文件，反之亦然。这能有效防止基于临时文件的符号链接攻击或数据泄露。
 - **`PrivateDevices=yes`**
     - **作用：** 隔离物理设备。
-    - **结果：** 为该服务挂载一个私有的 `/dev` 目录，里面只包含伪设备（如 `/dev/null`, `/dev/zero`, `/dev/urandom` 等）。该服务将**完全看不到**真实的物理硬件设备（如硬盘 `/dev/sda`、USB 设备等），彻底杜绝了直接读写底层块设备的可能。
+    - **结果：** 为服务提供一个只含必要伪设备的私有 `/dev`，例如 `/dev/null`、`/dev/zero` 和 `/dev/urandom`，限制直接访问宿主机设备节点。这不等于隔离了所有可能的硬件访问路径。
 - **`NoNewPrivileges=yes`**
-    - **作用：** 禁止权限提升。
-    - **结果：** 确保该服务及其所有子进程，无论如何都无法获得新的系统权限。即使服务调用了一个带有 SUID 位的程序（比如 `sudo` 或 `su`），也无法借此提升为 root 权限。
+    - **作用：** 限制通过执行新程序获得额外权限。
+    - **结果：** 服务及其子进程不能通过 `execve()` 利用 setuid/setgid 位或文件 capabilities 获得额外权限。它不能防住所有提权方式，例如直接利用内核漏洞修改进程凭据。
 - **`RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX`**
     - **作用：** 限制该服务可以使用的网络协议族。
-    - **结果：** 该服务只能使用：
+    - **结果：** 允许创建以下地址族的套接字：
         - `AF_INET`：IPv4 网络通信
         - `AF_INET6`：IPv6 网络通信
         - `AF_UNIX`：本地 UNIX 域套接字（用于本地进程间通信）
-    - 除此之外的网络协议（例如底层的数据包抓取 `AF_PACKET`、蓝牙 `AF_BLUETOOTH` 等）全部被内核拦截。这大大减少了网络层面的攻击面。
+    - 在支持相应 seccomp 过滤的环境中，创建其他地址族套接字的调用会被限制。这可以缩小攻击面，但不限制 IPv4/IPv6 的连接目标，也不会撤销已经继承或传入的套接字。
 
 创建新用户时直接：
 ```shell
@@ -241,11 +244,13 @@ fi
 
 ---
 # 后记
-其实这个配置很早就做了但是一直没写，当时还没爆出来CopyFail和DirtyFrag这样的漏洞。爆出来的时候第一时间做了测试，发现这套systemd配置阴差阳错的全都防住了，大致分析如下：
-因为CopyFail使用了一个特殊的套接字类型：`AF_ALG`，而systemd配置只允许`AF_INET AF_INET6 AF_UNIX`这三种，因此CopyFail无法提权。DirtyFrag也是同理，其利用的`AF_NETLINK`、`AF_RXRPC`、`AF_ALG`都被禁止了。  
-同时，`NoNewPrivileges=yes`也是最后的防线，代码的最终目标是篡改`/usr/bin/su`植入恶意ELF shellcode或篡改`/etc/passwd`清空root密码，随后调用具有`setuid`权限的`su`命令来获取 root 权限。而`NoNewPrivileges`一旦设置，该进程及其派生的所有子进程，无论执行什么程序，都**绝对无法**通过文件的`setuid`或`setgid`标志获得更高的权限。退一万步讲，即使后续有漏洞找到了某种手段绕过了网络限制，并成功将`/usr/bin/su`替换成了恶意Shell，当它执行`su`时，弹出来的依然是一个低权限用户的Shell，提权彻底沦为空谈。
+其实这个配置很早就做了但是一直没写，当时还没爆出来 CopyFail 和 DirtyFrag 这样的漏洞。披露后，我在这套配置下运行了当时拿到的 PoC，测试中没有成功提权。这是对当时环境和样本的观察，不能推广为能防住所有相关变种。
 
-本文没有讨论SELinux，因为当前方案在“朋友共用、非生产核心”的场景下是可接受的简化，避免了配置错误导致功能不可用的风险和运维复杂度，但实际上systemd的这些沙盒选项主要基于namespace和cgroup隔离，并不能完全替代强制访问控制（也就是SELinux和AppArmor这类ACL），对于需要更高安全等级的租户隔离（如不可信用户之间需防止内核漏洞逃逸），SELinux/AppArmor仍然是主流。
+从测试样本看，利用链需要创建 `AF_ALG`，或 `AF_NETLINK`、`AF_RXRPC` 等套接字，而这里的 `RestrictAddressFamilies` 没有允许这些地址族，因此可能在套接字创建阶段阻断这些利用路径。要确认具体阻断点，还需要结合对应 PoC、内核版本和系统日志分析。
+
+`NoNewPrivileges=yes` 则限制了另一类路径：进程及其子进程不能在 `execve()` 时通过 setuid/setgid 位或文件 capabilities 获得额外权限。但它不阻止所有不经过 `execve()` 的权限变化，也不能保证受损的系统文件不会影响其他高权限进程。因此，系统及时更新仍然必要，不能用这套配置代替漏洞修补。
+
+本文没有展开 SELinux，当前方案主要面向朋友共用、非关键业务的环境。systemd 的这些选项结合了 namespace、cgroup 和 seccomp 等机制，但不是完整的租户安全边界。SELinux/AppArmor 可以进一步限制进程访问，也不能保证挡住所有内核漏洞；面对互不信任的用户，还需要根据威胁模型评估更强的隔离方式。
 当然，这个方案也存在其他一些局限，比如当用户非常多，或者uid分配有特殊需求，超过10000时原先计算端口的方式可能会失效；对于科学计算等其他正常需求，目前的限制可能过于严格等。本文仅作为一种思路探讨和参考。
 
 _碎碎念：在容器化和云原生的时代，传统systemd还有很多值得我们去探求的特性可以做到很多事情呢……_
@@ -253,3 +258,5 @@ _碎碎念：在容器化和云原生的时代，传统systemd还有很多值得
 ---
 参考文章：
 1. [systemd.git - A fork of systemd to make components more independant](https://git.parabola.nu/~lukeshu/systemd.git/log/man?id=6b3d378331fe714c7bf2263eaa9a8b33fc878e7c&ofs=200&showmsg=1)
+2. [systemd.exec：服务执行环境与沙盒选项](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html)
+3. [Linux 内核文档：No New Privileges Flag](https://docs.kernel.org/userspace-api/no_new_privs.html)

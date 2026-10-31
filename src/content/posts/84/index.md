@@ -2,7 +2,7 @@
 title: "DN42探究日记 - Ep.1 加入DN42网络"
 published: 2025-06-28T13:19:00.000Z
 updated: 2025-08-20T12:41:04.000Z
-description: "本文提供完整DN42网络搭建指南：从Git注册节点、Bird2路由配置到WireGuard隧道建立，详解BGP对等互联全流程。包含MP-BGP/非MP-BGP双模式配置、ROA安全验证及故障排查技巧，所有操作均在172.20.0.0/14虚拟地址空间进行，不影响真实互联网环境。附Bird配置文件及自动化脚本，助您快速加入DN42去中心化网络。"
+description: "记录加入 DN42 的过程：在 Registry 注册 ASN 和地址资源，配置 BIRD、ROA 检查与 WireGuard，并与其他成员建立 BGP 对等连接。"
 image: ""
 tags: ["DN42", "BGP", "BIRD", "网络技术"]
 category: "网络技术"

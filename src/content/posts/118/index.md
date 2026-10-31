@@ -2,7 +2,7 @@
 title: "DN42探究日记 - Ep.4 配置BGP Communities"
 published: 2025-08-17T15:43:00.000Z
 updated: 2025-08-17T17:20:41.000Z
-description: "详细解读BGP Communities的工作原理及其在DN42网络中的实战应用。通过分步演示bird2配置流程，演示如何为路由添加地理标签（Region/Country）、基于社区值实现路由优选（LOCAL_PREF优先级调整），并规避路由劫持风险。包含代码示例、邻居验证效果截图，帮助理解BGP Communities概念及应用，简化网络策略管理。从零构建高可靠性BGP路由策略。"
+description: "在 BIRD 中为自己的 DN42 路由添加地理位置 Community，并根据收到的标签调整 LOCAL_PREF，尝试按地区和直连关系进行选路。"
 image: ""
 tags: ["DN42", "BGP", "BIRD", "网络技术", "iBGP"]
 category: "网络技术"
@@ -29,7 +29,9 @@ DN42中有一套自己的Communities规范，详情可参考：[BGP-communities 
 
 # 配置
 本文大致思路和方案来源于Xe_iu大佬，仅针对地理位置信息添加BGP Communities并进行优选。一般来说这样就足够了。~~（还有个原因是其他的我还没太搞明白）~~  
-注意: 我们应该**只对自己的AS添加地理位置信息相关的BGP Communities**，不应当对邻居传递来的路由添加相关条目。若对邻居的路由加上自己的地区Communities则会造成**伪造路由起源**，引发**路由劫持**。下游可能会误判流量路径，将本应直连的流量绕道至你的网络，增加延迟的同时大量消耗你的网络的流量。（Large Communities除外，Large Community有一套验证机制可以防止此类事情发生，但是不在本文讨论范围内）
+注意：本文的地理标签用于标识**自己发起的路由**，因此只给自己的前缀添加，不改写邻居路由上的地理标签。给邻居路由加上自己的地区标签，可能误导依赖这些标签的选路策略，但这不等同于修改路由的起源 AS。Standard Community 和 Large Community 都不自带真实性验证；收到的标签是否可信，需要结合对等关系、约定和导入过滤策略判断。
+
+Large Community 的安全边界可参考 [RFC 8092 第 7 节](https://www.rfc-editor.org/rfc/rfc8092.html#section-7)：路径上的中间 AS 可以增加、删除或修改这些属性。
 
 思路已经很明白了，在导出路由时我们需要先验证是否是我们自己的路由，如果是则为路由打上communities标签即可。DN42官方给的样例配置中已经写好了两个函数`is_self_net()`和`is_self_net_v6()`用于检查是否是自己的路由，因此编写配置文件部分就很简单了。  
 

@@ -2,7 +2,7 @@
 title: "简述对AOSP设备树中的一些文件和概念的理解"
 published: 2025-02-03T03:58:00.000Z
 updated: 2025-06-27T03:29:21.000Z
-description: "简述对AOSP设备树中的一些文件和概念的理解"
+description: "整理编译 Android ROM 时对设备树的理解，涉及 Android.bp、各类 Makefile、prop、overlay、SELinux 策略和 vendor blob 提取文件。"
 image: ""
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"

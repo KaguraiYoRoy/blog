@@ -2,7 +2,7 @@
 title: "2026 CCSSSC - Traffic Analysis (traffic_hunt) - WriteUp"
 published: 2026-03-15T12:20:00.000Z
 updated: 2026-03-16T10:02:33.000Z
-description: "A detailed technical writeup of the 2026 Software System Security Competition (CCSSSC) CTF, traffic analysis challenge. It covers the complete attack chain from Apache Shiro vulnerability exploitation (CVE-2016-4437) to the injection of a Behinder memory-shell, followed by multi-part ELF malware upload and finally, AES-GCM encrypted reverse shell communication to retrieve the flag. Includes decryption scripts and analysis."
+description: "Analyzing the traffic_hunt capture from CCSSSC 2026, tracing Shiro exploitation, a Behinder memory shell, and payload uploads before decrypting custom shell traffic to recover the flag."
 image: ""
 tags: ["Web", "CTF", "Cybersecurity", "Misc", "TrafficAnalytics", "Forensics", "WebShell", "Backdoor"]
 category: "Projects"

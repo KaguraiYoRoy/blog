@@ -2,7 +2,7 @@
 title: "Building a Cross-Region K3s Cluster from Scratch - Calico No-Encapsulation CNI"
 published: 2026-04-05T13:43:00.000Z
 updated: 2026-06-06T05:43:53.000Z
-description: "This article provides a step-by-step guide to building a cross-region K3s cluster from scratch, using Calico as the CNI with no-encapsulation mode. It covers network architecture analysis, CNI selection, routing design, K3s installation, Calico deployment, BGP topology configuration, and MTU tuning. Ideal for developers looking to understand cross-region container networking practices."
+description: "Deploying K3s across an existing private network with Calico in no-encapsulation mode, distributing Pod routes through BGP and adjusting the topology and MTU."
 image: ""
 tags: ["BGP", "iBGP", "Kubernetes", "K3s", "Cluster", "CNI"]
 category: "Network"

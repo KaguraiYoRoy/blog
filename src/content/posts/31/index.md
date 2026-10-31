@@ -2,7 +2,7 @@
 title: "使用家宽无公网IP+CDNfly实现建站"
 published: 2025-03-09T06:33:00.000Z
 updated: 2025-06-27T03:28:50.000Z
-description: "使用家宽无公网IP+CDNfly实现建站"
+description: "在 NAT 条件允许的家宽上用 Lucky 映射入站端口，再通过 Webhook 更新 CDNfly 的回源地址和端口，记录无独立公网 IP 的建站尝试。"
 image: ""
 tags: []
 category: "运维"

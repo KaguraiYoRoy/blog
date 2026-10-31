@@ -2,7 +2,7 @@
 title: "Configuring Multi-Exit Routing for a Dual-NIC VPS Using PBR"
 published: 2025-09-14T09:07:00.000Z
 updated: 2025-12-14T13:27:03.000Z
-description: "Learn how to configure multi-exit routing for a dual-NIC VPS using Policy-Based Routing (PBR) and Netplan on Linux, enabling controlled traffic splitting and egress path selection."
+description: "Configuring outbound routing on a dual-NIC IEPL VPS with Netplan route metrics, separate routing tables, and policy rules to select a gateway for specific traffic."
 image: ""
 tags: ["Network Technology", "PBR", "IEPL"]
 category: "Network"

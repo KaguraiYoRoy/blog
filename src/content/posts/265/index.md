@@ -2,7 +2,7 @@
 title: "从零构建跨地域 K3s 集群 - Calico 无封装 CNI"
 published: 2026-04-05T13:43:00.000Z
 updated: 2026-06-06T05:43:33.000Z
-description: "本文详细介绍了如何从零开始构建一个跨地域的 K3s 集群，选用 Calico 作为 CNI 并配置无封装模式。文章涵盖了网络架构分析、CNI 选型、路由设计、K3s 安装、Calico 部署、BGP 拓扑配置以及 MTU 调优等关键步骤，适合希望了解跨地域容器网络实践的开发者。"
+description: "在已有跨地域内网上部署 K3s，选择 Calico 无封装模式，通过 BGP 让中间路由器学习 Pod 路由，并记录 CNI 选型、拓扑和 MTU 调整。"
 image: ""
 tags: ["BGP", "iBGP", "Kubernetes", "K3s", "集群", "CNI"]
 category: "网络技术"

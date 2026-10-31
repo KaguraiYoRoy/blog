@@ -2,7 +2,7 @@
 title: "OneManISP - Ep.2 向世界宣告我们自己的IP段"
 published: 2025-08-20T15:59:00.000Z
 updated: 2025-08-20T16:01:26.000Z
-description: "这篇文章详细介绍了如何将个人申请的 IPv6 地址段通过 BGP 协议广播到全球。内容涵盖在 RIPE Database 中设置子网对象和路由信息、向 Vultr 申请 BGP Session 接入的完整流程、LOA 授权信的填写方法，以及使用 Bird2 路由软件进行 BGP 广播的具体配置。通过本文，你将学会如何让你的 IP 段被全球互联网识别和访问，实现真正意义上的自主路由。"
+description: "拿到 ASN 和 IPv6 地址段后，在 RIPE Database 创建相关对象，向 Vultr 申请 BGP Session，再用 BIRD 宣告前缀并测试公网连通性。"
 image: ""
 tags: ["BGP", "BIRD", "网络技术", "Clearnet", "ASN"]
 category: "网络技术"

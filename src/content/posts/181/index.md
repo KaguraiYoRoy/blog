@@ -2,7 +2,7 @@
 title: "通过PBR为双网卡VPS配置多出口路由"
 published: 2025-09-14T09:07:00.000Z
 updated: 2025-09-17T00:17:08.000Z
-description: "本文详细介绍了如何在Linux服务器上配置深港IEPL双网卡分流方案。通过Netplan设置路由metric实现主备出口，并结合策略路由(PBR)实现按IP规则分流，涵盖从基础配置到高级路由策略的完整实现过程。"
+description: "为一台深港 IEPL 双网卡 VPS 配置出口，先用 Netplan 设置路由 metric，再通过独立路由表和策略路由规则指定流量走哪个网关。"
 image: ""
 tags: ["网络技术", "PBR", "IEPL"]
 category: "网络技术"

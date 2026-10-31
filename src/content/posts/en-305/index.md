@@ -2,7 +2,7 @@
 title: "Home Network Upgrade – GPON Stick + 802.11k/v/r Roaming"
 published: 2026-07-11T00:37:00.000Z
 updated: 2026-07-22T15:58:47.000Z
-description: "A hands-on home network upgrade using a GPON stick and Xiaomi BE10000 to exceed 1Gbps speeds, featuring detailed 802.11k/v/r seamless roaming configuration between primary and secondary routers, OpenWrt flashing, VLAN setup, channel and power tuning to fix sticky clients, and complete UCI command walkthroughs with floor plan analysis."
+description: "Upgrading a home network with a GPON stick and Xiaomi BE10000, configuring VLANs, PPPoE, and 802.11k/v/r, then tuning channels and power and checking speed and roaming behavior."
 image: ""
 tags: ["OpenWRT", "BE10000", "AX3600", "Mesh", "QWRT", "802.11", "GPON", "SFP"]
 category: "Network"
@@ -499,32 +499,28 @@ It can be observed that the channel in the master bedroom is fairly clean, the s
 Therefore, we need to make some minor adjustments to the channels and power levels, and also configure 802.11 k/v/r.
 
 ## Tuning Power and Channels
-The main goal is to separate the channels and prevent clients from sticking to a specific access point.
-I can't fully explain all the reasoning myself; I also referenced a lot of configurations suggested by AI. Let's have AI explain it here too (escape)
-### 1. Band Strategy (Channel): Fully Separated to Avoid Co-Channel Interference
-The main and satellite routers use **completely non-overlapping** channels on all bands, which is the most critical step in a multi-router setup.
-- **2.4 GHz Band (Main 1 / Satellite 11):** In the 2.4 GHz band, only channels 1, 6, and 11 are completely non-overlapping and interference-free. The main and satellite routers occupy channels 1 and 11 respectively, ensuring that the two devices do not "fight" each other (co-channel interference) when transmitting 2.4 GHz signals, thereby ensuring the stability of smart home devices that rely on 2.4 GHz.
-- **5 GHz Band (Main 36 / Satellite 52):** The main router uses the lower channel 36, and the satellite uses the DFS channel 52. These two channels are completely independent when using an 80 MHz bandwidth.
+The goal is to separate the channels and adjust coverage to reduce clients sticking to a distant access point. I used AI suggestions as a starting point; the settings still need to be checked against room layout, interference, and client behavior.
+### 1. Channel Strategy: Reduce Interference Between the APs
+- **2.4 GHz (Main 1 / Satellite 11):** With the 20 MHz width used here, channels 1 and 11 reduce overlap between the two APs. The familiar 1/6/11 plan follows the same idea, but it does not remove interference from neighboring Wi-Fi, Bluetooth, or other sources.
+- **5 GHz (Main 36 / Satellite 52):** These settings use separate 80 MHz channel blocks. Channel 52 is subject to DFS; availability depends on local regulations and device support, and radar detection may require a channel change.
 
-**Summary:** This spatial channel isolation means that when a device moves between the main and satellite routers, the background noise floor is minimal, maximizing network throughput.
+This reduces contention between my APs. It does not guarantee the lowest noise floor or maximum throughput, so the actual operating channels and room coverage still need checking.
 
-### 2. Bandwidth Strategy: Balancing Stability and Extreme Speed
-- **2.4 GHz uses 20 MHz:** This is a very sensible approach. Although 40 MHz is theoretically faster, in the extremely crowded 2.4 GHz band (microwave ovens, Bluetooth all operate here), enabling 40 MHz multiplies interference, often leading to frequent dropouts. Locking it to 20 MHz sacrifices peak speed but trades it for maximum **wall-penetration stability and coverage**, which is ideal for IoT smart devices that don't require high speeds.
-- **5 GHz uses 80 MHz:** 80 MHz is the current sweet-spot bandwidth for most phones and computers, capable of providing extremely high internal network transfer speeds and external download speeds. It is the **primary internet access band**.
+### 2. Bandwidth Strategy: Balance Interference and Speed
+- **2.4 GHz at 20 MHz:** This occupies less spectrum than 40 MHz and suits coverage and IoT use in my crowded environment. It does not directly guarantee greater range or fewer dropouts.
+- **5 GHz at 80 MHz:** This is my main access band, balancing speed and spectrum use. In a more congested environment, a narrower channel may be worth testing.
 
-### 3. Power Strategy (Tx Power): "Weak 2.4 GHz, Strong 5 GHz"
-This power configuration is the most brilliant aspect of this set of parameters, perfectly addressing the "sticky client" problem in multi-AP environments.
-- **2.4 GHz Power Lowered (18 dBm / 20 dBm):** 2.4 GHz signals have long wavelengths and strong wall-penetration ability. If the power isn't reduced, a phone moving around the house will stubbornly "cling" to a distant 2.4 GHz signal, resulting in extremely slow speeds. Lowering the 2.4 GHz power on both routers artificially shrinks the 2.4 GHz coverage circle, encouraging the device to disconnect sooner when the signal weakens and search for a better signal.
-- **5 GHz Power Maximized (23 dBm / 24 dBm):** 5 GHz signals have poor wall penetration and attenuate quickly. Keeping the power high helps compensate for this weakness, extending the high-speed 5 GHz coverage area.
+### 3. Power Strategy: Adjust Coverage
+- **2.4 GHz at 18 dBm / 20 dBm:** The aim is to reduce excessive overlap and make distant APs less attractive. Lowering power too far can leave coverage gaps, so walking tests are needed.
+- **5 GHz at 24 dBm / 23 dBm:** The aim is to retain fast coverage in the rooms. Actual power remains subject to hardware and regulatory limits; increasing AP transmit power does not increase the phone's return-path capability.
 
-**Summary:** This power differential configuration creates a natural form of "band steering" at the physical layer. When a phone receives both 2.4 GHz and 5 GHz signals simultaneously, the high-powered 5 GHz signal's strength can easily surpass the low-powered 2.4 GHz signal, making the phone willingly prioritize connecting to the faster 5 GHz network.
+These settings may influence band and AP selection, but they are not a dedicated band-steering mechanism and cannot force clients to prefer 5 GHz.
 
 ### 4. Roaming Coordination
-With the physical layer parameters — band, bandwidth, and power — all optimally tuned as described above, the `802.11k/v/r` protocols form a perfect roaming closed loop:
-- **11k (Neighbor Report) + 11v (BSS Transition Management):** The routers actively tell the phone "which nearby node has a better signal" and suggest it switch. Because the 2.4 GHz power is suppressed, the phone is more likely to trigger the 11v switching threshold when moving.
-- **11r (Fast Transition):** Combined with a unified SSID (PINer) and the same encryption method, this eliminates the several hundred milliseconds normally required for re-entering the password and re-authenticating when the phone switches routers, achieving a truly "seamless" experience (e.g., WeChat voice calls don't drop). The consistent `mobility_domain` and unique `nasid` are also standard requirements for 11r configuration.
+- **11k (Neighbor Report) + 11v (BSS Transition Management):** These provide supported clients with candidate AP information and transition suggestions. Whether suggestions are sent depends on the AP implementation and configuration; clients decide whether to accept them.
+- **11r (Fast Transition):** With matching SSID, security, and mobility-domain settings, this reduces key-negotiation overhead during a transition. Ordinary roaming does not require retyping the password either. Enabling 11r alone does not establish that a transition has no packet loss or service interruption.
 
-_Ref: Gemini_
+_The initial configuration and explanation drew on Gemini suggestions. The observations below describe the actual results._
 
 The final configuration for band, bandwidth, and power is:
 * Main Router 192.168.3.1
@@ -537,6 +533,8 @@ The final configuration for band, bandwidth, and power is:
 ---
 ## Results & Follow-up
 In the final testing, connections defaulted to the main router in the living room, balcony, kitchen, and bathroom. In the second bedroom, it automatically switches to the satellite router. Closing the door in the study also triggers a switch from the main router to the satellite. It takes about 5 seconds from signal degradation to the actual switch. The master bedroom was inconsistent; sometimes it switches, sometimes it doesn't, but it switched in 3 out of 5 tests.
+
+The 5 seconds is the observed time from signal degradation to the transition, not a measured 5-second network outage. This record does not include packet-loss or authentication-time measurements during the transition, so it does not establish seamless roaming.
 
 Speed test after plugging into the 5 Gbps port:
 ![950c5d4f29c767feff2e3e9ac9b140a9.png](./images/2026/07/1200252525.png)

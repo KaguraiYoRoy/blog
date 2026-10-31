@@ -2,7 +2,7 @@
 title: "Leveraging systemd Features to Build a Multi-tenant CodeServer"
 published: 2026-06-06T07:34:00.000Z
 updated: 2026-06-06T07:38:31.000Z
-description: "This article details how to leverage systemd features (resource limits, sandboxing, Path units) to build a multi-tenant CodeServer environment, enabling isolated per-user execution, self-service password changes, isolated Python virtual environments, and incidentally blocking kernel exploits like CopyFail and DirtyFrag. Ideal for administrators who want to securely provide browser-based VS Code to multiple users on a Linux server."
+description: "Running per-user code-server instances on a server shared with friends, using systemd resource limits and password-file monitoring, with Python venvs and notes on isolation limits."
 image: ""
 tags: ["systemd", "codeserver"]
 category: "Ops"
@@ -13,25 +13,25 @@ lang: "en_US"
 
 # Analysis
 
-The motivation came from a university Python course – I didn't want to bring my heavy laptop to every class, so I tried to see if a tablet could do the job. After some searching, I found [coder/code-server: VS Code in the browser](https://github.com/coder/code-server) which fit the requirements perfectly while also being cross-platform. I deployed it for myself, but later my friends also wanted access. That got me thinking about how to support multi-tenancy and security simultaneously. Initially I considered containerization, but because of the need to install new pip packages, containers would have been tricky – I would have had to persist Python site-packages and everything, and performance would suffer. So I decided to stick with a binary deployment.
+The motivation came from a university Python course: I wanted to use a tablet rather than bring my heavy laptop to every class. [coder/code-server: VS Code in the browser](https://github.com/coder/code-server) suited that use case. After I deployed it for myself, friends also wanted access. I considered containers, then chose a binary deployment with Linux users and venvs to manage each person's files and Python packages. I did not benchmark container performance against direct deployment.
 
 The requirements are simple, roughly summarized as follows:
 1. Each user can log into CodeServer using their own domain name.
 2. Each user can change their own login password.
-3. Each user's Python environment is completely isolated and can independently install pip packages.
+3. Each user has a separate Python package environment and can install pip packages independently.
 4. Users should not be able to access each other's files.
 5. Prevent users from accidentally deleting critical system components.
 6. Prevent users from accidentally writing infinite loops or similar that exhaust server resources.
 7. Prevent users from using the server for cryptocurrency mining or as a jump box for attacks.
 
 After analysis and discussions with AI, the final solution is roughly as follows:
-1. Use Linux's native multi-user mechanism – each user runs a CodeServer under their own home directory for basic isolation. This easily satisfies requirements 1, 4 and 5.
+1. Run CodeServer under a separate Linux user and home directory, with ownership and permissions controlling file access. Home directories should be accessible only to their owners, for example with mode `0700`; creating separate users alone does not hide every file. Domain access also requires a separate reverse-proxy configuration.
 2. Listening ports are calculated based on UID. Create a venv manually for each user and activate it automatically via `.bashrc` to satisfy requirement 3.
-3. Use systemd's restrictions to limit process behavior, achieving requirements 6–7 to a certain extent.
+3. Use systemd to limit resource consumption and some process operations. This reduces the impact of mistakes but cannot prevent all mining or network abuse.
 4. Use systemd's path mechanism to monitor `$HOME/.config/code-server/config.yaml` and automatically restart the daemon, allowing users to change their login password by modifying the configuration file – a relatively elegant way to achieve requirement 2.
 
 ~~For requirement 7, given the computer literacy level of first-year students, I'm not too worried (I hope?).~~  
-I didn't cut off network access completely because some requirements need internet to download packages, or might involve web scraping. systemd's restrictions should already block most malicious operations.  
+I kept network access for package downloads and tasks such as web scraping. Ordinary IPv4/IPv6 outbound connections remain allowed, so these settings do not replace egress controls or abuse management.  
 This article does not cover SELinux, because in my opinion SELinux would be over-engineering for these requirements, and I'm not very familiar with SELinux/SEPolicy (that's the main reason lol). I also wanted to avoid imposing restrictions that hinder legitimate usage, so SELinux is not used.
 
 # Deployment
@@ -55,6 +55,7 @@ CPUQuota=150%
 TasksMax=200
 IOWeight=50
 ProtectSystem=strict
+ReadWritePaths=/home/%i
 PrivateTmp=yes
 PrivateDevices=yes
 NoNewPrivileges=yes
@@ -72,6 +73,8 @@ WantedBy=multi-user.target
 ```
 
 The filename is `code-server@.service`; the part after `@` is substituted for `%i`. The design passes the username via `%i`, calculates the port, and starts automatically. The port calculation logic is `7000+uid%10000`. Typically UIDs start from 1000, so ports start from 8000 in order of user creation.
+
+`ProtectSystem=strict` also makes home directories read-only, so `ReadWritePaths=/home/%i` explicitly allows writes to this user's working directory. It does not grant additional filesystem permissions; ownership and permissions still need to be set correctly. A venv separates Python packages, but is not a security sandbox restricting access to the host or other files.
 
 Note this part of the configuration:
 ```toml
@@ -91,8 +94,8 @@ It mainly covers two aspects: **Resource Control** and **Security & Sandboxing**
 ### I. Resource Control
 This uses Linux's cgroups mechanism to prevent the service from consuming excessive system resources and affecting other programs.
 - **`MemoryMax=1G`**
-    - **Effect:** Limits the service to a maximum of 1GB of memory.
-    - **Outcome:** If the service tries to use more than 1GB, the system (OOM Killer) will forcibly kill the process to protect the system.
+    - **Effect:** Sets a 1 GiB memory limit for the service's cgroup.
+    - **Outcome:** If the service cgroup reaches its limit and memory reclaim cannot relieve the pressure, an OOM kill may occur within the group. Here, `1G` means 1 GiB.
 - **`CPUQuota=150%`**
     - **Effect:** Limits the service to at most 150% CPU usage.
     - **Outcome:** 100% represents one full CPU core. 150% means the service can saturate one core and use half of a second core (i.e., up to 1.5 CPU cores' worth of compute).
@@ -101,29 +104,29 @@ This uses Linux's cgroups mechanism to prevent the service from consuming excess
     - **Outcome:** Prevents the service from creating unlimited child processes due to bugs or infinite loops (e.g., fork bomb), which could exhaust system PID resources and crash the system.
 - **`IOWeight=50`**
     - **Effect:** Sets the disk I/O priority weight. The default is usually 100.
-    - **Outcome:** A value of 50 means when system I/O is busy, this service gets lower priority for disk read/write resources compared to default services, preventing it from choking the whole system when doing heavy file I/O.
+    - **Outcome:** Where the device and I/O controller support weighted scheduling, 50 reduces the service's relative share under contention. It is not a fixed throughput limit or a guarantee that other services remain unaffected.
 
 ### II. Security & Isolation
-This uses Linux namespaces and other kernel security mechanisms to "cage" the service, minimizing damage even if the service is compromised.
+These settings restrict access to filesystems, devices, and sockets to reduce the impact of mistakes and limit some attack paths.
 - **`ProtectSystem=strict`**
     - **Effect:** Strictly protects system files.
-    - **Outcome:** The entire operating system's filesystem (the root `/` and everything under it, except special API directories like `/dev`, `/proc`, `/sys`) is made **read-only** for this service. The service cannot modify, overwrite, or delete any critical system files.
+    - **Outcome:** Makes the filesystem hierarchy read-only, except for API filesystems and explicitly writable paths. Here, `ReadWritePaths` keeps the user's home writable. This mount restriction does not replace kernel security updates.
 - **`PrivateTmp=yes`**
     - **Effect:** Provides an independent temporary directory for the service.
     - **Outcome:** The service sees its own private `/tmp` and `/var/tmp` directories. It cannot see or modify files placed in the global `/tmp` by other users/services, and vice versa. This effectively prevents symlink attacks or data leaks based on temporary files.
 - **`PrivateDevices=yes`**
     - **Effect:** Isolates physical devices.
-    - **Outcome:** Mounts a private `/dev` directory for the service, containing only pseudo-devices (e.g., `/dev/null`, `/dev/zero`, `/dev/urandom`). The service **cannot see** real physical hardware devices (like `/dev/sda`, USB devices), completely eliminating the possibility of directly reading/writing block devices.
+    - **Outcome:** Provides a private `/dev` with necessary pseudo-devices such as `/dev/null`, `/dev/zero`, and `/dev/urandom`, restricting direct access to host device nodes. This does not isolate every possible route to hardware access.
 - **`NoNewPrivileges=yes`**
-    - **Effect:** Prevents privilege escalation.
-    - **Outcome:** Ensures that the service and all its child processes, no matter what, cannot gain new system privileges. Even if the service invokes a program with the SUID bit (e.g., `sudo` or `su`), it cannot escalate to root privileges.
+    - **Effect:** Restricts acquiring additional privileges by executing another program.
+    - **Outcome:** The service and its descendants cannot gain privileges through setuid/setgid bits or file capabilities during `execve()`. It does not prevent every escalation path, such as a kernel exploit that directly changes process credentials.
 - **`RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX`**
     - **Effect:** Restricts the socket address families the service can use.
-    - **Outcome:** The service can only use:
+    - **Outcome:** Allows creating sockets in these address families:
         - `AF_INET`: IPv4 network communication
         - `AF_INET6`: IPv6 network communication
         - `AF_UNIX`: local UNIX domain sockets (for local IPC)
-    - Any other address families (e.g., low-level packet capture `AF_PACKET`, Bluetooth `AF_BLUETOOTH`, etc.) are blocked by the kernel. This greatly reduces the network attack surface.
+    - On systems supporting the relevant seccomp filtering, calls to create sockets in other address families are restricted. This reduces attack surface but does not restrict IPv4/IPv6 destinations or revoke sockets inherited or passed to the service.
 
 When creating a new user, just run:
 ```shell
@@ -265,12 +268,13 @@ I won't go into detail here – just install the Python and debugger extensions 
 
 # Postscript
 
-I actually set this up a long time ago but never wrote about it. At that time, vulnerabilities like CopyFail and DirtyFrag hadn't been disclosed yet. When they were disclosed, I tested them immediately and found that this systemd configuration happened to block them all. A rough analysis follows:
+I set this up before CopyFail and DirtyFrag were disclosed. After disclosure, I ran the PoCs available to me under this configuration and did not observe successful privilege escalation. That observation applies to the environment and samples I tested, not every related exploit variant.
 
-CopyFail uses a special socket type: `AF_ALG`. Our systemd configuration only allows `AF_INET AF_INET6 AF_UNIX`, so CopyFail cannot escalate privileges. Similarly for DirtyFrag – it uses `AF_NETLINK`, `AF_RXRPC`, and `AF_ALG`, all of which are blocked.  
-Also, `NoNewPrivileges=yes` acts as a final line of defense. The ultimate goal of those exploits is to tamper with `/usr/bin/su` to inject malicious ELF shellcode, or modify `/etc/passwd` to clear the root password, then invoke the setuid `su` command to gain root privileges. With `NoNewPrivileges` set, the process and all its descendants can **absolutely never** gain higher privileges through the `setuid` or `setgid` flags of any file. Even if a future vulnerability finds a way to bypass the network restrictions and successfully replace `/usr/bin/su` with a malicious shell, executing `su` would still spawn a low-privilege shell – privilege escalation becomes impossible.
+The tested exploit paths needed sockets such as `AF_ALG`, or `AF_NETLINK` and `AF_RXRPC`, which this `RestrictAddressFamilies` allowlist excludes. It may therefore block those paths at socket creation. Establishing the exact failure point requires the specific PoC, kernel version, and system logs.
 
-This article does not cover SELinux, because the current solution is acceptably simplified for the scenario of "friends sharing, non-production critical", avoiding the risk of misconfiguration causing functional issues and operational complexity. In reality, systemd's sandboxing options are primarily based on namespaces and cgroups, and cannot fully replace mandatory access control (like SELinux or AppArmor). For higher security requirements for tenant isolation (e.g., preventing kernel escape vulnerabilities among untrusted users), SELinux/AppArmor is still the mainstream choice.
+`NoNewPrivileges=yes` restricts another path: the service and its descendants cannot gain privileges through setuid/setgid bits or file capabilities during `execve()`. It does not prevent all privilege changes outside `execve()`, nor ensure that damaged system files cannot affect other privileged processes. System updates remain necessary; these settings do not replace vulnerability fixes.
+
+This article does not explore SELinux. The setup is intended for a server shared with friends rather than critical production workloads. These systemd options combine namespaces, cgroups, and seccomp, but do not form a complete tenant security boundary. SELinux/AppArmor can further restrict access, but cannot guarantee protection against every kernel vulnerability either. Mutually untrusted users call for an assessment of stronger isolation based on the threat model.
 
 Of course, this solution has other limitations. For example, when there are many users or special UID allocation requirements that exceed 10000, the port calculation logic may fail. For legitimate needs like scientific computing, the current restrictions may be too strict. This article is only intended as a discussion and reference.
 
@@ -279,3 +283,5 @@ _Random thoughts: In the age of containerization and cloud-native, traditional s
 ---
 Reference:
 1. [systemd.git - A fork of systemd to make components more independant](https://git.parabola.nu/~lukeshu/systemd.git/log/man?id=6b3d378331fe714c7bf2263eaa9a8b33fc878e7c&ofs=200&showmsg=1)
+2. [systemd.exec: Execution Environment and Sandboxing Options](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html)
+3. [Linux Kernel Documentation: No New Privileges Flag](https://docs.kernel.org/userspace-api/no_new_privs.html)

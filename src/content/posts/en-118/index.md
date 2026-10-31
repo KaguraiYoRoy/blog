@@ -2,7 +2,7 @@
 title: "DN42 - Ep.4 Configuring BGP Communities"
 published: 2025-08-17T15:43:00.000Z
 updated: 2025-11-06T10:53:58.000Z
-description: "详细解读BGP Communities的工作原理及其在DN42网络中的实战应用。通过分步演示bird2配置流程，演示如何为路由添加地理标签（Region/Country）、基于社区值实现路由优选（LOCAL_PREF优先级调整），并规避路由劫持风险。包含代码示例、邻居验证效果截图，帮助理解BGP Communities概念及应用，简化网络策略管理。从零构建高可靠性BGP路由策略。"
+description: "Tagging my DN42 routes with geographic communities in BIRD and adjusting LOCAL_PREF using received tags to prefer nearby routes and direct peers."
 image: ""
 tags: ["DN42", "BGP", "BIRD", "Network Technology", "iBGP"]
 category: "Network"
@@ -30,7 +30,9 @@ DN42 has its own set of Communities specifications. For details, please refer to
 # Configuration
 The general idea and approach in this article are largely based on Xe_iu's method, focusing on adding BGP Communities for geographic information and performing route optimization. Generally, this is sufficient. ~~(Another reason is that I haven't fully grasped the others yet)~~  
 
-Note: We should **ONLY add geographic information-related BGP Communities to routes originating from our own AS**. We should not add such entries to routes received from neighbors. Adding our own regional Communities to a neighbor's routes constitutes **forging the route origin**, potentially leading to **route hijacking**. Downstream networks might misjudge the traffic path, routing traffic that should be direct through your network, increasing latency and consuming your network's bandwidth. (Large Communities are an exception, as they have a verification mechanism to prevent this, but that's beyond the scope of this article).
+Note: In this example, geographic tags describe **routes originated by our own AS**, so I only add them to my own prefixes and leave neighbors' geographic tags unchanged. Adding our region to a neighbor's route could mislead policies that rely on these tags, but it does not change the route's origin AS. Neither Standard nor Large Communities provide built-in authenticity checks; trust depends on peer relationships, agreed semantics, and import filters.
+
+See [RFC 8092, Section 7](https://www.rfc-editor.org/rfc/rfc8092.html#section-7): intermediate ASes can add, delete, or alter Large Community attributes.
 
 The idea is clear. When exporting routes, we first need to verify if it's our own route. If it is, we add the communities tag to the route. The sample configuration provided by DN42 already includes two functions, `is_self_net()` and `is_self_net_v6()`, to check if a route is our own. Therefore, writing the configuration part is straightforward. 
 

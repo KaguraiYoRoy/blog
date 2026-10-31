@@ -2,7 +2,7 @@
 title: "OneManISP - Ep.1 Registering an ASN"
 published: 2025-08-18T09:49:00.000Z
 updated: 2025-11-08T02:56:17.000Z
-description: "A step-by-step guide for beginners on how to register your own ASN (Autonomous System Number) through the RIPE NCC using an LIR service, covering preparation, document requirements, and RIPE Database setup."
+description: "My experience applying for a RIPE ASN through an LIR, preparing documents, creating RIPE Database objects, and understanding their links to address space and routes."
 image: ""
 tags: ["BGP", "BIRD", "Network Technology", "Clearnet", "ASN"]
 category: "Network"
