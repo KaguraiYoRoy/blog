@@ -16,6 +16,7 @@ import remarkGithubAdmonitionsToDirectives from "remark-github-admonitions-to-di
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import { expressiveCodeConfig } from "./src/config.ts";
+import { typechoPostRedirects } from "./src/constants/typecho-redirects.ts";
 import { pluginLanguageBadge } from "./src/plugins/expressive-code/language-badge.ts";
 import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
 import { GithubCardComponent } from "./src/plugins/rehype-component-github-card.mjs";
@@ -29,6 +30,7 @@ export default defineConfig({
 	site: "https://blog.iyoroy.cn/",
 	base: "/",
 	trailingSlash: "always",
+	redirects: typechoPostRedirects,
 	integrations: [
 		tailwind({
 			nesting: true,

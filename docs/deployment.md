@@ -28,6 +28,21 @@ Pull Request 只检查和构建，不发布。也可以在 Actions 页面手动�
 
 更换域名时，同时更新 GitHub Pages 设置、DNS、`public/CNAME`、`astro.config.mjs`、RSS 的备用地址和友链资料中的绝对地址。
 
+### Typecho 旧地址
+
+构建时通过 Astro 原生跳转生成 80 个兼容页面，部署到 GitHub Pages 后即可自动跳转：
+
+| 旧地址 | 新地址 |
+| --- | --- |
+| `/archives/<cid>/` | `/posts/<cid>/` |
+| `/en/archives/<cid>/` | `/posts/en-<cid>/` |
+| `/about.html`、`/friends.html`、`/privacy.html`、`/dn42.html` | `/about/`、`/friends/`、`/privacy/`、`/dn42/` |
+| `/en/about.html`、`/en/friends.html`、`/en/privacy.html`、`/en/dn42.html` | `/en/about/`、`/en/friends/`、`/en/privacy/`、`/en/dn42/` |
+
+旧文章 ID 和独立页面映射集中在 `src/constants/typecho-redirects.ts`。文章通过 `astro.config.mjs` 的 `redirects` 生成目录入口，独立页面通过 `src/pages/[...legacy].html.ts` 生成真正的 `.html` 文件。新写的 Astro 文章无需增加旧地址。
+
+GitHub Pages 提供的是包含即时 `meta refresh`、`noindex` 和新地址 `canonical` 的 HTML，实际 HTTP 状态码为 200，不是服务器级 301。境内可以继续使用 Nginx 的 301 规则；两端使用同一份构建产物。域名跳转仍需在接收旧域名（例如 `www.iyoroy.cn`）的服务器或代理上配置。
+
 ## 境内自动部署
 
 在仓库的 **Settings > Environments > github-pages > Environment secrets** 中配置。境内部署任务已声明使用 `github-pages` 环境；也可以使用同名 Repository secrets：
