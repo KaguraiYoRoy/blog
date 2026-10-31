@@ -9,7 +9,7 @@ Nyaa~
 This is Kagura iYoRoy's little nest~
 
 # About iYoRoy
-> Hope all things in the world be treated with warmth.
+> May all things in the world be treated with tenderness.
 
 It's a cat! (Yay meow!)  
 My true self is a university student.  
