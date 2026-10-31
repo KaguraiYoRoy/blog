@@ -1,0 +1,30 @@
+.expressive-code {
+    .frame {
+        @apply !shadow-none;
+    }
+
+    .title {
+        font-family: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+}
+
+.mermaid-diagram {
+    @apply overflow-x-auto bg-[var(--codeblock-bg)] p-4;
+}
+
+.mermaid-diagram svg {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.expressive-code .frame:has(.mermaid-diagram) {
+    overflow: hidden;
+}
+
+.mermaid-error {
+    color: #fda4af;
+    white-space: pre-wrap;
+}

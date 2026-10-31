@@ -1,0 +1,127 @@
+---
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/jetbrains-mono/wght-italic.css";
+
+interface Props {
+	class: string;
+}
+const className = Astro.props.class;
+---
+<div data-pagefind-body class={`prose dark:prose-invert prose-base !max-w-none custom-md ${className}`}>
+    <!--<div class="prose dark:prose-invert max-w-none custom-md">-->
+    <!--<div class="max-w-none custom-md">-->
+    <slot/>
+</div>
+
+<script>
+document.addEventListener("click", function (e: MouseEvent) {
+    const target = e.target as Element | null;
+    if (target && target.classList.contains("copy-btn")) {
+        const preEle = target.closest("pre");
+        const codeEle = preEle?.querySelector("code");
+        const code = Array.from(codeEle?.querySelectorAll(".code:not(summary *)") ?? [])
+            .map(el => el.textContent)
+            .map(t => t === "\n" ? "" : t)
+            .join("\n");
+        navigator.clipboard.writeText(code);
+
+        const timeoutId = target.getAttribute("data-timeout-id");
+        if (timeoutId) {
+            clearTimeout(parseInt(timeoutId));
+        }
+
+        target.classList.add("success");
+
+        // 设置新的timeout并保存ID到按钮的自定义属性中
+        const newTimeoutId = setTimeout(() => {
+            target.classList.remove("success");
+        }, 1000);
+
+        target.setAttribute("data-timeout-id", newTimeoutId.toString());
+    }
+});
+</script>
+
+<script>
+let renderId = 0;
+let renderScheduled = false;
+let mermaidPromise: Promise<typeof import("mermaid")> | undefined;
+
+async function getMermaid() {
+    mermaidPromise ??= import("mermaid");
+    return (await mermaidPromise).default;
+}
+
+function isDarkMode() {
+    return document.documentElement.classList.contains("dark");
+}
+
+function configureMermaid(mermaid: typeof import("mermaid").default) {
+    mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: "strict",
+        theme: isDarkMode() ? "dark" : "default",
+    });
+}
+
+async function renderDiagram(source: string, target: HTMLElement) {
+    try {
+        const mermaid = await getMermaid();
+        configureMermaid(mermaid);
+        const { svg } = await mermaid.render(`mermaid-diagram-${renderId++}`, source);
+        target.innerHTML = svg;
+        target.classList.remove("mermaid-error");
+        target.dataset.rendered = "true";
+    } catch (error) {
+        console.error("Failed to render Mermaid diagram:", error);
+        target.classList.add("mermaid-error");
+        target.textContent = source;
+    }
+}
+
+async function renderMermaidDiagrams() {
+    const codeBlocks = document.querySelectorAll<HTMLElement>('pre[data-language="mermaid"]');
+    for (const pre of codeBlocks) {
+        const source = Array.from(pre.querySelectorAll(".ec-line .code"))
+            .map((line) => line.textContent ?? "")
+            .join("\n");
+        const codeFrame = pre.closest(".expressive-code");
+        if (!source.trim() || !codeFrame) continue;
+
+        const target = document.createElement("div");
+        target.className = "mermaid-diagram";
+        target.dataset.language = "mermaid";
+        target.dataset.source = source;
+        target.setAttribute("role", "img");
+        target.setAttribute("aria-label", "Mermaid diagram");
+        // Keep Expressive Code's frame so Mermaid blocks use the same visual shell as code.
+        pre.replaceWith(target);
+        await renderDiagram(source, target);
+    }
+
+    const renderedDiagrams = document.querySelectorAll<HTMLElement>(".mermaid-diagram[data-source]");
+    for (const diagram of renderedDiagrams) {
+        if (diagram.dataset.theme === (isDarkMode() ? "dark" : "light")) continue;
+        const source = diagram.dataset.source;
+        if (!source) continue;
+        await renderDiagram(source, diagram);
+        diagram.dataset.theme = isDarkMode() ? "dark" : "light";
+    }
+}
+
+function scheduleMermaidRender() {
+    if (renderScheduled) return;
+    renderScheduled = true;
+    queueMicrotask(async () => {
+        renderScheduled = false;
+        await renderMermaidDiagrams();
+    });
+}
+
+scheduleMermaidRender();
+document.addEventListener("astro:page-load", scheduleMermaidRender);
+new MutationObserver(scheduleMermaidRender).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+});
+</script>

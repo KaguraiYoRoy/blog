@@ -1,0 +1,20 @@
+---
+import { getCollection, render } from "astro:content";
+import Markdown from "@components/misc/Markdown.astro";
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+
+export async function getStaticPaths() {
+	const pages = await getCollection("spec");
+	return pages
+		.filter((page) => page.data.locale === "zh-CN" && page.data.routeSlug && page.data.routeSlug !== "about")
+		.map((page) => ({ params: { slug: page.data.routeSlug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+<MainGridLayout title={page.data.title} lang={page.data.lang}>
+	<div class="card-base px-9 py-6">
+		<Markdown class="mt-2"><Content /></Markdown>
+	</div>
+</MainGridLayout>
