@@ -27,8 +27,8 @@ body {
     background-size: cover;
 }
 
-/* Preserve the fixed positioning of generated page scrollbars. */
-body > :not(.site-background, .os-scrollbar) {
+/* Preserve fixed positioning and stacking for scrollbars and image previews. */
+body > :not(.site-background, .os-scrollbar, .pswp) {
     position: relative;
     z-index: 1;
 }
