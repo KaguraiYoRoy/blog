@@ -27,7 +27,8 @@ body {
     background-size: cover;
 }
 
-body > :not(.site-background) {
+/* Preserve the fixed positioning of generated page scrollbars. */
+body > :not(.site-background, .os-scrollbar) {
     position: relative;
     z-index: 1;
 }
