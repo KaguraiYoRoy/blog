@@ -3,7 +3,7 @@ title: "Brief Understanding of Some Files and Concepts in AOSP Device Trees"
 published: 2025-02-03T03:58:00.000Z
 updated: 2025-11-20T06:11:06.000Z
 description: "A comprehensive guide explaining key files and concepts in AOSP device trees, including Android.bp, various Makefiles (Android.mk, BoardConfig.mk, device.mk), prop files, overlays, sepolicy, dependencies, and vendor blob extraction scripts."
-image: "./images/2025/02/2527021884.jpg"
+image: ""
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"
 categories: ["Android"]

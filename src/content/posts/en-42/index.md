@@ -3,7 +3,7 @@ title: "Cross-Platform Service Programming Diary Ep.1 - Unified Logging Manageme
 published: 2025-04-18T16:19:00.000Z
 updated: 2025-11-22T09:20:45.000Z
 description: "本文详细讲解如何用C++实现跨平台多线程日志系统，通过BlockingQueue阻塞队列保障线程安全，支持日志分级和文件/控制台双输出，提供std::thread与mutex的实战应用示例，包含Windows/Linux时间戳获取、va_list格式化消息等关键实现细节，适合需要构建高性能日志模块的开发者参考。"
-image: "./images/2025/04/3664149349.jpg"
+image: ""
 tags: ["C&C++", "Linux", "Windows", "Programming", "MSVC", "STL", "Services"]
 category: "Develop"
 categories: ["Develop"]

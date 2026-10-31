@@ -3,7 +3,7 @@ title: "Migrating RR Loader for Synology DSM"
 published: 2025-01-29T16:36:00.000Z
 updated: 2025-11-06T01:06:02.000Z
 description: "Step-by-step guide to migrate RR bootloader for Synology DSM from a larger USB drive to a smaller Optane disk, using Linux tools like dd and fdisk, with cautions for data safety."
-image: "./images/2025/01/760705903.jpg"
+image: ""
 tags: ["Linux", "Synology"]
 category: "NAS"
 categories: ["NAS"]

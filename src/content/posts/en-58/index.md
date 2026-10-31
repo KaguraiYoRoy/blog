@@ -3,7 +3,7 @@ title: "Enabling Cloudflare SaaS Integration for International Traffic Routing o
 published: 2025-05-15T13:59:00.000Z
 updated: 2025-11-22T06:13:56.000Z
 description: "Learn how to implement international traffic routing for your blog using Cloudflare SaaS. This step-by-step guide shows you how to set up custom hostnames with a fallback origin, configure DCV delegation, and use DNS geolocation to seamlessly serve visitors from outside mainland China through Cloudflare's CDN, all while keeping your primary domain independent."
-image: "./images/2025/05/670409175.jpg"
+image: ""
 tags: ["Web", "DNS", "Cloudflare", "CDN"]
 category: "Ops"
 categories: ["Ops"]

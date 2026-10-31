@@ -3,7 +3,7 @@ title: "跨平台服务编写日记 Ep.1 统一的日志管理"
 published: 2025-04-18T16:19:00.000Z
 updated: 2025-06-27T03:28:21.000Z
 description: "本文详细讲解如何用C++实现跨平台多线程日志系统，通过BlockingQueue阻塞队列保障线程安全，支持日志分级和文件/控制台双输出，提供std::thread与mutex的实战应用示例，包含Windows/Linux时间戳获取、va_list格式化消息等关键实现细节，适合需要构建高性能日志模块的开发者参考。"
-image: "./images/2025/04/3664149349.jpg"
+image: ""
 tags: ["C&C++", "Linux", "Windows", "编程", "MSVC", "STL", "服务"]
 category: "开发"
 categories: ["开发"]

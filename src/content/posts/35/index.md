@@ -3,7 +3,7 @@ title: "通过Alist使TrueNAS同步到OneDrive"
 published: 2025-03-12T16:39:00.000Z
 updated: 2025-06-27T03:28:41.000Z
 description: "通过Alist使TrueNAS同步到OneDrive"
-image: "./images/2025/03/976336872.jpg"
+image: ""
 tags: ["Linux", "TrueNAS", "Docker", "Alist", "OneDrive"]
 category: "运维"
 categories: ["运维", "NAS"]

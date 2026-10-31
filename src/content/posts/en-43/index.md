@@ -3,7 +3,7 @@ title: "Centralized Deployment of EasyTier using Docker"
 published: 2025-04-14T17:04:00.000Z
 updated: 2025-11-22T05:43:32.000Z
 description: "Learn how to centrally deploy EasyTier's Dashboard using Docker Compose for unified management of your P2P network devices. This guide covers deploying the API & web console, setting up reverse proxy, client configuration, and data persistence."
-image: "./images/2025/04/952476347.jpg"
+image: ""
 tags: ["Linux", "EasyTier", "Docker"]
 category: "Ops"
 categories: ["Ops"]

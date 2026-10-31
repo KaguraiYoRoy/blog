@@ -3,7 +3,7 @@ title: "给Android 4.9内核添加KernelSU支持"
 published: 2024-12-26T16:18:00.000Z
 updated: 2025-06-27T03:29:33.000Z
 description: "为Android 4.9非GKI内核添加KernelSU支持"
-image: "./images/2025/01/1852164268.jpg"
+image: ""
 tags: ["C&C++", "Android", "Kernel"]
 category: "Android"
 categories: ["Android", "开发"]
@@ -424,8 +424,3 @@ jobs:
 ```
 
 ~~_咱才不会告诉你上面的脚本其实也是这里面摘出来的（逃_~~
-
-
-
-
-[头图下载](./images/2025/01/1852164268.jpg)

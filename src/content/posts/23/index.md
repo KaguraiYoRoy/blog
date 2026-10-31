@@ -3,7 +3,7 @@ title: "简述对AOSP设备树中的一些文件和概念的理解"
 published: 2025-02-03T03:58:00.000Z
 updated: 2025-06-27T03:29:21.000Z
 description: "简述对AOSP设备树中的一些文件和概念的理解"
-image: "./images/2025/02/2527021884.jpg"
+image: ""
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"
 categories: ["Android"]

@@ -3,7 +3,7 @@ title: "小米845系列机器类原生调用红外摄像头进行人脸识别"
 published: 2025-03-06T14:57:00.000Z
 updated: 2025-06-27T03:29:14.000Z
 description: "使小米845系列机器类原生能够调用红外摄像头以进行人脸识别"
-image: "./images/2025/03/2750165786.jpg"
+image: ""
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"
 categories: ["Android", "开发"]

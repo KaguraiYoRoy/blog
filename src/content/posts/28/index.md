@@ -3,7 +3,7 @@ title: "在TrueNAS上使用Docker安装1Panel"
 published: 2025-03-07T05:18:00.000Z
 updated: 2025-06-27T03:29:09.000Z
 description: "在TrueNAS上使用Docker安装1Panel"
-image: "./images/2025/03/3758994431.jpg"
+image: ""
 tags: ["Linux", "TrueNAS", "Docker", "Web", "1Panel"]
 category: "NAS"
 categories: ["NAS"]

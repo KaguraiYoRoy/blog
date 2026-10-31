@@ -3,7 +3,7 @@ title: "为黑群晖迁移RR引导盘"
 published: 2025-01-29T16:36:00.000Z
 updated: 2025-06-27T03:29:28.000Z
 description: "为黑群晖迁移RR引导盘"
-image: "./images/2025/01/760705903.jpg"
+image: ""
 tags: ["Linux", "群晖"]
 category: "NAS"
 categories: ["NAS"]

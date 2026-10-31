@@ -3,7 +3,7 @@ title: "记一次为Android 4.9内核的ROM启用erofs支持"
 published: 2024-12-25T15:26:00.000Z
 updated: 2025-11-05T14:26:49.000Z
 description: "为Android 4.9内核的ROM启用erofs支持"
-image: "./images/2025/01/213977100.jpg"
+image: ""
 tags: ["Android", "AOSP", "Kernel"]
 category: "Android"
 categories: ["Android", "开发"]
@@ -128,5 +128,3 @@ index 7aca90a..685ec84 100644
 
 # 常见问题
 * 开机进入fastboot：检查fstab是否修改正确
-
-[头图下载](./images/2025/01/213977100.jpg)

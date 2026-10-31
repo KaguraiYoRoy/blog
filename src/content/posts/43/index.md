@@ -3,7 +3,7 @@ title: "Docker下中心化部署EasyTier"
 published: 2025-04-14T17:04:00.000Z
 updated: 2025-07-29T02:28:29.000Z
 description: "Docker下中心化部署EasyTier"
-image: "./images/2025/04/952476347.jpg"
+image: ""
 tags: ["Linux", "EasyTier", "Docker"]
 category: "运维"
 categories: ["运维"]

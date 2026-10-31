@@ -3,7 +3,7 @@ title: "为博客启用Cloudflare SaaS接入实现国际分流"
 published: 2025-05-15T13:59:00.000Z
 updated: 2025-10-04T12:36:08.000Z
 description: "详解通过Cloudflare SaaS实现自定义主机名解析，利用回退域名与DCV委派优化国际线路访问。包含信用卡绑定、分地区CNAME设置及SSL证书配置步骤，助力提升境外访问速度。"
-image: "./images/2025/05/670409175.jpg"
+image: ""
 tags: ["Web", "DNS", "Cloudflare", "CDN"]
 category: "运维"
 categories: ["运维"]

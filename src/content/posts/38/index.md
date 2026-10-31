@@ -3,7 +3,7 @@ title: "C++使用WINAPI查询DNS解析记录"
 published: 2025-03-20T09:33:00.000Z
 updated: 2026-02-21T09:00:47.000Z
 description: "C++使用WINAPI查询DNS解析记录"
-image: "./images/2025/03/2171005745.jpg"
+image: ""
 tags: ["C&C++", "Windows", "MSVC"]
 category: "开发"
 categories: ["开发"]

@@ -3,7 +3,7 @@ title: "跨平台服务编写日记 Ep.2 进程间通讯（IPC）"
 published: 2025-05-19T03:54:00.000Z
 updated: 2025-06-27T03:27:40.000Z
 description: "详解Windows与Linux下跨平台进程间通信（IPC）实现方案，分别通过命名管道（Named Pipe）和Unix域套接字（Socket）实现双向消息传递，提供完整C++代码示例及多线程处理逻辑，附可下载的跨平台通信测试项目。"
-image: "./images/2025/05/233594059.jpg"
+image: ""
 tags: ["C&C++", "Linux", "Windows", "MSVC", "STL", "服务", "IPC"]
 category: "开发"
 categories: ["开发"]
