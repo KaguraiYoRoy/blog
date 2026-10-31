@@ -16,7 +16,10 @@ export function getPostUrlBySlug(slug: string): string {
 	return url(`/posts/${slug}/`);
 }
 
-export function getTagUrl(tag: string, locale: "zh_CN" | "en_US" = "zh_CN"): string {
+export function getTagUrl(
+	tag: string,
+	locale: "zh_CN" | "en_US" = "zh_CN",
+): string {
 	const prefix = locale === "en_US" ? "/en" : "";
 	if (!tag) return url(`${prefix}/archive/`);
 	return url(`${prefix}/archive/?tag=${encodeURIComponent(tag.trim())}`);
@@ -32,11 +35,12 @@ export function getCategoryUrl(
 			? category.trim()
 				? [category.trim()]
 				: []
-			: category?.map((item) => item.trim()).filter(Boolean) ?? [];
+			: (category?.map((item) => item.trim()).filter(Boolean) ?? []);
 	if (
 		categoryList.length === 0 ||
 		(categoryList.length === 1 &&
-			categoryList[0].toLowerCase() === i18n(I18nKey.uncategorized, locale).toLowerCase())
+			categoryList[0].toLowerCase() ===
+				i18n(I18nKey.uncategorized, locale).toLowerCase())
 	)
 		return url(`${prefix}/archive/?uncategorized=true`);
 

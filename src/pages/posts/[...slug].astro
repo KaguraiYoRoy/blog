@@ -13,10 +13,16 @@ import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
 import { siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
-import { getLocalizedProfile, getProfileLocale } from "../../utils/profile-utils";
+import {
+	getLocalizedProfile,
+	getProfileLocale,
+} from "../../utils/profile-utils";
 
 export async function getStaticPaths() {
-	const blogEntries = [...await getSortedPosts("zh_CN"), ...await getSortedPosts("en_US")];
+	const blogEntries = [
+		...(await getSortedPosts("zh_CN")),
+		...(await getSortedPosts("en_US")),
+	];
 	return blogEntries.map((entry) => ({
 		params: { slug: entry.slug },
 		props: { entry },

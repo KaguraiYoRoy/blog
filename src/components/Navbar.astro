@@ -19,18 +19,25 @@ let links: NavBarLink[] = navBarConfig.links.map(
 		return item;
 	},
 );
-const isEnglish = Astro.url.pathname.startsWith("/en/") || Astro.url.pathname.startsWith("/posts/en-");
+const isEnglish =
+	Astro.url.pathname.startsWith("/en/") ||
+	Astro.url.pathname.startsWith("/posts/en-");
 const localePrefix = isEnglish ? "/en" : "";
 const localizedLinks = links.map((link) => {
 	if (link.external) return link;
-	const key = link.url === "/"
-		? "Home"
-		: link.url.includes("archive")
-			? "Archive"
-			: link.url.includes("friends")
-				? "Friends"
-				: "About";
-	return { ...link, name: isEnglish ? key : link.name, url: `${localePrefix}${link.url}` || "/" };
+	const key =
+		link.url === "/"
+			? "Home"
+			: link.url.includes("archive")
+				? "Archive"
+				: link.url.includes("friends")
+					? "Friends"
+					: "About";
+	return {
+		...link,
+		name: isEnglish ? key : link.name,
+		url: `${localePrefix}${link.url}` || "/",
+	};
 });
 const pathname = Astro.url.pathname;
 let alternatePath: string;

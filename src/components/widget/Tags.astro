@@ -7,7 +7,11 @@ import { getTagUrl } from "../../utils/url-utils";
 import ButtonTag from "../control/ButtonTag.astro";
 import WidgetLayout from "./WidgetLayout.astro";
 
-const locale = Astro.url.pathname.startsWith("/en/") || Astro.url.pathname.startsWith("/posts/en-") ? "en_US" : "zh_CN";
+const locale =
+	Astro.url.pathname.startsWith("/en/") ||
+	Astro.url.pathname.startsWith("/posts/en-")
+		? "en_US"
+		: "zh_CN";
 const tags = await getTagList(locale);
 
 const COLLAPSED_HEIGHT = "7.5rem";

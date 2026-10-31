@@ -4,7 +4,9 @@ import type { LocalizedText } from "../types/config";
 export type ProfileLocale = keyof LocalizedText;
 
 export function getProfileLocale(pathname: string): ProfileLocale {
-	return pathname === "/en" || pathname.startsWith("/en/") || pathname.startsWith("/posts/en-")
+	return pathname === "/en" ||
+		pathname.startsWith("/en/") ||
+		pathname.startsWith("/posts/en-")
 		? "en_US"
 		: "zh_CN";
 }

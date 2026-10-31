@@ -8,7 +8,10 @@ export async function getStaticPaths() {
 	const pages = await getCollection("spec");
 	return pages
 		.filter((page) => page.data.locale === "en-US" && page.data.routeSlug)
-		.map((page) => ({ params: { slug: page.data.routeSlug }, props: { page } }));
+		.map((page) => ({
+			params: { slug: page.data.routeSlug },
+			props: { page },
+		}));
 }
 
 const { page } = Astro.props;

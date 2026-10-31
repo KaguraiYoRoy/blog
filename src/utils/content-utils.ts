@@ -7,7 +7,10 @@ import { getCategoryUrl } from "@utils/url-utils.ts";
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts(locale?: "zh_CN" | "en_US") {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
-		return (import.meta.env.PROD ? data.draft !== true : true) && (!locale || !data.lang || data.lang === locale);
+		return (
+			(import.meta.env.PROD ? data.draft !== true : true) &&
+			(!locale || !data.lang || data.lang === locale)
+		);
 	});
 
 	const sorted = allBlogPosts.sort((a, b) => {
@@ -36,7 +39,9 @@ export type PostForList = {
 	slug: string;
 	data: CollectionEntry<"posts">["data"];
 };
-export async function getSortedPostsList(locale?: "zh_CN" | "en_US"): Promise<PostForList[]> {
+export async function getSortedPostsList(
+	locale?: "zh_CN" | "en_US",
+): Promise<PostForList[]> {
 	const sortedFullPosts = await getRawSortedPosts(locale);
 
 	// delete post.body
@@ -54,7 +59,10 @@ export type Tag = {
 
 export async function getTagList(locale?: "zh_CN" | "en_US"): Promise<Tag[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return (import.meta.env.PROD ? data.draft !== true : true) && (!locale || !data.lang || data.lang === locale);
+		return (
+			(import.meta.env.PROD ? data.draft !== true : true) &&
+			(!locale || !data.lang || data.lang === locale)
+		);
 	});
 
 	const countMap: { [key: string]: number } = {};
@@ -80,9 +88,14 @@ export type Category = {
 	children: Category[];
 };
 
-export async function getCategoryList(locale?: "zh_CN" | "en_US"): Promise<Category[]> {
+export async function getCategoryList(
+	locale?: "zh_CN" | "en_US",
+): Promise<Category[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return (import.meta.env.PROD ? data.draft !== true : true) && (!locale || !data.lang || data.lang === locale);
+		return (
+			(import.meta.env.PROD ? data.draft !== true : true) &&
+			(!locale || !data.lang || data.lang === locale)
+		);
 	});
 	const postsByCategory = new Map<string, Set<string>>();
 	const uncategorizedPosts = new Set<string>();
@@ -100,7 +113,8 @@ export async function getCategoryList(locale?: "zh_CN" | "en_US"): Promise<Categ
 
 		for (const category of categories) {
 			const categoryName = category.trim();
-			if (!postsByCategory.has(categoryName)) postsByCategory.set(categoryName, new Set());
+			if (!postsByCategory.has(categoryName))
+				postsByCategory.set(categoryName, new Set());
 			postsByCategory.get(categoryName)?.add(post.id);
 		}
 	});
@@ -123,7 +137,8 @@ export async function getCategoryList(locale?: "zh_CN" | "en_US"): Promise<Categ
 			}));
 		const parentPosts = new Set(postsByCategory.get(definition.name) ?? []);
 		for (const child of children) {
-			for (const postId of postsByCategory.get(child.name) ?? []) parentPosts.add(postId);
+			for (const postId of postsByCategory.get(child.name) ?? [])
+				parentPosts.add(postId);
 		}
 
 		if (parentPosts.size > 0) {
@@ -141,12 +156,22 @@ export async function getCategoryList(locale?: "zh_CN" | "en_US"): Promise<Categ
 		.filter((name) => !knownNames.has(name))
 		.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 	for (const name of unknown) {
-		ret.push({ name, count: postsByCategory.get(name)?.size ?? 0, url: getCategoryUrl(name, locale), children: [] });
+		ret.push({
+			name,
+			count: postsByCategory.get(name)?.size ?? 0,
+			url: getCategoryUrl(name, locale),
+			children: [],
+		});
 	}
 
 	const uncategorized = i18n(I18nKey.uncategorized, locale);
 	if (uncategorizedPosts.size) {
-		ret.push({ name: uncategorized, count: uncategorizedPosts.size, url: getCategoryUrl(uncategorized, locale), children: [] });
+		ret.push({
+			name: uncategorized,
+			count: uncategorizedPosts.size,
+			url: getCategoryUrl(uncategorized, locale),
+			children: [],
+		});
 	}
 
 	return ret;

@@ -10,7 +10,8 @@ export const friendLinks: FriendLink[] = [
 		name: "Tech Sky Blog",
 		url: "https://www.tsy.ink",
 		avatar: "/friends/avatars/tech-sky.png",
-		description: "致力于高质量的文章，其内容主要涵盖 Linux、VPS、建站、安卓玩机",
+		description:
+			"致力于高质量的文章，其内容主要涵盖 Linux、VPS、建站、安卓玩机",
 	},
 	{
 		name: "Andy's blog",

@@ -1,13 +1,18 @@
 ---
 import { Icon } from "astro-icon/components";
 import { profileConfig } from "../../config";
-import { getLocalizedProfile, getProfileLocale } from "../../utils/profile-utils";
+import {
+	getLocalizedProfile,
+	getProfileLocale,
+} from "../../utils/profile-utils";
 import { url } from "../../utils/url-utils";
 import ImageWrapper from "../misc/ImageWrapper.astro";
 
 const config = profileConfig;
 const profile = getLocalizedProfile(getProfileLocale(Astro.url.pathname));
-const isEnglish = Astro.url.pathname.startsWith("/en/") || Astro.url.pathname.startsWith("/posts/en-");
+const isEnglish =
+	Astro.url.pathname.startsWith("/en/") ||
+	Astro.url.pathname.startsWith("/posts/en-");
 const aboutUrl = isEnglish ? "/en/about/" : "/about/";
 ---
 <div class="card-base p-3">

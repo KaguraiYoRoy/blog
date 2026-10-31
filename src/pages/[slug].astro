@@ -7,8 +7,16 @@ import MainGridLayout from "@layouts/MainGridLayout.astro";
 export async function getStaticPaths() {
 	const pages = await getCollection("spec");
 	return pages
-		.filter((page) => page.data.locale === "zh-CN" && page.data.routeSlug && page.data.routeSlug !== "about")
-		.map((page) => ({ params: { slug: page.data.routeSlug }, props: { page } }));
+		.filter(
+			(page) =>
+				page.data.locale === "zh-CN" &&
+				page.data.routeSlug &&
+				page.data.routeSlug !== "about",
+		)
+		.map((page) => ({
+			params: { slug: page.data.routeSlug },
+			props: { page },
+		}));
 }
 
 const { page } = Astro.props;

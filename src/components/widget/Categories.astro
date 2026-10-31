@@ -1,12 +1,16 @@
 ---
+import { Icon } from "astro-icon/components";
 import I18nKey from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
 import { getCategoryList } from "../../utils/content-utils";
-import { Icon } from "astro-icon/components";
 import ButtonLink from "../control/ButtonLink.astro";
 import WidgetLayout from "./WidgetLayout.astro";
 
-const locale = Astro.url.pathname.startsWith("/en/") || Astro.url.pathname.startsWith("/posts/en-") ? "en_US" : "zh_CN";
+const locale =
+	Astro.url.pathname.startsWith("/en/") ||
+	Astro.url.pathname.startsWith("/posts/en-")
+		? "en_US"
+		: "zh_CN";
 const categories = await getCategoryList(locale);
 
 const COLLAPSED_HEIGHT = "7.5rem";
@@ -14,7 +18,8 @@ const COLLAPSE_THRESHOLD = 5;
 
 const isCollapsed = categories.length >= COLLAPSE_THRESHOLD;
 const expandLabel = locale === "en_US" ? "Expand subcategories" : "展开子分类";
-const collapseLabel = locale === "en_US" ? "Collapse subcategories" : "收起子分类";
+const collapseLabel =
+	locale === "en_US" ? "Collapse subcategories" : "收起子分类";
 
 interface Props {
 	class?: string;
