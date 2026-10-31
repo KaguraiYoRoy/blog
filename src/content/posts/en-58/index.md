@@ -6,6 +6,7 @@ description: "Learn how to implement international traffic routing for your blog
 image: "./images/2025/05/670409175.jpg"
 tags: ["Web", "DNS", "Cloudflare", "CDN"]
 category: "Ops"
+categories: ["Ops"]
 draft: false
 lang: "en_US"
 ---

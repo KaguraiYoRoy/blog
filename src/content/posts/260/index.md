@@ -6,6 +6,7 @@ description: "本文详细记录了2026软件系统安全赛流量分析题traff
 image: ""
 tags: ["Web", "CTF", "网络安全", "Misc", "流量分析", "取证", "WebShell", "后门"]
 category: "专题向研究"
+categories: ["专题向研究", "CTF", "网络安全"]
 draft: false
 lang: "zh_CN"
 ---

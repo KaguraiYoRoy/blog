@@ -6,6 +6,7 @@ description: "A write-up for the 2025 Gujianshan CTF Misc challenge \"Fruit\", i
 image: ""
 tags: ["CTF", "Misc", "Steganography", "Image steganography"]
 category: "CTF"
+categories: ["CTF"]
 draft: false
 lang: "en_US"
 ---

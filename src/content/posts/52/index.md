@@ -6,6 +6,7 @@ description: "详解Windows与Linux下跨平台进程间通信（IPC）实现方
 image: "./images/2025/05/233594059.jpg"
 tags: ["C&C++", "Linux", "Windows", "MSVC", "STL", "服务", "IPC"]
 category: "开发"
+categories: ["开发"]
 draft: false
 lang: "zh_CN"
 ---

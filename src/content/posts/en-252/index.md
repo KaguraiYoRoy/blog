@@ -6,6 +6,7 @@ description: "Learn how to establish a dynamic routed overlay network between tw
 image: ""
 tags: ["BIRD", "IGP", "OSPF"]
 category: "Network"
+categories: ["Network", "One Man ISP"]
 draft: false
 lang: "en_US"
 ---

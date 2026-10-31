@@ -2,6 +2,7 @@
 import I18nKey from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
 import { getCategoryList } from "../../utils/content-utils";
+import { Icon } from "astro-icon/components";
 import ButtonLink from "../control/ButtonLink.astro";
 import WidgetLayout from "./WidgetLayout.astro";
 
@@ -12,6 +13,8 @@ const COLLAPSED_HEIGHT = "7.5rem";
 const COLLAPSE_THRESHOLD = 5;
 
 const isCollapsed = categories.length >= COLLAPSE_THRESHOLD;
+const expandLabel = locale === "en_US" ? "Expand subcategories" : "展开子分类";
+const collapseLabel = locale === "en_US" ? "Collapse subcategories" : "收起子分类";
 
 interface Props {
 	class?: string;
@@ -24,13 +27,60 @@ const style = Astro.props.style;
 <WidgetLayout name={i18n(I18nKey.categories, locale)} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
                 class={className} style={style}
 >
-    {categories.map((c) =>
-        <ButtonLink
-            url={c.url}
-            badge={String(c.count)}
-            label={`View all posts in the ${c.name.trim()} category`}
-        >
-            {c.name.trim()}
-        </ButtonLink>
-    )}
+    {categories.map((c, index) => <div>
+        <div class="flex items-center gap-1">
+            <div class="min-w-0 flex-1">
+                <ButtonLink
+                    url={c.url}
+                    badge={String(c.count)}
+                    label={`View all posts in the ${c.name.trim()} category`}
+                >
+                    {c.name.trim()}
+                </ButtonLink>
+            </div>
+            {c.children.length > 0 && <button
+                type="button"
+                data-category-toggle
+                data-target={`category-children-${index}`}
+                aria-controls={`category-children-${index}`}
+                aria-expanded="true"
+                aria-label={collapseLabel}
+                title={collapseLabel}
+                class="btn-plain h-9 w-9 shrink-0 rounded-lg active:scale-90"
+            >
+                <Icon name="material-symbols:chevron-right-rounded" class="category-toggle-icon rotate-90 text-xl transition"></Icon>
+            </button>}
+        </div>
+        {c.children.length > 0 && <div id={`category-children-${index}`} class="category-children ml-3 pl-2 border-l border-black/10 dark:border-white/10">
+            {c.children.map((child) => <ButtonLink
+                url={child.url}
+                badge={String(child.count)}
+                label={`View all posts in the ${child.name.trim()} category`}
+            >
+                {child.name.trim()}
+            </ButtonLink>)}
+        </div>}
+    </div>)}
 </WidgetLayout>
+
+<script is:inline define:vars={{ expandLabel, collapseLabel }}>
+	function bindCategoryToggles() {
+		document.querySelectorAll("[data-category-toggle]").forEach((button) => {
+			if (button.dataset.bound === "true") return;
+			button.dataset.bound = "true";
+			button.addEventListener("click", () => {
+				const target = document.getElementById(button.dataset.target || "");
+				if (!target) return;
+				const expanded = button.getAttribute("aria-expanded") === "true";
+				target.hidden = expanded;
+				button.setAttribute("aria-expanded", String(!expanded));
+				button.setAttribute("aria-label", expanded ? expandLabel : collapseLabel);
+				button.setAttribute("title", expanded ? expandLabel : collapseLabel);
+				button.querySelector(".category-toggle-icon")?.classList.toggle("rotate-90", !expanded);
+			});
+		});
+	}
+
+	bindCategoryToggles();
+	document.addEventListener("astro:page-load", bindCategoryToggles);
+</script>

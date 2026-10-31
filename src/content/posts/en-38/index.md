@@ -6,6 +6,7 @@ description: "Learn how to query DNS TXT records using C++ and the Windows WINAP
 image: "./images/2025/03/2171005745.jpg"
 tags: ["C&C++", "Windows", "MSVC"]
 category: "Develop"
+categories: ["Develop"]
 draft: false
 lang: "en_US"
 ---

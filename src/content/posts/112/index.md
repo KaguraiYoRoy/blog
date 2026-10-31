@@ -6,6 +6,7 @@ description: "本文详细指导如何在DN42网络注册专属域名并搭建�
 image: ""
 tags: ["DNS", "DN42", "BGP", "网络技术"]
 category: "网络技术"
+categories: ["网络技术", "DN42"]
 draft: false
 lang: "zh_CN"
 ---

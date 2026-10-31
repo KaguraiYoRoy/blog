@@ -6,6 +6,7 @@ description: "Enable erofs support for ROM in Android 4.9 kernel"
 image: "./images/2025/01/213977100.jpg"
 tags: ["Android", "AOSP", "Kernel"]
 category: "Android"
+categories: ["Android", "Develop"]
 draft: false
 lang: "en_US"
 ---

@@ -6,6 +6,7 @@ description: "本文详细介绍了如何在两台OpenWrt路由器上通过ZeroT
 image: ""
 tags: ["BIRD", "IGP", "OSPF"]
 category: "网络技术"
+categories: ["网络技术", "个人ISP"]
 draft: false
 lang: "zh_CN"
 ---

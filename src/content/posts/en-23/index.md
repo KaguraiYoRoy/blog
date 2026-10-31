@@ -6,6 +6,7 @@ description: "A comprehensive guide explaining key files and concepts in AOSP de
 image: "./images/2025/02/2527021884.jpg"
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"
+categories: ["Android"]
 draft: false
 lang: "en_US"
 ---

@@ -6,6 +6,7 @@ description: "家庭网络更新实践, 使用猫棒与小米BE10000突破千兆
 image: ""
 tags: ["OpenWRT", "BE10000", "Mesh", "QWRT", "802.11", "GPON", "SFP", "AX3600"]
 category: "网络技术"
+categories: ["网络技术", "物联网"]
 draft: false
 lang: "zh_CN"
 ---

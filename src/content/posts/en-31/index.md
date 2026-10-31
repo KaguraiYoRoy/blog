@@ -6,6 +6,7 @@ description: "Learn how to host a website using home broadband without a public 
 image: "./images/2025/03/2270562049.jpg"
 tags: []
 category: "Ops"
+categories: ["Ops"]
 draft: false
 lang: "en_US"
 ---

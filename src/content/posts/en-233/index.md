@@ -6,6 +6,7 @@ description: "A detailed guide on manually installing Proxmox VE on Debian 13, c
 image: ""
 tags: ["Network Technology", "iSCSI", "PVE"]
 category: "Ops"
+categories: ["Ops", "Network"]
 draft: false
 lang: "en_US"
 ---

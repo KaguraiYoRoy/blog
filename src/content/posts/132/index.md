@@ -6,6 +6,7 @@ description: "这篇文章详细介绍了如何将个人申请的 IPv6 地址段
 image: ""
 tags: ["BGP", "BIRD", "网络技术", "Clearnet", "ASN"]
 category: "网络技术"
+categories: ["网络技术", "个人ISP"]
 draft: false
 lang: "zh_CN"
 ---

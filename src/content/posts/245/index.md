@@ -6,6 +6,7 @@ description: "本文详细记录了PolarCTF 2025冬季赛Web题目\"Polarflag\"�
 image: ""
 tags: []
 category: "专题向研究"
+categories: ["专题向研究", "CTF", "网络安全"]
 draft: false
 lang: "zh_CN"
 ---

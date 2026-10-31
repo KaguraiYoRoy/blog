@@ -6,6 +6,7 @@ description: "C++使用WINAPI查询DNS解析记录"
 image: "./images/2025/03/2171005745.jpg"
 tags: ["C&C++", "Windows", "MSVC"]
 category: "开发"
+categories: ["开发"]
 draft: false
 lang: "zh_CN"
 ---

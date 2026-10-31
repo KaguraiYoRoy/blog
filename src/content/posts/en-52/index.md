@@ -6,6 +6,7 @@ description: "Learn how to implement cross-platform Inter-Process Communication 
 image: "./images/2025/05/233594059.jpg"
 tags: ["C&C++", "Linux", "Windows", "MSVC", "STL", "Services", "IPC"]
 category: "Develop"
+categories: ["Develop"]
 draft: false
 lang: "en_US"
 ---

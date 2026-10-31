@@ -6,6 +6,7 @@ description: "本文深入记录了作者如何将复杂的 DN42 与 IANA 多自
 image: ""
 tags: ["DN42", "BGP", "BIRD", "IGP", "iBGP", "Clearnet", "Anycast", "Prefix", "IANA", "ISP", "BGP 联邦", "BGP Community", "WireGuard", "Ansible", "自动化"]
 category: "网络技术"
+categories: ["网络技术", "DN42", "个人ISP"]
 draft: false
 lang: "zh_CN"
 ---

@@ -6,6 +6,7 @@ description: "从一个辩题出发，深入探讨想象力与认知的关系，
 image: ""
 tags: ["思考", "建模"]
 category: "奇思妙想"
+categories: ["奇思妙想"]
 draft: false
 lang: "zh_CN"
 ---

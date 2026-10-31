@@ -6,6 +6,7 @@ description: "探索如何使用 VRF（虚拟路由转发）技术在同一台 V
 image: ""
 tags: ["BGP", "BIRD", "网络技术", "OSPF", "内部路由协议", "VRF"]
 category: "网络技术"
+categories: ["网络技术", "DN42", "个人ISP"]
 draft: false
 lang: "zh_CN"
 ---

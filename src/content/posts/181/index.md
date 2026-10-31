@@ -6,6 +6,7 @@ description: "本文详细介绍了如何在Linux服务器上配置深港IEPL双
 image: ""
 tags: ["网络技术", "PBR", "IEPL"]
 category: "网络技术"
+categories: ["网络技术"]
 draft: false
 lang: "zh_CN"
 ---

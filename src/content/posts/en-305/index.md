@@ -6,6 +6,7 @@ description: "A hands-on home network upgrade using a GPON stick and Xiaomi BE10
 image: ""
 tags: ["OpenWRT", "BE10000", "AX3600", "Mesh", "QWRT", "802.11", "GPON", "SFP"]
 category: "Network"
+categories: ["Network", "IoT"]
 draft: false
 lang: "en_US"
 ---

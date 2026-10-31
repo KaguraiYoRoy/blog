@@ -6,6 +6,7 @@ description: "本文详细记录了DASCTF竞赛中五道题目的完整解题过
 image: ""
 tags: ["CTF", "网络安全"]
 category: "CTF"
+categories: ["CTF"]
 draft: false
 lang: "zh_CN"
 ---

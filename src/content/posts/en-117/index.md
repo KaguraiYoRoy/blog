@@ -6,6 +6,7 @@ description: "A step-by-step guide for beginners on how to register your own ASN
 image: ""
 tags: ["BGP", "BIRD", "Network Technology", "Clearnet", "ASN"]
 category: "Network"
+categories: ["Network", "One Man ISP"]
 draft: false
 lang: "en_US"
 ---

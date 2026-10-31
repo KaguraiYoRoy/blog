@@ -6,6 +6,7 @@ description: "详细解读BGP Communities的工作原理及其在DN42网络中�
 image: ""
 tags: ["DN42", "BGP", "BIRD", "网络技术", "iBGP"]
 category: "网络技术"
+categories: ["网络技术", "DN42"]
 draft: false
 lang: "zh_CN"
 ---

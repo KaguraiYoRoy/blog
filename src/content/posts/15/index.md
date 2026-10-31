@@ -6,6 +6,7 @@ description: "为黑群晖迁移RR引导盘"
 image: "./images/2025/01/760705903.jpg"
 tags: ["Linux", "群晖"]
 category: "NAS"
+categories: ["NAS"]
 draft: false
 lang: "zh_CN"
 ---

@@ -6,6 +6,7 @@ description: "Learn how to announce your own IPv6 address block to the global in
 image: ""
 tags: ["BGP", "BIRD", "Network Technology", "Clearnet", "ASN"]
 category: "Network"
+categories: ["Network", "One Man ISP"]
 draft: false
 lang: "en_US"
 ---

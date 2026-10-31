@@ -6,6 +6,7 @@ description: "A detailed technical writeup of the 2026 Software System Security 
 image: ""
 tags: ["Web", "CTF", "Cybersecurity", "Misc", "TrafficAnalytics", "Forensics", "WebShell", "Backdoor"]
 category: "Projects"
+categories: ["Projects", "CTF", "Cybersecurity"]
 draft: false
 lang: "en_US"
 ---

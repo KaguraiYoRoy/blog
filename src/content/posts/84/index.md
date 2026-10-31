@@ -6,6 +6,7 @@ description: "本文提供完整DN42网络搭建指南：从Git注册节点、Bi
 image: ""
 tags: ["DN42", "BGP", "BIRD", "网络技术"]
 category: "网络技术"
+categories: ["网络技术", "DN42"]
 draft: false
 lang: "zh_CN"
 ---

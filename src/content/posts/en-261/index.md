@@ -6,6 +6,7 @@ description: "An exploration of the relationship between imagination and cogniti
 image: ""
 tags: ["Thinking", "Model Construction"]
 category: "Brain Dumps"
+categories: ["Brain Dumps"]
 draft: false
 lang: "en_US"
 ---

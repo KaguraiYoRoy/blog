@@ -6,6 +6,7 @@ description: "This article details how to restore and adapt NFC tap-to-connect W
 image: ""
 tags: ["OpenWRT", "Router", "NFC", "IoT", "Wi-Fi"]
 category: "Develop"
+categories: ["Develop", "IoT"]
 draft: false
 lang: "en_US"
 ---

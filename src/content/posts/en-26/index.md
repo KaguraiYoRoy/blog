@@ -6,6 +6,7 @@ description: "A technical guide explaining how to enable the infrared camera for
 image: "./images/2025/03/2750165786.jpg"
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"
+categories: ["Android", "Develop"]
 draft: false
 lang: "en_US"
 ---

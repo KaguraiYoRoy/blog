@@ -6,6 +6,7 @@ description: "A comprehensive guide on adding KernelSU support to a non-GKI Andr
 image: "./images/2025/01/1852164268.jpg"
 tags: ["C&C++", "Android", "Kernel"]
 category: "Android"
+categories: ["Android", "Develop"]
 draft: false
 lang: "en_US"
 ---

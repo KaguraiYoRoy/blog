@@ -6,6 +6,7 @@ description: "使用家宽无公网IP+CDNfly实现建站"
 image: "./images/2025/03/2270562049.jpg"
 tags: []
 category: "运维"
+categories: ["运维"]
 draft: false
 lang: "zh_CN"
 ---

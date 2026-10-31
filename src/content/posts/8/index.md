@@ -6,6 +6,7 @@ description: "为Android 4.9非GKI内核添加KernelSU支持"
 image: "./images/2025/01/1852164268.jpg"
 tags: ["C&C++", "Android", "Kernel"]
 category: "Android"
+categories: ["Android", "开发"]
 draft: false
 lang: "zh_CN"
 ---

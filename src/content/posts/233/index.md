@@ -6,6 +6,7 @@ description: "一份详细指南，介绍通过 DD 重装脚本重装成纯净 D
 image: ""
 tags: ["网络技术", "PVE", "iSCSI"]
 category: "运维"
+categories: ["运维", "网络技术"]
 draft: false
 lang: "zh_CN"
 ---

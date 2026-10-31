@@ -6,6 +6,7 @@ description: "This article details the complete solution process for the PolarCT
 image: ""
 tags: []
 category: "Projects"
+categories: ["Projects", "CTF", "Cybersecurity"]
 draft: false
 lang: "en_US"
 ---

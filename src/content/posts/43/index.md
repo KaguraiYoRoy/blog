@@ -6,6 +6,7 @@ description: "Docker下中心化部署EasyTier"
 image: "./images/2025/04/952476347.jpg"
 tags: ["Linux", "EasyTier", "Docker"]
 category: "运维"
+categories: ["运维"]
 draft: false
 lang: "zh_CN"
 ---

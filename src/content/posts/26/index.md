@@ -6,6 +6,7 @@ description: "使小米845系列机器类原生能够调用红外摄像头以进
 image: "./images/2025/03/2750165786.jpg"
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"
+categories: ["Android", "开发"]
 draft: false
 lang: "zh_CN"
 ---

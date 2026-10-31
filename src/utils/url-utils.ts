@@ -22,15 +22,28 @@ export function getTagUrl(tag: string, locale: "zh_CN" | "en_US" = "zh_CN"): str
 	return url(`${prefix}/archive/?tag=${encodeURIComponent(tag.trim())}`);
 }
 
-export function getCategoryUrl(category: string | null, locale: "zh_CN" | "en_US" = "zh_CN"): string {
+export function getCategoryUrl(
+	category: string | readonly string[] | null,
+	locale: "zh_CN" | "en_US" = "zh_CN",
+): string {
 	const prefix = locale === "en_US" ? "/en" : "";
+	const categoryList =
+		typeof category === "string"
+			? category.trim()
+				? [category.trim()]
+				: []
+			: category?.map((item) => item.trim()).filter(Boolean) ?? [];
 	if (
-		!category ||
-		category.trim() === "" ||
-		category.trim().toLowerCase() === i18n(I18nKey.uncategorized, locale).toLowerCase()
+		categoryList.length === 0 ||
+		(categoryList.length === 1 &&
+			categoryList[0].toLowerCase() === i18n(I18nKey.uncategorized, locale).toLowerCase())
 	)
 		return url(`${prefix}/archive/?uncategorized=true`);
-	return url(`${prefix}/archive/?category=${encodeURIComponent(category.trim())}`);
+
+	const query = categoryList
+		.map((item) => `category=${encodeURIComponent(item)}`)
+		.join("&");
+	return url(`${prefix}/archive/?${query}`);
 }
 
 export function getDir(path: string): string {

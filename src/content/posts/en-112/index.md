@@ -6,6 +6,7 @@ description: "A step-by-step guide on how to register your own domain in the DN4
 image: ""
 tags: ["DNS", "DN42", "BGP", "Network Technology"]
 category: "Network"
+categories: ["Network", "DN42"]
 draft: false
 lang: "en_US"
 ---

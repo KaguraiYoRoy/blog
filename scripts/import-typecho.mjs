@@ -193,7 +193,8 @@ function importDatabase(file, locale, lang) {
 		const frontmatter = [
 			"---", `title: ${quote(decodeHtmlEntities(post.title))}`, `published: ${new Date(post.created * 1000).toISOString()}`,
 			`updated: ${new Date(post.modified * 1000).toISOString()}`, `description: ${quote(description)}`,
-			`image: ${quote(image)}`, `tags: [${tags.map(quote).join(", ")}]`, `category: ${quote(categories[0]?.name ?? "")}`,
+			`image: ${quote(image)}`, `tags: [${tags.map(quote).join(", ")}]`,
+			`category: ${quote(categories[0]?.name ?? "")}`, `categories: [${categories.map((meta) => quote(meta.name)).join(", ")}]`,
 			"draft: false", `lang: ${quote(lang)}`, "---", "", body,
 		];
 		fs.writeFileSync(filePath, frontmatter.join("\n"), "utf8");

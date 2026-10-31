@@ -6,6 +6,7 @@ description: "本文详细介绍了如何从零开始构建一个跨地域的 K3
 image: ""
 tags: ["BGP", "iBGP", "Kubernetes", "K3s", "集群", "CNI"]
 category: "网络技术"
+categories: ["网络技术", "专题向研究", "Kubernetes"]
 draft: false
 lang: "zh_CN"
 ---

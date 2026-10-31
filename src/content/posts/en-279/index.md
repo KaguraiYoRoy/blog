@@ -6,6 +6,7 @@ description: "This article details how to leverage systemd features (resource li
 image: ""
 tags: ["systemd", "codeserver"]
 category: "Ops"
+categories: ["Ops", "Cybersecurity"]
 draft: false
 lang: "en_US"
 ---

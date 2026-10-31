@@ -6,6 +6,7 @@ description: "Detailed WriteUp of the 2025 Yangcheng Cup preliminary competition
 image: ""
 tags: ["CTF", "Cybersecurity"]
 category: "CTF"
+categories: ["CTF"]
 draft: false
 lang: "en_US"
 ---

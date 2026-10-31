@@ -6,6 +6,7 @@ description: "本文详细介绍如何为Typecho博客配置简易多语言方�
 image: ""
 tags: ["Typecho", "博客", "国际化"]
 category: "开发"
+categories: ["开发"]
 draft: false
 lang: "zh_CN"
 ---

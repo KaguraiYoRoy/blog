@@ -6,6 +6,7 @@ description: "本文详细分析了通过Umami中的CVE-2025-55182 Next.js RCE�
 image: ""
 tags: ["网络安全", "逆向", "CVE", "RCE"]
 category: "运维"
+categories: ["运维", "网络安全"]
 draft: false
 lang: "zh_CN"
 ---

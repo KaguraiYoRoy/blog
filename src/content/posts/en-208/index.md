@@ -6,6 +6,7 @@ description: "Troubleshooting guide for resolving OSPF source address issues whe
 image: ""
 tags: ["DN42", "BGP", "BIRD", "OSPF"]
 category: "Network"
+categories: ["Network", "DN42", "One Man ISP"]
 draft: false
 lang: "en_US"
 ---

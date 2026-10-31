@@ -6,6 +6,7 @@ description: "本文详细讲解如何用C++实现跨平台多线程日志系统
 image: "./images/2025/04/3664149349.jpg"
 tags: ["C&C++", "Linux", "Windows", "Programming", "MSVC", "STL", "Services"]
 category: "Develop"
+categories: ["Develop"]
 draft: false
 lang: "en_US"
 ---

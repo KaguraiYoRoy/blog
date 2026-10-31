@@ -6,6 +6,7 @@ description: "A step-by-step guide on implementing a simple multi-language solut
 image: ""
 tags: ["Typecho", "Blog", "I18n"]
 category: "Develop"
+categories: ["Develop"]
 draft: false
 lang: "en_US"
 ---

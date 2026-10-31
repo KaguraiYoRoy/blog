@@ -6,6 +6,7 @@ description: "Learn how to sync TrueNAS to OneDrive using Alist as a WebDAV brid
 image: "./images/2025/03/976336872.jpg"
 tags: ["Linux", "TrueNAS", "Docker", "Alist", "OneDrive"]
 category: "Ops"
+categories: ["Ops", "NAS"]
 draft: false
 lang: "en_US"
 ---

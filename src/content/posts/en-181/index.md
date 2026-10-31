@@ -6,6 +6,7 @@ description: "Learn how to configure multi-exit routing for a dual-NIC VPS using
 image: ""
 tags: ["Network Technology", "PBR", "IEPL"]
 category: "Network"
+categories: ["Network"]
 draft: false
 lang: "en_US"
 ---

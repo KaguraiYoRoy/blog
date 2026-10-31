@@ -6,6 +6,7 @@ description: "Learn how to centrally deploy EasyTier's Dashboard using Docker Co
 image: "./images/2025/04/952476347.jpg"
 tags: ["Linux", "EasyTier", "Docker"]
 category: "Ops"
+categories: ["Ops"]
 draft: false
 lang: "en_US"
 ---

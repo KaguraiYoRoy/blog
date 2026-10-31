@@ -6,6 +6,7 @@ description: "记录在DN42与公网BGP共存环境中部署BIRD路由时遇到�
 image: ""
 tags: ["DN42", "BGP", "BIRD", "OSPF"]
 category: "网络技术"
+categories: ["网络技术", "DN42", "个人ISP"]
 draft: false
 lang: "zh_CN"
 ---

@@ -6,6 +6,7 @@ description: "A beginner's guide to joining the DN42 experimental network, cover
 image: ""
 tags: ["DN42", "BGP", "BIRD", "Network Technology"]
 category: "Network"
+categories: ["Network", "DN42"]
 draft: false
 lang: "en_US"
 ---

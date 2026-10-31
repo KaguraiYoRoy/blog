@@ -6,6 +6,7 @@ description: "本文详细介绍如何利用 systemd 的特性（资源限制、
 image: ""
 tags: ["systemd", "codeserver"]
 category: "运维"
+categories: ["运维", "网络安全"]
 draft: false
 lang: "zh_CN"
 ---

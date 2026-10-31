@@ -6,6 +6,7 @@ description: "为Android 4.9内核的ROM启用erofs支持"
 image: "./images/2025/01/213977100.jpg"
 tags: ["Android", "AOSP", "Kernel"]
 category: "Android"
+categories: ["Android", "开发"]
 draft: false
 lang: "zh_CN"
 ---

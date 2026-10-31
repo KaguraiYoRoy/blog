@@ -6,6 +6,7 @@ description: "This in-depth article reveals how the author completely refactored
 image: ""
 tags: ["DN42", "BGP", "BIRD", "iBGP", "Clearnet", "Anycast", "Prefix", "IANA", "ISP", "BGP Confederation", "BGP Community", "WireGuard", "Ansible", "Automation"]
 category: "Network"
+categories: ["Network", "DN42", "One Man ISP"]
 draft: false
 lang: "en_US"
 ---

@@ -6,6 +6,7 @@ description: "本文详细介绍如何为刷入QWRT的小米BE10000路由器恢�
 image: ""
 tags: ["OpenWRT", "Router", "NFC", "IoT", "Wi-Fi"]
 category: "开发"
+categories: ["开发", "物联网"]
 draft: false
 lang: "zh_CN"
 ---

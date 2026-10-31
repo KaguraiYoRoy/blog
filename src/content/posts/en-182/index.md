@@ -6,6 +6,7 @@ description: "A guide on using VRF to isolate DN42 and public BGP routing on a s
 image: ""
 tags: ["BGP", "BIRD", "Network Technology", "OSPF", "Interior Gateway Protocol", "VRF"]
 category: "Network"
+categories: ["Network", "DN42", "One Man ISP"]
 draft: false
 lang: "en_US"
 ---

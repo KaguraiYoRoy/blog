@@ -6,6 +6,7 @@ description: "探索DN42网络中通过OSPF v3实现高效内部路由的最新�
 image: ""
 tags: ["DN42", "网络技术", "IGP", "OSPF", "内部路由协议", "iBGP"]
 category: "网络技术"
+categories: ["网络技术", "DN42"]
 draft: false
 lang: "zh_CN"
 ---

@@ -6,6 +6,7 @@ description: "本文详细介绍了如何通过LIR在RIPE NCC注册ASN，包括�
 image: ""
 tags: ["BGP", "BIRD", "网络技术", "Clearnet", "ASN"]
 category: "网络技术"
+categories: ["网络技术", "个人ISP"]
 draft: false
 lang: "zh_CN"
 ---

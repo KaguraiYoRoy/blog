@@ -1,4 +1,5 @@
 import { type CollectionEntry, getCollection } from "astro:content";
+import { getCategoryDefinitions } from "@constants/categories";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils.ts";
@@ -76,39 +77,77 @@ export type Category = {
 	name: string;
 	count: number;
 	url: string;
+	children: Category[];
 };
 
 export async function getCategoryList(locale?: "zh_CN" | "en_US"): Promise<Category[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
 		return (import.meta.env.PROD ? data.draft !== true : true) && (!locale || !data.lang || data.lang === locale);
 	});
-	const count: { [key: string]: number } = {};
-	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
-		if (!post.data.category) {
-			const ucKey = i18n(I18nKey.uncategorized);
-			count[ucKey] = count[ucKey] ? count[ucKey] + 1 : 1;
+	const postsByCategory = new Map<string, Set<string>>();
+	const uncategorizedPosts = new Set<string>();
+	allBlogPosts.forEach((post) => {
+		const categories = post.data.categories.length
+			? post.data.categories
+			: post.data.category
+				? [post.data.category]
+				: [];
+
+		if (categories.length === 0) {
+			uncategorizedPosts.add(post.id);
 			return;
 		}
 
-		const categoryName =
-			typeof post.data.category === "string"
-				? post.data.category.trim()
-				: String(post.data.category).trim();
-
-		count[categoryName] = count[categoryName] ? count[categoryName] + 1 : 1;
+		for (const category of categories) {
+			const categoryName = category.trim();
+			if (!postsByCategory.has(categoryName)) postsByCategory.set(categoryName, new Set());
+			postsByCategory.get(categoryName)?.add(post.id);
+		}
 	});
 
-	const lst = Object.keys(count).sort((a, b) => {
-		return a.toLowerCase().localeCompare(b.toLowerCase());
-	});
-
+	const definitions = getCategoryDefinitions(locale);
+	const knownNames = new Set<string>();
 	const ret: Category[] = [];
-	for (const c of lst) {
-		ret.push({
-			name: c,
-			count: count[c],
-			url: getCategoryUrl(c, locale),
-		});
+
+	for (const definition of definitions) {
+		knownNames.add(definition.name);
+		for (const child of definition.children ?? []) knownNames.add(child);
+
+		const children = (definition.children ?? [])
+			.filter((child) => postsByCategory.get(child)?.size)
+			.map((child) => ({
+				name: child,
+				count: postsByCategory.get(child)?.size ?? 0,
+				url: getCategoryUrl(child, locale),
+				children: [],
+			}));
+		const parentPosts = new Set(postsByCategory.get(definition.name) ?? []);
+		for (const child of children) {
+			for (const postId of postsByCategory.get(child.name) ?? []) parentPosts.add(postId);
+		}
+
+		if (parentPosts.size > 0) {
+			const descendants = children.map((child) => child.name);
+			ret.push({
+				name: definition.name,
+				count: parentPosts.size,
+				url: getCategoryUrl([definition.name, ...descendants], locale),
+				children,
+			});
+		}
 	}
+
+	const unknown = [...postsByCategory.keys()]
+		.filter((name) => !knownNames.has(name))
+		.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+	for (const name of unknown) {
+		ret.push({ name, count: postsByCategory.get(name)?.size ?? 0, url: getCategoryUrl(name, locale), children: [] });
+	}
+
+	const uncategorized = i18n(I18nKey.uncategorized, locale);
+	if (uncategorizedPosts.size) {
+		ret.push({ name: uncategorized, count: uncategorizedPosts.size, url: getCategoryUrl(uncategorized, locale), children: [] });
+	}
+
 	return ret;
 }

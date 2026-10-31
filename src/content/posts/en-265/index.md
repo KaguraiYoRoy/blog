@@ -6,6 +6,7 @@ description: "This article provides a step-by-step guide to building a cross-reg
 image: ""
 tags: ["BGP", "iBGP", "Kubernetes", "K3s", "Cluster", "CNI"]
 category: "Network"
+categories: ["Network", "Projects", "Kubernetes"]
 draft: false
 lang: "en_US"
 ---

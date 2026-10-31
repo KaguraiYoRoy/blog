@@ -6,6 +6,7 @@ description: "A detailed technical analysis of a server hack exploiting the CVE-
 image: ""
 tags: ["Cybersecurity", "Reverse Engineering", "CVE", "RCE"]
 category: "Ops"
+categories: ["Ops", "Cybersecurity"]
 draft: false
 lang: "en_US"
 ---

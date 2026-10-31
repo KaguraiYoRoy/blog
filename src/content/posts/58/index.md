@@ -6,6 +6,7 @@ description: "详解通过Cloudflare SaaS实现自定义主机名解析，利用
 image: "./images/2025/05/670409175.jpg"
 tags: ["Web", "DNS", "Cloudflare", "CDN"]
 category: "运维"
+categories: ["运维"]
 draft: false
 lang: "zh_CN"
 ---

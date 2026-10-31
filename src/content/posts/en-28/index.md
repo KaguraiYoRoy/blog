@@ -6,6 +6,7 @@ description: " A step-by-step guide on installing the 1Panel control panel using
 image: "./images/2025/03/3758994431.jpg"
 tags: ["Linux", "TrueNAS", "Docker", "Web", "1Panel"]
 category: "NAS"
+categories: ["NAS"]
 draft: false
 lang: "en_US"
 ---

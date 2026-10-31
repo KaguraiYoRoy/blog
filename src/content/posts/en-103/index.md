@@ -6,6 +6,7 @@ description: "Learn how to configure internal routing with OSPF and iBGP in a DN
 image: ""
 tags: ["DN42", "Network Technology", "IGP", "OSPF", "Interior Gateway Protocol", "iBGP"]
 category: "Network"
+categories: ["Network", "DN42"]
 draft: false
 lang: "en_US"
 ---

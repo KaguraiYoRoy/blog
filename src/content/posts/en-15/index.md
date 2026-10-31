@@ -6,6 +6,7 @@ description: "Step-by-step guide to migrate RR bootloader for Synology DSM from 
 image: "./images/2025/01/760705903.jpg"
 tags: ["Linux", "Synology"]
 category: "NAS"
+categories: ["NAS"]
 draft: false
 lang: "en_US"
 ---

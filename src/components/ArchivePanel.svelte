@@ -20,6 +20,7 @@ interface Post {
 		title: string;
 		tags: string[];
 		category?: string | null;
+		categories?: string[];
 		published: Date;
 	};
 }
@@ -54,7 +55,14 @@ onMount(async () => {
 
 	if (categories.length > 0) {
 		filteredPosts = filteredPosts.filter(
-			(post) => post.data.category && categories.includes(post.data.category),
+			(post) => {
+				const postCategories = post.data.categories?.length
+					? post.data.categories
+					: post.data.category
+						? [post.data.category]
+						: [];
+				return postCategories.some((category) => categories.includes(category));
+			},
 		);
 	}
 

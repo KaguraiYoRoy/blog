@@ -6,6 +6,7 @@ description: "2025古剑山CTF杂项挑战“水果”的解题报告，涉及�
 image: ""
 tags: ["CTF", "Misc", "隐写", "图片隐写"]
 category: "CTF"
+categories: ["CTF"]
 draft: false
 lang: "zh_CN"
 ---
