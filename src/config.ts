@@ -71,6 +71,11 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa6-brands:github",
 			url: "https://github.com/KaguraiYoRoy",
 		},
+		{
+			name: "Email",
+			icon: "fa6-solid:envelope",
+			url: "mailto:i@iyoroy.cn",
+		},
 	],
 };
 
