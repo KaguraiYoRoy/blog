@@ -20,6 +20,8 @@ INFP | 个人开发者&运维
 以认真的态度做好每一件事  
 如果愿意接近咱的话……说不定能成为好朋友呢
 
+头像是[#オリジナル 笑顔ともふもふ - 畑乃おいも的插画 - pixiv](https://www.pixiv.net/artworks/95044346)，背景来源于[#Skeb Skebまとめ5 - ころんびぁ的插画 - pixiv](https://www.pixiv.net/artworks/115237913)，网站icon来自[#原神 綺良々ちゃん - ころんびぁ的插画 - pixiv](https://www.pixiv.net/artworks/108523445)（绮良良可爱喵！）
+
 # 关于这里
 会记录一些日常折腾时遇到的小问题  
 可能会有一部分小小的随笔（心情帖？）

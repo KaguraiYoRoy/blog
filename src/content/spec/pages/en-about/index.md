@@ -16,9 +16,11 @@ My true self is a university student.
 INFP | Personal Developer & Ops  
 Currently learning Android development, C++, C#, PHP, etc.  
 
-Want to become cute~  
+Wanna be cute~  
 Do everything with a serious attitude.  
 If you're willing to get close to me... we might become good friends?
+
+The avatar is from [#オリジナル 笑顔ともふもふ - 畑乃おいも的插画 - pixiv](https://www.pixiv.net/artworks/95044346), the background is from [#Skeb Skebまとめ5 - ころんびぁ的插画 - pixiv](https://www.pixiv.net/artworks/115237913), favicon is [#原神 綺良々ちゃん - ころんびぁ的插画 - pixiv](https://www.pixiv.net/artworks/108523445) (Kirara is so cute!)
 
 # About Here
 Will record some small problems encountered during daily tinkering.  
