@@ -1,9 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
-import { licenseConfig, profileConfig } from "../../config";
+import { licenseConfig } from "../../config";
 import I18nKey from "../../i18n/i18nKey";
 import { i18n } from "../../i18n/translation";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import { getLocalizedProfile, getProfileLocale } from "../../utils/profile-utils";
 
 interface Props {
 	title: string;
@@ -14,7 +15,7 @@ interface Props {
 
 const { title, pubDate } = Astro.props;
 const className = Astro.props.class;
-const profileConf = profileConfig;
+const profile = getLocalizedProfile(getProfileLocale(Astro.url.pathname));
 const licenseConf = licenseConfig;
 const postUrl = decodeURIComponent(Astro.url.toString());
 ---
@@ -28,7 +29,7 @@ const postUrl = decodeURIComponent(Astro.url.toString());
     <div class="flex gap-6 mt-2">
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.author)}</div>
-            <div class="transition text-black/75 dark:text-white/75 line-clamp-2">{profileConf.name}</div>
+            <div class="transition text-black/75 dark:text-white/75 line-clamp-2">{profile.name}</div>
         </div>
         <div>
             <div class="transition text-black/30 dark:text-white/30 text-sm">{i18n(I18nKey.publishedAt)}</div>

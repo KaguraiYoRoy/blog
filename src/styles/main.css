@@ -32,6 +32,11 @@ body > :not(.site-background) {
     z-index: 1;
 }
 
+/* Keep the navbar's floating controls above the main content stacking layer. */
+body > #top-row {
+    z-index: 60;
+}
+
 .dark .site-background {
     background-image:
         linear-gradient(rgba(19, 14, 18, 0.42), rgba(19, 14, 18, 0.42)),

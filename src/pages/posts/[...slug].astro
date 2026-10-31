@@ -11,8 +11,9 @@ import { Icon } from "astro-icon/components";
 import { licenseConfig } from "src/config";
 import ImageWrapper from "../../components/misc/ImageWrapper.astro";
 import PostMetadata from "../../components/PostMeta.astro";
-import { profileConfig, siteConfig } from "../../config";
+import { siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
+import { getLocalizedProfile, getProfileLocale } from "../../utils/profile-utils";
 
 export async function getStaticPaths() {
 	const blogEntries = [...await getSortedPosts("zh_CN"), ...await getSortedPosts("en_US")];
@@ -26,6 +27,7 @@ const { entry } = Astro.props;
 const { Content, headings } = await entry.render();
 
 const { remarkPluginFrontmatter } = await entry.render();
+const profile = getLocalizedProfile(getProfileLocale(Astro.url.pathname));
 
 const jsonLd = {
 	"@context": "https://schema.org",
@@ -35,7 +37,7 @@ const jsonLd = {
 	keywords: entry.data.tags,
 	author: {
 		"@type": "Person",
-		name: profileConfig.name,
+		name: profile.name,
 		url: Astro.site,
 	},
 	datePublished: formatDateToYYYYMMDD(entry.data.published),

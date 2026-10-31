@@ -43,6 +43,10 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		{
+			name: "友链",
+			url: "/friends/",
+		},
+		{
 			name: "GitHub",
 			url: "https://github.com/KaguraiYoRoy", // External profile link.
 			external: true, // Show an external link icon and will open in a new tab
@@ -52,8 +56,14 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/profile-avatar.png",
-	name: "神楽悠笙",
-	bio: "个人开发者 · 运维 · 网络技术",
+	name: {
+		zh_CN: "神楽悠笙",
+		en_US: "Kagura iYoRoy",
+	},
+	bio: {
+		zh_CN: "愿世间万物都能被温柔以待",
+		en_US: "May all things in the world be treated with tenderness.",
+	},
 	links: [
 		{
 			name: "GitHub",

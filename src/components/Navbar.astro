@@ -23,7 +23,13 @@ const isEnglish = Astro.url.pathname.startsWith("/en/") || Astro.url.pathname.st
 const localePrefix = isEnglish ? "/en" : "";
 const localizedLinks = links.map((link) => {
 	if (link.external) return link;
-	const key = link.url === "/" ? "Home" : link.url.includes("archive") ? "Archive" : "About";
+	const key = link.url === "/"
+		? "Home"
+		: link.url.includes("archive")
+			? "Archive"
+			: link.url.includes("friends")
+				? "Friends"
+				: "About";
 	return { ...link, name: isEnglish ? key : link.name, url: `${localePrefix}${link.url}` || "/" };
 });
 const pathname = Astro.url.pathname;
@@ -67,7 +73,7 @@ const alternateUrl = url(`${alternatePath}${Astro.url.search}`);
         <div class="flex">
             <!--<SearchPanel client:load>-->
             <Search client:only="svelte"></Search>
-        <a id="language-switcher" href={alternateUrl} aria-label={isEnglish ? "中文" : "English"} title={isEnglish ? "中文" : "English"}
+        <a id="language-switcher" data-no-swup href={alternateUrl} aria-label={isEnglish ? "中文" : "English"} title={isEnglish ? "中文" : "English"}
                class="btn-plain scale-animation rounded-lg h-11 min-w-11 px-2 active:scale-90 flex items-center justify-center gap-1">
                 <Icon name="material-symbols:language" class="text-[1.25rem]" />
                 <span id="language-switcher-label" class="text-xs font-bold">{isEnglish ? "中" : "EN"}</span>

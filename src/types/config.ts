@@ -62,13 +62,18 @@ export type NavBarConfig = {
 
 export type ProfileConfig = {
 	avatar?: string;
-	name: string;
-	bio?: string;
+	name: LocalizedText;
+	bio?: LocalizedText;
 	links: {
 		name: string;
 		url: string;
 		icon: string;
 	}[];
+};
+
+export type LocalizedText = {
+	zh_CN: string;
+	en_US: string;
 };
 
 export type LicenseConfig = {
