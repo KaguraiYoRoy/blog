@@ -13,7 +13,7 @@ export const siteConfig: SiteConfig = {
 	icp: "皖ICP备2025072622号-1", // Leave empty to hide the ICP registration in the footer.
 	lang: "zh_CN",
 	themeColor: {
-		hue: 345, // Theme hue.
+		hue: 0, // Theme hue.
 		fixed: false, // Hide the theme color picker for visitors
 	},
 	banner: {
