@@ -4,6 +4,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import ConfigCarrier from "@components/ConfigCarrier.astro";
+import Umami from "@components/Umami.astro";
 import { siteConfig } from "@/config";
 import {
 	AUTO_MODE,
@@ -156,6 +157,7 @@ const bannerOffset =
 		<slot name="head"></slot>
 
 		<link rel="alternate" type="application/rss+xml" title={profile.name} href={`${Astro.site}rss.xml`}/>
+		<Umami />
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}

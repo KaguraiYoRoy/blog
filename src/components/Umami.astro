@@ -1,0 +1,43 @@
+---
+import { siteConfig } from "@/config";
+
+const config = siteConfig.umami;
+---
+
+{import.meta.env.PROD && config?.enable && (
+	<>
+		<script
+			is:inline
+			defer
+			id="umami-script"
+			src={config.src}
+			data-website-id={config.websiteId}
+			data-domains={config.domains?.join(",")}
+			data-auto-pageview="false"
+			data-exclude-hash="true"
+			data-swup-ignore-script
+		></script>
+		<script is:inline data-swup-ignore-script>
+			(() => {
+				let lastUrl;
+
+				function trackPageView() {
+					const currentUrl = `${location.origin}${location.pathname}${location.search}`;
+					if (!window.umami || currentUrl === lastUrl) return;
+					const referrer = lastUrl || document.referrer;
+					window.umami.track((payload) => ({
+						...payload,
+						url: currentUrl,
+						referrer,
+					}));
+					lastUrl = currentUrl;
+				}
+
+				// Record Swup visits after the new title and content are in place.
+				document.addEventListener("astro:page-load", trackPageView);
+				document.getElementById("umami-script")?.addEventListener("load", trackPageView, { once: true });
+				trackPageView();
+			})();
+		</script>
+	</>
+)}

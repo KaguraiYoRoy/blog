@@ -28,6 +28,14 @@ Pull Request 只检查和构建，不发布。也可以在 Actions 页面手动�
 
 更换域名时，同时更新 GitHub Pages 设置、DNS、`public/CNAME`、`astro.config.mjs`、RSS 的备用地址和友链资料中的绝对地址。
 
+### Umami 统计
+
+`src/config.ts` 的 `siteConfig.umami` 沿用原 Typecho 站点的脚本地址和站点 ID，中英文页面共用同一套统计。脚本和站点 ID 是浏览器公开信息，无需配置 GitHub Secrets。
+
+统计脚本仅在生产构建中加载，`pnpm dev` 不加载。`domains` 限定允许统计的域名，当前为 `blog.iyoroy.cn` 和 `www.iyoroy.cn`；本地 `pnpm preview` 不会发送统计。更换域名时同步更新该列表，设为 `enable: false` 可关闭统计。
+
+`src/components/Umami.astro` 只初始化一次脚本，并在 Swup 页面切换完成后记录访问，支持首次打开、站内跳转、浏览器前进后退和语言切换。只改变文章锚点不会增加浏览量。
+
 ### Typecho 旧地址
 
 构建时通过 Astro 原生跳转生成 80 个兼容页面，部署到 GitHub Pages 后即可自动跳转：

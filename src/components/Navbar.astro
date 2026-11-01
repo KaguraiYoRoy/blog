@@ -32,7 +32,9 @@ const localizedLinks = links.map((link) => {
 				? "Archive"
 				: link.url.includes("friends")
 					? "Friends"
-					: "About";
+					: link.url.includes("about")
+						? "About"
+						: link.name;
 	return {
 		...link,
 		name: isEnglish ? key : link.name,

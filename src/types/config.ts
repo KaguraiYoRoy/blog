@@ -4,6 +4,12 @@ export type SiteConfig = {
 	title: string;
 	subtitle: string;
 	icp?: string;
+	umami?: {
+		enable: boolean;
+		src: string;
+		websiteId: string;
+		domains?: string[];
+	};
 
 	lang:
 		| "en"

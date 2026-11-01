@@ -11,6 +11,12 @@ export const siteConfig: SiteConfig = {
 	title: "悠笙の开发日记",
 	subtitle: "记录开发、网络与日常折腾",
 	icp: "皖ICP备2025072622号-1", // Leave empty to hide the ICP registration in the footer.
+	umami: {
+		enable: true,
+		src: "https://analytics.iyoroy.cn/script.js",
+		websiteId: "2931abea-9a02-4a63-a98f-4715f44e3413",
+		domains: ["blog.iyoroy.cn", "www.iyoroy.cn"],
+	},
 	lang: "zh_CN",
 	themeColor: {
 		hue: 0, // Theme hue.
@@ -48,9 +54,8 @@ export const navBarConfig: NavBarConfig = {
 			url: "/friends/",
 		},
 		{
-			name: "GitHub",
-			url: "https://github.com/KaguraiYoRoy", // External profile link.
-			external: true, // Show an external link icon and will open in a new tab
+			name: "DN42",
+			url: "/dn42/",
 		},
 	],
 };
