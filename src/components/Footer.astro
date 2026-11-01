@@ -5,7 +5,10 @@ import { getLocalizedProfile, getProfileLocale } from "../utils/profile-utils";
 import { url } from "../utils/url-utils";
 
 const currentYear = new Date().getFullYear();
-const profile = getLocalizedProfile(getProfileLocale(Astro.url.pathname));
+const locale = getProfileLocale(Astro.url.pathname);
+const profile = getLocalizedProfile(locale);
+const isEnglish = locale === "en_US";
+const privacyUrl = url(isEnglish ? "/en/privacy/" : "/privacy/");
 const icp = siteConfig.icp?.trim();
 ---
 
@@ -14,9 +17,12 @@ const icp = siteConfig.icp?.trim();
 <!--<div class="transition bg-[oklch(92%_0.01_var(&#45;&#45;hue))] dark:bg-black rounded-2xl py-8 mt-4 mb-8 flex flex-col items-center justify-center px-6">-->
 <div class="transition border-dashed border-[oklch(85%_0.01_var(--hue))] dark:border-white/15 rounded-2xl mb-12 flex flex-col items-center justify-center px-6">
     <div class="transition text-50 text-sm text-center">
-        &copy; <span id="copyright-year">{currentYear}</span> {profile.name}. All Rights Reserved. /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a> /
-        <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a><br>
+        &copy; <span id="copyright-year">{currentYear}</span> {profile.name}. All Rights Reserved.
+        <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 my-1">
+            <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('rss.xml')}>RSS</a>
+            <a class="transition link text-[var(--primary)] font-medium" target="_blank" href={url('sitemap-index.xml')}>Sitemap</a>
+            <a class="transition link text-[var(--primary)] font-medium" href={privacyUrl}>{isEnglish ? "Privacy Policy" : "隐私政策"}</a>
+        </div>
         Powered by
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://astro.build">Astro</a> &
         <a class="transition link text-[var(--primary)] font-medium" target="_blank" href="https://github.com/saicaca/fuwari">Fuwari</a>

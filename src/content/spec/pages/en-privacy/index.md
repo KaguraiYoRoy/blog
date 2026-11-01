@@ -5,19 +5,28 @@ lang: "en_US"
 routeSlug: "privacy"
 ---
 
-# 1. Analytics
-This website uses a self-hosted instance of **Umami** analytics. Umami is a privacy-focused tool that:
+# Privacy Policy
 
-* **No Cookies:** It does not use cookies or any other tracking technologies in your browser.
-* **Anonymization:** All visitor data is collected anonymously and aggregated. We cannot identify you personally through these analytics.
-* **Data Sovereignty:** All data is stored on our private servers and is never shared with third parties.
+Last updated: 2026-11-01
 
-# 2. Comments
-When you leave a comment on this site, we collect the data shown in the comments form, along with:
+## 1. Analytics
 
-* **Personal Information:** Including your nickname, email address, and website (if provided).
-* **Technical Information:** To help detect spam and prevent malicious attacks, we record your **IP address** and browser user agent string.
-* **Retention:** The comment and its metadata are retained indefinitely until you request their removal.
+This website uses a self-hosted **Umami** service to understand page views, visits, and article readership. The analytics script is served from `analytics.iyoroy.cn`, and analytics data is sent to that service.
 
-# 3. Your Rights
-If you have left comments on this site, you can request to receive an exported file of the personal data we hold about you, or request that we erase any personal data we hold about you.
+The data includes page URLs, titles, referring pages, browser language, screen size, and information derived from requests such as browser and device type and approximate location. Page URLs may include query parameters; please do not put passwords or other sensitive information in URLs.
+
+Umami does not use analytics cookies, and reading articles does not require a name, email address, or account. These statistics are used to understand visits to this site, not for advertising across websites.
+
+## 2. Browser Storage
+
+The website uses your browser's `localStorage` to remember your light or dark mode and theme color preferences. These settings stay in your browser and are not sent as Umami analytics data. You can remove them through your browser's site data settings.
+
+## 3. Hosting and External Links
+
+Static pages are served through GitHub Pages and a server in mainland China. Hosting and related network services may log IP addresses, request times, page URLs, and browser identifiers to serve requests, troubleshoot problems, and provide security. These logs are handled separately from Umami analytics, and their retention depends on the relevant service's configuration and policies.
+
+Articles may contain external links or resources. When you visit another website or your browser loads an external resource, that service receives the request and its own privacy policy applies.
+
+## 4. Contact
+
+For questions about this site's data handling, or requests to access, correct, or delete personal information you have provided, contact [i@iyoroy.cn](mailto:i@iyoroy.cn). Please identify the relevant page or information so the request can be verified and addressed.
