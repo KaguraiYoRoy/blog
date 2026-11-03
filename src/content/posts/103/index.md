@@ -116,7 +116,7 @@ AllowedIPs = 10.0.0.0/8, 172.20.0.0/14, 100.64.0.0/16, 172.31.0.0/16, fd00::/8, 
 # 启用OSPF
 _默认你已经配置好了如上一篇文章所写的bird基础配置_  
 在`/etc/bird`下新建一个名为`ospf.conf`的文件，填入如下内容：
-```nginx
+```bird2
 protocol ospf v3 <name> {
     ipv4 {
         import where is_self_net() && source != RTS_BGP;
@@ -145,7 +145,7 @@ protocol ospf v3 <name> {
 **配置示例**
 
 `/etc/bird/ospf.conf`
-```nginx
+```bird2
 protocol ospf v3 dn42_iyoroynet_ospf {
     ipv4 {
         import where is_self_net() && source != RTS_BGP;
@@ -169,7 +169,7 @@ protocol ospf v3 dn42_iyoroynet_ospf6 {
 
 
 接着，新建`/etc/bird/ospf`文件夹，在其中创建area配置文件（如：`/etc/bird/ospf/0.conf`），填写区域信息：
-```nginx
+```bird2
 area 0.0.0.0 {
     interface "<DN42 dummy网卡>" { stub; };
     interface "<wg0网卡名称>" {
@@ -192,7 +192,7 @@ area 0.0.0.0 {
 **配置示例**
 
 `/etc/bird/ospf/0.conf`
-```nginx
+```bird2
 area 0.0.0.0 {
     interface "dn42" { stub; };
     interface "dn42_hkg" {
@@ -214,7 +214,7 @@ area 0.0.0.0 {
 
 
 最后，打开`/etc/bird/bird.conf`，在末尾引入OSPF的配置文件：
-```nginx
+```bird2
 include "ospf.conf";
 ```
 运行`birdc configure`，然后`birdc show protocols`应该就能看到OSPF的状态是**Running**了。如果不是，请检查配置步骤是否出错。
@@ -246,7 +246,7 @@ iBGP可以保证AS内部所有运行BGP的路由器都能获知到达外部目�
 
 ## 编写iBGP配置文件
 在`/etc/bird`下新建文件`ibgp.conf`，填入如下内容：
-```nginx
+```bird2
 template bgp ibgpeers {
     local as OWNAS;
     ipv4 {
@@ -270,7 +270,7 @@ include "ibgp/*";
 * 因为我希望使用IPv6地址建立MP-BGP，通过IPv6路由IPv4，因此在IPv4中启用了`extended next hop`
 
 接着创建`/etc/bird/ibgp`文件夹，在其中为每台节点都创建一个iBGP Peer配置文件:
-```nginx
+```bird2
 protocol bgp 'dn42_ibgp_<节点>' from ibgpeers{
     neighbor <对应节点的IPv6 ULA地址> as OWNAS;
 };
@@ -281,7 +281,7 @@ protocol bgp 'dn42_ibgp_<节点>' from ibgpeers{
 **样例**
 
 `/etc/bird/ibgp/hkg.conf`:
-```nginx
+```bird2
 protocol bgp 'dn42_ibgp_HKG' from ibgpeers{
     neighbor fd18:3e15:61d0::1 as OWNAS;
 };
@@ -294,7 +294,7 @@ protocol bgp 'dn42_ibgp_HKG' from ibgpeers{
 * 使用可经 OSPF 路由到达的 ULA 地址建立 iBGP，可以让会话在直连 WireGuard 断开时改走其他链路，前提是仍存在可用的替代路径。ULA 地址本身不会自动提供冗余。
 
 最后，在`/etc/bird/bird.conf`中加入对`ibgp.conf`的引入:
-```nginx
+```bird2
 include "ibgp.conf";
 ```
 并运行`birdc configure`应用配置即可。

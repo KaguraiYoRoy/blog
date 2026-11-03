@@ -185,7 +185,7 @@ reload_service() {
 
 因此最终的配置文件结构如下：
 * `/etc/bird/bird.conf`: 配置文件入口点
-```nginx
+```bird2
 define INTRA_ROUTER_ID = 100.64.0.100;
 define INTRA_PREFIX_V4 = [ 100.64.0.0/16+, 192.168.0.0/16+ ]; # 允许被 OSPF 传递的 IPv4 前缀
 define INTRA_PREFIX_V6 = [ fd18:3e15:61d0::/48+ ]; # 允许被 OSPF 传递的 IPv6 前缀
@@ -205,7 +205,7 @@ include "intra/ospf.conf";
 分表是为了后期如果要为这台机器接入 DN42, 分表会比较安全.  
 
 * `/etc/bird/intra/defs.conf`: 过滤器所用的函数
-```nginx
+```bird2
 function is_intra_net4() {
     return net ~ INTRA_PREFIX_V4;
 }
@@ -224,7 +224,7 @@ function is_intra_dn42_net6(){
 ```
 
 * `/etc/bird/intra/kernel.conf`: 将 OSPF 学习到的路由写入系统路由表
-```nginx
+```bird2
 protocol kernel intra_kernel_v4 {
     kernel table 254;
     scan time 20;
@@ -253,7 +253,7 @@ protocol kernel intra_kernel_v6 {
 ```
 
 * `/etc/bird/intra/ospf.conf`: OSPF 模块
-```nginx
+```bird2
 protocol ospf v3 intra_ospf_v4 {
     router id INTRA_ROUTER_ID; # 指定 RouterID
     
@@ -280,7 +280,7 @@ protocol ospf v3 intra_ospf_v6 {
 ```
 
 * `/etc/bird/intra/ospf/backbone.conf`: OSPF 区域配置
-```nginx
+```bird2
 area 0.0.0.0 {
     interface "br-lan" { stub; }; # 本地内网网卡
     interface "zta7oqfzy6" { # ZeroTier 网卡

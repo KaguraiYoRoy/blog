@@ -319,7 +319,7 @@ apt install bird2 wireguard wireguard-tools -y
 
 ### bird.conf
 修改`/etc/bird/bird.conf`：
-```nginx
+```bird2
 define OWNAS       = <AS 号>;
 define OWNIP       = <DN42 IPv4 地址>;
 define OWNIPv6     = <DN42 IPv6 地址>;
@@ -416,7 +416,7 @@ include "ebgp.conf";
 你可能在其他教程里看到过使用定时任务+重载Bird的更新ROA方案，此处配置RPKI则是另一种配置ROA的方式。
 
 创建`/etc/bird/rpki.conf`，填写如下内容：
-```nginx
+```bird2
 roa4 table dn42_roa;
 roa6 table dn42_roa_v6;
 
@@ -436,7 +436,7 @@ RPKI服务器可以使用我朋友的AkaereIX提供的服务：`rpki.akae.re`
 
 **样例**
 
-```nginx
+```bird2
 roa4 table dn42_roa;
 roa6 table dn42_roa_v6;
 
@@ -455,7 +455,7 @@ protocol rpki dn42_rpki_akix {
 
 ### ebgp.conf
 创建`/etc/bird/ebgp.conf`，填入如下内容：
-```nginx
+```bird2
 template bgp dnpeers {
     local as OWNAS;
     path metric 1;

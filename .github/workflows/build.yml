@@ -38,6 +38,9 @@ jobs:
       - name: Test deployment scripts
         run: node --test scripts/deploy-cn.test.mjs
 
+      - name: Test BIRD syntax highlighting
+        run: node --test scripts/bird-highlighting.test.mjs
+
       - name: Check Astro
         run: pnpm check
 

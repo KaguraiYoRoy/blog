@@ -198,7 +198,7 @@ Underlay 的 IPv6 本身是 DN42 可达的, 如果还要分配其他 DN42 IPv6 �
 ```
 
 在各个 Protocol 中, 这一项作为总开关, 控制是否应当导出. IANA 的上游导出过滤器:  
-```nginx
+```bird2
 template bgp iana_upstream_v6 {
 	...
 	
@@ -225,7 +225,7 @@ template bgp iana_upstream_v6 {
 ```
 
 其中 `iana_filter_default_check()` 用于检查前缀长度, ROA, 是否是默认路由等比较琐碎的内容:
-```nginx
+```bird2
 function iana_filter_default_check(){
     if net ~ [::/0] then return false;
     if net.len > 48 then return false;
@@ -236,7 +236,7 @@ function iana_filter_default_check(){
 ```
 
 `remove_confederation_as()`, 顾名思义, 移除联邦内部 AS:
-```nginx
+```bird2
 function remove_confederation_as() {
     bgp_path.delete([4220240000..4220249999]); # 4242422024 Infrastructure
     bgp_path.delete([4233770000..4233779999]); # 4242423377 Infrastructure
@@ -244,7 +244,7 @@ function remove_confederation_as() {
 ```
 
 `remove_private_community()`, 顾名思义, 移除内部 Community. 这部分目前实施的很粗糙, 后续需要详细细化, 因为部分 Community 应当对下游开放, 使其可以通过 Community 来传递路由意图, 做一些优化, 比如 prepend AS path, 可用于路由调优或者流量工程:
-```nginx
+```bird2
 function remove_private_community(){
     bgp_large_community.delete([(4242422024, *, *)]);
     bgp_large_community.delete([(205369, *, *)]);
@@ -252,7 +252,7 @@ function remove_private_community(){
 ```
 
 `iana_upstream_add_community()`, 为来自上游的路由全都打上允许在 IANA 基础设施流通的 Community 以及路由来源标识:
-```nginx
+```bird2
 function iana_upstream_add_community(){
     bgp_large_community.add((205369,1,1));
     bgp_large_community.add((205369,2,102));
@@ -265,7 +265,7 @@ function iana_upstream_add_community(){
 在当前内网中与之对应的, 来自对等体的会被打上`(205369,2,101)`, 来自下游的会被打上`(205369,2,100)`.
 
 `iana_upstream_check_community()` 会检查路由的 Community, 基于上述原则判断其是否应该被广播给上游:
-```nginx
+```bird2
 function iana_upstream_check_community(){
     if !(bgp_large_community ~ [(205369,1,1)]) then return false;      # 没被允许在 IANA 基础设施广播, 则拒绝
     if bgp_large_community ~ [(205369,65535,65282)] then return false; # no-advertise

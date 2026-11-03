@@ -38,7 +38,7 @@ Large Community 的安全边界可参考 [RFC 8092 第 7 节](https://www.rfc-ed
 ## 为路由添加Communities
 
 首先我们需要在节点配置文件开头定义好当前节点的地理区域信息，详情请查询[BGP-communities - DN42 Wiki](https://dn42.dev/howto/BGP-communities)：
-```nginx
+```bird2
 define DN42_REGION = 52;   # 52代表亚洲东部地区
 define DN42_COUNTRY= 1344; # 1344代表香港
 ```
@@ -73,7 +73,7 @@ define DN42_COUNTRY= 1344; # 1344代表香港
 * 对于直接和自己Peer的路由，优先级再+20
 
 创建一个函数用于优先级计算：
-```nginx
+```bird2
 function ebgp_calculate_priority() {
     int priority = 100;  # 基础优先级
     

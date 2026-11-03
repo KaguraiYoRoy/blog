@@ -197,7 +197,7 @@ My configuration file structure follows these rules:
 
 Thus, the final configuration file structure is:
 * `/etc/bird/bird.conf`: Configuration entry point
-```nginx
+```bird2
 define INTRA_ROUTER_ID = 100.64.0.100;
 define INTRA_PREFIX_V4 = [ 100.64.0.0/16+, 192.168.0.0/16+ ]; # IPv4 prefixes allowed to be advertised via OSPF
 define INTRA_PREFIX_V6 = [ fd18:3e15:61d0::/48+ ]; # IPv6 prefixes allowed to be advertised via OSPF
@@ -217,7 +217,7 @@ The RouterID here is directly taken from the node's IPv4 address within the Zero
 Separate tables are used for future safety, e.g., if connecting this node to DN42.
 
 * `/etc/bird/intra/defs.conf`: Functions for filters
-```nginx
+```bird2
 function is_intra_net4() {
     return net ~ INTRA_PREFIX_V4;
 }
@@ -236,7 +236,7 @@ function is_intra_dn42_net6(){
 ```
 
 * `/etc/bird/intra/kernel.conf`: Write routes learned by OSPF into the system routing table
-```nginx
+```bird2
 protocol kernel intra_kernel_v4 {
     kernel table 254;
     scan time 20;
@@ -265,7 +265,7 @@ protocol kernel intra_kernel_v6 {
 ```
 
 * `/etc/bird/intra/ospf.conf`: OSPF module
-```nginx
+```bird2
 protocol ospf v3 intra_ospf_v4 {
     router id INTRA_ROUTER_ID; # Specify RouterID
 
@@ -292,7 +292,7 @@ protocol ospf v3 intra_ospf_v6 {
 ```
 
 * `/etc/bird/intra/ospf/backbone.conf`: OSPF Area Configuration
-```nginx
+```bird2
 area 0.0.0.0 {
     interface "br-lan" { stub; }; # Local LAN interface
     interface "zta7oqfzy6" { # ZeroTier interface

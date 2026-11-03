@@ -318,7 +318,7 @@ apt install bird2 wireguard wireguard-tools -y
 
 ### bird.conf
 Modify `/etc/bird/bird.conf`：
-```nginx
+```bird2
 define OWNAS       = <AS Number>;
 define OWNIP       = <DN42 IPv4 Address>;
 define OWNIPv6     = <DN42 IPv6 Address>;
@@ -415,7 +415,7 @@ Here, the `OWNIP` and `OWNIPV6` parameters refer to the DN42 IPv4 and IPv6 addre
 You might have seen other tutorials using cron jobs + reloading Bird to update ROAs. Configuring RPKI here is another way to configure ROAs.
 
 Create `/etc/bird/rpki.conf` and fill in the following content:
-```nginx
+```bird2
 roa4 table dn42_roa;
 roa6 table dn42_roa_v6;
 
@@ -435,7 +435,7 @@ For the RPKI server, you can use the service provided by my friend's AkaereIX: `
 
 **Example**
 
-```nginx
+```bird2
 roa4 table dn42_roa;
 roa6 table dn42_roa_v6;
 
@@ -454,7 +454,7 @@ protocol rpki dn42_rpki_akix {
 
 ### ebgp.conf
 Create `/etc/bird/ebgp.conf` and fill in the following content:
-```nginx
+```bird2
 template bgp dnpeers {
     local as OWNAS;
     path metric 1;

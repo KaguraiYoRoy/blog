@@ -75,7 +75,7 @@ lang: "zh_CN"
 我用的操作系统是Debian12 Bookworm，使用Bird2作为路由软件，并且按照[这篇文章](https://www.iyoroy.cn/archives/103/)中「更新Bird2至v2.16及以上」章节更新Bird2至最新版。Vultr那边给我的上游ASN是`64515`，上游用于BGP Session的地址是`2001:19f0:ffff::1`，VPS用于BGP Session的地址是`2001:19f0:0006:0ff5:5400:05ff:fe96:881f`。
 
 我的Bird2配置文件修改自DN42中的配置文件：
-```nginx
+```bird2
 log syslog all;
 define OWNAS       = 205369;                   # 自己的ASN
 define OWNIPv6     = 2a14:7583:f203::1;        # 给机器绑定的单个IPv6地址

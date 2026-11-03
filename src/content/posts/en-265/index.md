@@ -313,7 +313,7 @@ This part is simply a matter of writing Bird configuration files (easy).
 Here are a few examples:
 
 * `k3s/ibgp.conf`:
-```nginx
+```bird2
 function is_insider_as(){
     if bgp_path.len > 0 && !(bgp_path ~ [= 64512 =]) then {
         return false;
@@ -397,14 +397,14 @@ include "ibgpeers/*";
 ```
 
 * `ibgpeers/backbone-cn.conf`:
-```nginx
+```bird2
 protocol bgp 'k3s_backbone_cn_v4' from k3sbackbone{
     neighbor fd18:3e15:61d0:cafe:f001::1;
 };
 ```
 
 * `ibgpeers/master.conf`:
-```nginx
+```bird2
 protocol bgp 'k3s_master_v4' from k3speers{
     neighbor 192.168.100.251;
 };

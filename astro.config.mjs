@@ -24,6 +24,7 @@ import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.js";
 import { remarkExcerpt } from "./src/plugins/remark-excerpt.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-copy-button.js";
+import birdGrammar from "./vendor/bird2/bird2.tmLanguage.json" with { type: "json" };
 
 // https://astro.build/config
 export default defineConfig({
@@ -60,6 +61,10 @@ export default defineConfig({
 		}),
 		expressiveCode({
 			themes: [expressiveCodeConfig.theme, expressiveCodeConfig.theme],
+			shiki: {
+				langs: [birdGrammar],
+				langAlias: { bird: "bird2" },
+			},
 			plugins: [
 				pluginCollapsibleSections(),
 				pluginLineNumbers(),

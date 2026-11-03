@@ -39,7 +39,7 @@ The idea is clear. When exporting routes, we first need to verify if it's our ow
 ## Adding Communities to Routes
 
 First, we need to define the geographic region information for the current node at the beginning of the node configuration file. Please check [BGP-communities - DN42 Wiki](https://dn42.dev/howto/BGP-communities) for details:  
-```nginx
+```bird2
 define DN42_REGION = 52;   # 52 represents East Asia
 define DN42_COUNTRY= 1344; # 1344 represents Hong Kong
 ```
@@ -74,7 +74,7 @@ My logic for handling `BGP.local_pref` here references ~~(basically copies)~~ Xe
 * For routes received via direct peering with us, priority +20 additionally
 
 Create a function to calculate the priority:  
-```nginx
+```bird2
 function ebgp_calculate_priority() {
     int priority = 100;  # Base priority
 

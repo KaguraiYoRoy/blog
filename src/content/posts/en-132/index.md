@@ -75,7 +75,7 @@ You should have received the following information from your upstream:
 The operating system I use is Debian 12 Bookworm, using Bird2 as the routing software. I updated Bird2 to the latest version following the section "Update Bird2 to v2.16 or above" in [this article](https://www.iyoroy.cn/en/archives/103/). The upstream ASN Vultr gave me is 64515, the upstream BGP Session address is `2001:19f0:ffff::1`, and the VPS's BGP Session address is `2001:19f0:0006:0ff5:5400:05ff:fe96:881f`.
 
 My Bird2 configuration file is modified from the configuration file used in DN42:
-```nginx
+```bird2
 log syslog all;
 define OWNAS       = 205369; 
 define OWNIPv6     = 2a14:7583:f203::1; 

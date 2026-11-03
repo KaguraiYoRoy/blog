@@ -119,7 +119,7 @@ Please replace `100.64.0.225` and `100.64.0.226` with your local and peer IPv4 a
 # Enable OSPF
 _You should have already configured basic Bird settings as described in the previous article._  
 Create a new file called `ospf.conf` under `/etc/bird` and add the following:
-```nginx
+```bird2
 protocol ospf v3 <name> {
     ipv4 {
         import where is_self_net() && source != RTS_BGP;
@@ -148,7 +148,7 @@ protocol ospf v3 <name> {
 **Example**
 
 `/etc/bird/ospf.conf`
-```nginx
+```bird2
 protocol ospf v3 dn42_iyoroynet_ospf {
     ipv4 {
         import where is_self_net() && source != RTS_BGP;
@@ -172,7 +172,7 @@ protocol ospf v3 dn42_iyoroynet_ospf6 {
 
 
 Next, create the `/etc/bird/ospf` folder and then create an area configuration file (e.g., `/etc/bird/ospf/backbone.conf`) with the following content:
-```nginx
+```bird2
 area 0.0.0.0 {
     interface "<DN42 dummy interface>" { stub; };
     interface "<wg0 interface>" {
@@ -195,7 +195,7 @@ area 0.0.0.0 {
 **Example**
 
 `/etc/bird/ospf/backbone.conf`
-```nginx
+```bird2
 area 0.0.0.0 {
     interface "dn42" { stub; };
     interface "dn42_hkg" {
@@ -217,7 +217,7 @@ area 0.0.0.0 {
 
 
 Finally, open `/etc/bird/bird.conf` and add the following to include the OSPF configuration file at the end:
-```nginx
+```bird2
 include "ospf.conf";
 ```
 Run `birdc configure`, and then `birdc show protocols` should show the OSPF status as **Running**. If not, check the configuration steps for errors.
@@ -249,7 +249,7 @@ I haven't tried the latter two solutions. Here are some potentially useful refer
 
 ## Writing the iBGP Configuration File
 Create a new file `ibgp.conf` in `/etc/bird` and fill it with the following content:
-```nginx
+```bird2
 template bgp ibgpeers {
     local as OWNAS;
     ipv4 {
@@ -273,7 +273,7 @@ include "ibgp/*";
 * Because I want to use IPv6 addresses to establish MP-BGP and route IPv4 over IPv6, `extended next hop` is enabled for IPv4.
 
 Next, create the `/etc/bird/ibgp` directory. Inside, create an iBGP Peer configuration file for each node:
-```nginx
+```bird2
 protocol bgp 'dn42_ibgp_<Node Name>' from ibgpeers{
     neighbor <Corresponding Node's IPv6 ULA Address> as OWNAS;
 };
@@ -284,7 +284,7 @@ protocol bgp 'dn42_ibgp_<Node Name>' from ibgpeers{
 **Example**
 
 `/etc/bird/ibgp/hkg.conf`:
-```nginx
+```bird2
 protocol bgp 'dn42_ibgp_HKG' from ibgpeers{
     neighbor fd18:3e15:61d0::1 as OWNAS;
 };
@@ -298,7 +298,7 @@ Note:
 * Using ULA addresses reachable through OSPF allows iBGP to use another path if the direct WireGuard link fails, provided an alternative path remains available. ULA addressing alone does not provide redundancy.
 
 Finally, add the inclusion of `ibgp.conf` in `/etc/bird/bird.conf`:
-```nginx
+```bird2
 include "ibgp.conf";
 ```
 And run `birdc configure` to apply the configuration.

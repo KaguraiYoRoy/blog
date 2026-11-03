@@ -9,7 +9,7 @@ Astro 的 `site` 使用上述域名，`base` 保持 `/`。自定义域名不使�
 推送到 `main` 会触发 `.github/workflows/build.yml`：
 
 1. 使用 Node.js 22 和 `package.json` 中指定的 pnpm 版本安装锁定依赖。
-2. 运行 `node --test scripts/deploy-cn.test.mjs` 检查部署脚本。
+2. 运行 `node --test scripts/deploy-cn.test.mjs` 检查部署脚本，并运行 `node --test scripts/bird-highlighting.test.mjs` 检查 BIRD 配置高亮。
 3. 运行 `pnpm check`。
 4. 运行 `pnpm build`，生成静态页面和 Pagefind 搜索索引。
 5. 将 `dist/` 打包为 `github-pages` 构建产物。

@@ -197,7 +197,7 @@ Similarly, all routes destined for IANA will be tagged with:
 ```
 
 Within various protocols, this acts as a master switch, controlling whether export should occur. IANA upstream export filter:  
-```nginx
+```bird2
 template bgp iana_upstream_v6 {
 	...
 	
@@ -224,7 +224,7 @@ template bgp iana_upstream_v6 {
 ```
 
 Where `iana_filter_default_check()` is used to check prefix length, ROA, whether it is a default route, and other miscellaneous content:
-```nginx
+```bird2
 function iana_filter_default_check(){
     if net ~ [::/0] then return false;
     if net.len > 48 then return false;
@@ -235,7 +235,7 @@ function iana_filter_default_check(){
 ```
 
 `remove_confederation_as()`, as the name suggests, removes internal confederation ASes:
-```nginx
+```bird2
 function remove_confederation_as() {
     bgp_path.delete([4220240000..4220249999]); # 4242422024 Infrastructure
     bgp_path.delete([4233770000..4233779999]); # 4242423377 Infrastructure
@@ -243,7 +243,7 @@ function remove_confederation_as() {
 ```
 
 `remove_private_community()`, as the name suggests, removes internal Communities. The current implementation is very rough and needs detailed refinement later, because some Communities should be open to downstreams, allowing them to use Communities to convey routing intents and perform optimizations, such as prepending AS path, which can be used for route tuning or traffic engineering:
-```nginx
+```bird2
 function remove_private_community(){
     bgp_large_community.delete([(4242422024, *, *)]);
     bgp_large_community.delete([(205369, *, *)]);
@@ -251,7 +251,7 @@ function remove_private_community(){
 ```
 
 `iana_upstream_add_community()`, tags all routes from upstream with the Community allowing circulation in the IANA infrastructure, as well as a route source identifier:
-```nginx
+```bird2
 function iana_upstream_add_community(){
     bgp_large_community.add((205369,1,1));
     bgp_large_community.add((205369,2,102));
@@ -264,7 +264,7 @@ Where `(205369,2,102)` identifies the route as coming from an upstream. Route so
 Correspondingly in the current internal network, routes from peers are tagged `(205369,2,101)`, and routes from downstreams are tagged `(205369,2,100)`.
 
 `iana_upstream_check_community()` checks the route's Community, and based on the principles above, judges whether it should be advertised to upstream:
-```nginx
+```bird2
 function iana_upstream_check_community(){
     if !(bgp_large_community ~ [(205369,1,1)]) then return false;      # not permitted for broadcast in IANA infrastructure, reject
     if bgp_large_community ~ [(205369,65535,65282)] then return false; # no-advertise
