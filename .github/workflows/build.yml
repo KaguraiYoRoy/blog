@@ -41,6 +41,9 @@ jobs:
       - name: Test BIRD syntax highlighting
         run: node --test scripts/bird-highlighting.test.mjs
 
+      - name: Check stylesheet compilation
+        run: pnpm exec tailwindcss --input src/styles/global.css --output "$RUNNER_TEMP/blog-styles.css" --postcss
+
       - name: Check Astro
         run: pnpm check
 
