@@ -499,7 +499,7 @@ extra_routes:
 
 For the code, see: [bird2-config/ansible at dev · iYoRoy-Network/bird2-config](https://github.com/iYoRoy-Network/bird2-config/tree/dev/ansible)
 
-# Effects & Afterword
+# Effects
 
 For the prefix `2a14:7583:f220::/43` that I announce in the Asia region, I do not want it announced to the Europe region, nor do I want it announced to AS 6939. Therefore, on all machines announcing this block, I added:
 

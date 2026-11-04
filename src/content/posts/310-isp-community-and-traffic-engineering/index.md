@@ -454,7 +454,7 @@ extra_routes:
 ~~（其实这部分是我直接丢给 AI 让它帮我改我的 Ansible 模板的所以我说不好它模板是怎么渲染的（逃））~~  
 代码部分可以参考：[bird2-config/ansible at dev · iYoRoy-Network/bird2-config](https://github.com/iYoRoy-Network/bird2-config/tree/dev/ansible)
 
-# 效果 & 后记
+# 效果
 我在亚洲地区播出的前缀 `2a14:7583:f220::/43`，不希望它被播到欧洲地区，并且不希望它被播往 AS 6939，因此我在所有播这个段的机器上为其添加了：
 ```yml
 - [205369, COMM_FN_ONLY_REGION, GEO_REGION_ASIA_SOUTH]
