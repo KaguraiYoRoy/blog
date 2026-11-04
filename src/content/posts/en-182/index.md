@@ -93,8 +93,8 @@ PrivateKey = [Data Redacted]
 ListenPort = [Data Redacted]
 Table = off
 Address = fe80::2024/64
-+ PostUp = ip link set dev %i master dn42-vrf
-+ PostUp = ip addr add fe80::2024/64 dev %i
++PostUp = ip link set dev %i master dn42-vrf
++PostUp = ip addr add fe80::2024/64 dev %i
 PostUp = sysctl -w net.ipv6.conf.%i.autoconf=0
 
 [Peer]
@@ -115,12 +115,12 @@ ipv6 table dn42_table_v6
 Then, specify the VRF and system routing table number in the kernel protocol, and specify the previously created v4/v6 routing tables in the IPv4/IPv6 sections:  
 ```diff
 protocol kernel dn42_kernel_v6{
-+   vrf "dn42-vrf";
-+   kernel table 1042;
++    vrf "dn42-vrf";
++    kernel table 1042;
     scan time 20;
 
     ipv6 {
-+       table dn42_table_v6;
++        table dn42_table_v6;
         import none;
         export filter {
             if source = RTS_STATIC then reject;
@@ -131,12 +131,12 @@ protocol kernel dn42_kernel_v6{
 };
 
 protocol kernel dn42_kernel_v4{
-+   vrf "dn42-vrf";
-+   kernel table 1042;
++    vrf "dn42-vrf";
++    kernel table 1042;
     scan time 20;
 
     ipv4 {
-+       table dn42_table_v4;
++        table dn42_table_v4;
         import none;
         export filter {
             if source = RTS_STATIC then reject;
@@ -151,22 +151,22 @@ protocol kernel dn42_kernel_v4{
 For protocols other than kernel, add the VRF and the independent IPv4/IPv6 tables, but do not specify the system routing table number:  
 ```diff
 protocol static dn42_static_v4{
-+   vrf "dn42-vrf";
++    vrf "dn42-vrf";
     route DN42_OWNNET reject;
 
     ipv4 {
-+       table dn42_table_v4;
++        table dn42_table_v4;
         import all;
         export none;
     };
 }
 
 protocol static dn42_static_v6{
-+   vrf "dn42-vrf";
++    vrf "dn42-vrf";
     route DN42_OWNNETv6 reject;
 
     ipv6 {
-+       table dn42_table_v6;
++        table dn42_table_v6;
         import all;
         export none;
     };
@@ -181,10 +181,10 @@ Apply the same method to BGP, OSPF, etc. However, I chose to use separate Router
 ```diff
 # /etc/bird/dn42/ospf.conf
 protocol ospf v3 dn42_ospf_iyoroynet_v4 {
-+   vrf "dn42-vrf";
-+   router id DN42_OWNIP;
++    vrf "dn42-vrf";
++    router id DN42_OWNIP;
     ipv4 {
-+       table dn42_table_v4;
++        table dn42_table_v4;
         import where is_self_dn42_net() && source != RTS_BGP;
         export where is_self_dn42_net() && source != RTS_BGP;
     };
@@ -193,10 +193,10 @@ protocol ospf v3 dn42_ospf_iyoroynet_v4 {
 };
 
 protocol ospf v3 dn42_ospf_iyoroynet_v6 {
-+   vrf "dn42-vrf";
-+   router id DN42_OWNIP;
++    vrf "dn42-vrf";
++    router id DN42_OWNIP;
     ipv6 {
-+       table dn42_table_v6;
++        table dn42_table_v6;
         import where is_self_dn42_net_v6() && source != RTS_BGP;
         export where is_self_dn42_net_v6() && source != RTS_BGP;
     };
@@ -209,18 +209,18 @@ protocol ospf v3 dn42_ospf_iyoroynet_v6 {
 # /etc/bird/dn42/ebgp.conf
 ...
 template bgp dnpeers {
-+   vrf "dn42-vrf";
-+   router id DN42_OWNIP;
++    vrf "dn42-vrf";
++    router id DN42_OWNIP;
     local as DN42_OWNAS;
     path metric 1;
 
     ipv4 {
-+       table dn42_table_v4;
++        table dn42_table_v4;
         ...
     };
 
     ipv6 {
-+       table dn42_table_v6;
++        table dn42_table_v6;
         ...
     };
 }

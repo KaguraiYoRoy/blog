@@ -80,11 +80,11 @@ network:
                 search:
                 - [数据删除]
             set-name: eth0
-+           routes:
-+             - to: "default"
-+               via: "10.10.0.1"
-+               # 设置 metric=50，作为备选出口
-+               metric: 50
++            routes:
++              - to: "default"
++                via: "10.10.0.1"
++                # 设置 metric=50，作为备选出口
++                metric: 50
         eth1:
             addresses:
             - 10.20.1.31/16
@@ -100,11 +100,11 @@ network:
                 search:
                 - [数据删除]
             set-name: eth1
-+           routes:
-+             - to: "default"
-+               via: "10.20.0.1"
-+               # 设置 metric=25，作为优先出口
-+               metric: 25
++            routes:
++              - to: "default"
++                via: "10.20.0.1"
++                # 设置 metric=25，作为优先出口
++                metric: 25
 ```
 
 编写PBR配置：

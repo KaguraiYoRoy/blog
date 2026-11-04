@@ -46,20 +46,18 @@ define DN42_COUNTRY= 1344; # 1344代表香港
 
 随后在dnpeers模板中修改导出的过滤器：
 ```diff
-         };
- 
-         export filter {
--            if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then accept;
-+            if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then{ 
-+                if (is_self_net()) then {      # 检查是否是自己的路由
-+                    bgp_community.add((64511, DN42_REGION));  # 打上大洲级别的区域信息
-+                    bgp_community.add((64511, DN42_COUNTRY)); # 打上国家/地区信息
-+                }
-+                accept;
-+            }
-             reject;
-         };
-         import limit 1000 action block;
+export filter {
+-    if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then accept;
++    if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then{ 
++        if (is_self_net()) then {      # 检查是否是自己的路由
++            bgp_community.add((64511, DN42_REGION));  # 打上大洲级别的区域信息
++            bgp_community.add((64511, DN42_COUNTRY)); # 打上国家/地区信息
++        }
++        accept;
++    }
+    reject;
+};
+import limit 1000 action block;
 ```
 在导出时检查，如果是自己的路由则按照上面设置的`DN42_REGION`和`DN42_COUNTRY`为该路由设置bgp_community。其中，`64511`是**专门为地理标签（Region/Country）保留的公共AS号标识符**，直接照抄即可。在IPv6的导出规则中也如法炮制，不过将`is_self_net()`换成`is_self_net_v6()`即可。
 
@@ -106,7 +104,7 @@ template bgp dnpeers {
                     print "[dn42] ROA check failed for ", net, " ASN ", bgp_path.last;
                     reject;
                 }
-+               bgp_local_pref = ebgp_calculate_priority(); 
++                bgp_local_pref = ebgp_calculate_priority(); 
                 accept;
             }
             reject;

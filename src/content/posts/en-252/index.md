@@ -183,8 +183,8 @@ reload_service() {
 Change the `BIRD_CONF` value to `/etc/bird/bird.conf`:
 
 ```diff
-- BIRD_CONF="/etc/bird.conf"
-+ BIRD_CONF="/etc/bird/bird.conf"
+-BIRD_CONF="/etc/bird.conf"
++BIRD_CONF="/etc/bird/bird.conf"
 ```
 
 Then create the `/etc/bird` folder. All subsequent OSPF configuration files will be placed here.

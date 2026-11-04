@@ -241,21 +241,21 @@ Modify the SiteMap's Plugin.php:
 public static function activate()
 {
     Helper::addRoute(
--       'sitemap',
-+       'sitemap_index',
+-        'sitemap',
++        'sitemap_index',
         '/sitemap.xml',
         Generator::class,
--       'generate',
-+       'generate_index',
+-        'generate',
++        'generate_index',
         'index'
     );
-+   Helper::addRoute(
-+       'sitemap_cn',
-+       '/sitemap_cn.xml',
-+       Generator::class,
-+       'generate_cn',
-+       'index'
-+   );
++    Helper::addRoute(
++        'sitemap_cn',
++        '/sitemap_cn.xml',
++        Generator::class,
++        'generate_cn',
++        'index'
++    );
 }
 
 /**
@@ -263,9 +263,9 @@ public static function activate()
 */
 public static function deactivate()
 {
--   Helper::removeRoute('sitemap');
-+   Helper::removeRoute('sitemap_index');
-+   Helper::removeRoute('sitemap_cn');
+-    Helper::removeRoute('sitemap');
++    Helper::removeRoute('sitemap_index');
++    Helper::removeRoute('sitemap_cn');
 }
 ```
 
@@ -384,24 +384,24 @@ Modify the SiteMap's `Generator.php`:
 ```diff
 class Generator extends Contents
 {
-+   public function generate_index(){
-+       $sitemap = '<?xml version="1.0" encoding="UTF-8"?>
-+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-+ <sitemap>
-+   <loc>https://www.iyoroy.cn/sitemap_cn.xml</loc>
-+ </sitemap>
-+ <sitemap>
-+   <loc>https://www.iyoroy.cn/en/sitemap.xml</loc>
-+ </sitemap>
-+</sitemapindex>';
-+       $this->response->throwContent($sitemap, 'text/xml');
-+   }
++    public function generate_index(){
++        $sitemap = '<?xml version="1.0" encoding="UTF-8"?>
++ <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
++  <sitemap>
++    <loc>https://www.iyoroy.cn/sitemap_cn.xml</loc>
++  </sitemap>
++  <sitemap>
++    <loc>https://www.iyoroy.cn/en/sitemap.xml</loc>
++  </sitemap>
++ </sitemapindex>';
++        $this->response->throwContent($sitemap, 'text/xml');
++    }
 +
     /**
      * @return void
      */
--   public function generate()
-+   public function generate_cn()
+-    public function generate()
++    public function generate_cn()
     {
         $sitemap = '<?xml version="1.0" encoding="' . $this->options->charset . '"?>' . PHP_EOL;
 ...
@@ -604,18 +604,18 @@ Modify the function that retrieves view counts in `<webroot>/en/usr/themes/Joe/c
 /* Query Post Views */
 function _getViews($item, $type = true)
 {
-- $db = Typecho_Db::get();
-+ // $db = Typecho_Db::get();
+-  $db = Typecho_Db::get();
++  // $db = Typecho_Db::get();
 
-+ $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
-+ $db->addServer([
-+     'host' => 'mysql',
-+     'user' => 'typecho',
-+     'password' => '[CENSORED]',
-+     'charset' => 'utf8mb4',
-+     'port' => 3306,
-+     'database' => 'typecho'
-+ ], Typecho_Db::READ | Typecho_Db::WRITE);
++  $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
++  $db->addServer([
++      'host' => 'mysql',
++      'user' => 'typecho',
++      'password' => '[CENSORED]',
++      'charset' => 'utf8mb4',
++      'port' => 3306,
++      'database' => 'typecho'
++  ], Typecho_Db::READ | Typecho_Db::WRITE);
   
   $result = $db->fetchRow($db->select('views')->from('table.contents')->where('cid = ?', $item->cid))['views'];
   if ($type) echo number_format($result);
@@ -627,18 +627,18 @@ Modify the function that retrieves like counts in `<webroot>/en/usr/themes/Joe/c
 /* Query Post Like Count */
 function _getAgree($item, $type = true)
 {
-- $db = Typecho_Db::get();
-+ // $db = Typecho_Db::get();
+-  $db = Typecho_Db::get();
++  // $db = Typecho_Db::get();
 
-+ $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
-+ $db->addServer([
-+     'host' => 'mysql',
-+     'user' => 'typecho',
-+     'password' => '[CENSORED]',
-+     'charset' => 'utf8mb4',
-+     'port' => 3306,
-+     'database' => 'typecho'
-+ ], Typecho_Db::READ | Typecho_Db::WRITE);
++  $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
++  $db->addServer([
++      'host' => 'mysql',
++      'user' => 'typecho',
++      'password' => '[CENSORED]',
++      'charset' => 'utf8mb4',
++      'port' => 3306,
++      'database' => 'typecho'
++  ], Typecho_Db::READ | Typecho_Db::WRITE);
   
   $result = $db->fetchRow($db->select('agree')->from('table.contents')->where('cid = ?', $item->cid))['agree'];
   if ($type) echo number_format($result);
@@ -647,25 +647,25 @@ function _getAgree($item, $type = true)
 ```
 Modify the code displaying view counts on the homepage in `<webroot>/en/usr/themes/Joe/core/route.php`:
 ```diff
-        $result[] = array(
-            "mode" => $item->fields->mode ? $item->fields->mode : 'default',
-            "image" => _getThumbnails($item),
-            "time" => date('Y-m-d', $item->created),
-            "created" => date('d/m/Y', $item->created),
-            "title" => $item->title,
-            "abstract" => _getAbstract($item, false),
-            "category" => $item->categories,
--           "views" => number_format($item->views),
-+           // "views" => number_format($item->views),
-+           "views" => _getViews($item, false),
-            "commentsNum" => number_format($item->commentsNum),
--           "agree" => number_format($item->agree),
-+           // "agree" => number_format($item->agree),
-+           "agree" => _getAgree($item, false),
-            "permalink" => $item->permalink,
-            "lazyload" => _getLazyload(false),
-            "type" => "normal"
-        );
+$result[] = array(
+    "mode" => $item->fields->mode ? $item->fields->mode : 'default',
+    "image" => _getThumbnails($item),
+    "time" => date('Y-m-d', $item->created),
+    "created" => date('d/m/Y', $item->created),
+    "title" => $item->title,
+    "abstract" => _getAbstract($item, false),
+    "category" => $item->categories,
+-    "views" => number_format($item->views),
++    // "views" => number_format($item->views),
++    "views" => _getViews($item, false),
+    "commentsNum" => number_format($item->commentsNum),
+-    "agree" => number_format($item->agree),
++    // "agree" => number_format($item->agree),
++    "agree" => _getAgree($item, false),
+    "permalink" => $item->permalink,
+    "lazyload" => _getLazyload(false),
+    "type" => "normal"
+);
 ```
 The code displaying view counts on the article page itself already uses `_getViews`, so it doesn't need modification.  
 Modify the code that increments view counts:
@@ -681,17 +681,17 @@ function _handleViews($self)
     if (!preg_match('/^\d+$/',  $cid)) {
         return $self->response->throwJson(array("code" => 0, "data" => "Illegal request! Blocked!"));
     }
--   $db = Typecho_Db::get();  
-+   // $db = Typecho_Db::get();  
-+   $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
-+   $db->addServer([
-+       'host' => 'mysql',
-+       'user' => 'typecho',
-+       'password' => '[CENSORED]',
-+       'charset' => 'utf8mb4',
-+       'port' => 3306,
-+       'database' => 'typecho'
-+   ], Typecho_Db::READ | Typecho_Db::WRITE);
+-    $db = Typecho_Db::get();  
++    // $db = Typecho_Db::get();  
++    $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
++    $db->addServer([
++        'host' => 'mysql',
++        'user' => 'typecho',
++        'password' => '[CENSORED]',
++        'charset' => 'utf8mb4',
++        'port' => 3306,
++        'database' => 'typecho'
++    ], Typecho_Db::READ | Typecho_Db::WRITE);
     
     
     $row = $db->fetchRow($db->select('views')->from('table.contents')->where('cid = ?', $cid));
@@ -715,17 +715,17 @@ function _handleAgree($self)
     if (!preg_match('/^[agree|disagree]+$/', $type)) {
         return $self->response->throwJson(array("code" => 0, "data" => "Illegal request! Blocked!"));
     }
--   $db = Typecho_Db::get();
-+   // $db = Typecho_Db::get();  
-+   $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
-+   $db->addServer([
-+       'host' => 'mysql',
-+       'user' => 'typecho',
-+       'password' => '[CENSORED]',
-+       'charset' => 'utf8mb4',
-+       'port' => 3306,
-+       'database' => 'typecho'
-+   ], Typecho_Db::READ | Typecho_Db::WRITE);
+-    $db = Typecho_Db::get();
++    // $db = Typecho_Db::get();  
++    $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
++    $db->addServer([
++        'host' => 'mysql',
++        'user' => 'typecho',
++        'password' => '[CENSORED]',
++        'charset' => 'utf8mb4',
++        'port' => 3306,
++        'database' => 'typecho'
++    ], Typecho_Db::READ | Typecho_Db::WRITE);
   
     $row = $db->fetchRow($db->select('agree')->from('table.contents')->where('cid = ?', $cid));
     if (sizeof($row) > 0) {
@@ -750,35 +750,35 @@ class Intercept
     ...
     Typecho_Cookie::delete('__typecho_remember_text');
 +   
-+   $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
-+   $db->addServer([
-+       'host' => 'mysql',
-+       'user' => 'typecho_en',
-+       'password' => '[CENSORED]',
-+       'charset' => 'utf8mb4',
-+       'port' => 3306,
-+       'database' => 'typecho_en'
-+   ], Typecho_Db::READ | Typecho_Db::WRITE);
++    $db = new Typecho_Db('Mysql', 'typecho_' /* Prefix */);
++    $db->addServer([
++        'host' => 'mysql',
++        'user' => 'typecho_en',
++        'password' => '[CENSORED]',
++        'charset' => 'utf8mb4',
++        'port' => 3306,
++        'database' => 'typecho_en'
++    ], Typecho_Db::READ | Typecho_Db::WRITE);
 +   
-+   $row = [
-+       'coid'     => $comment['coid'], // Must include the newly generated comment ID
-+       'cid'      => $comment['cid'],
-+       'created'  => $comment['created'],
-+       'author'   => $comment['author'],
-+       'authorId' => $comment['authorId'],
-+       'ownerId'  => $comment['ownerId'],
-+       'mail'     => $comment['mail'],
-+       'url'      => $comment['url'],
-+       'ip'       => $comment['ip'],
-+       'agent'    => $comment['agent'],
-+       'text'     => $comment['text'],
-+       'type'     => $comment['type'],
-+       'status'   => $comment['status'],
-+       'parent'   => $comment['parent']
-+   ];
++    $row = [
++        'coid'     => $comment['coid'], // Must include the newly generated comment ID
++        'cid'      => $comment['cid'],
++        'created'  => $comment['created'],
++        'author'   => $comment['author'],
++        'authorId' => $comment['authorId'],
++        'ownerId'  => $comment['ownerId'],
++        'mail'     => $comment['mail'],
++        'url'      => $comment['url'],
++        'ip'       => $comment['ip'],
++        'agent'    => $comment['agent'],
++        'text'     => $comment['text'],
++        'type'     => $comment['type'],
++        'status'   => $comment['status'],
++        'parent'   => $comment['parent']
++    ];
 +
-+   // Insert data into the target database's `comments` table
-+   $db->query($db->insert('typecho_comments')->rows($row));
++    // Insert data into the target database's `comments` table
++    $db->query($db->insert('typecho_comments')->rows($row));
     return $comment;
   }
 }

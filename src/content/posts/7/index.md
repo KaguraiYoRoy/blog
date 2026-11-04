@@ -59,7 +59,7 @@ index 7684be360d98..69ea580fdb11 100644
  CONFIG_WCD9XXX_CODEC_CORE=y
  CONFIG_WCD_DSP_GLINK=y
  CONFIG_WCD_SPI_AC=y
-+CONFIG_EROFS_FS=y
++ CONFIG_EROFS_FS=y
 \ No newline at end of file
 ```
 
@@ -82,13 +82,13 @@ index cf73d39..700592f 100644
  BOARD_USERDATAIMAGE_PARTITION_SIZE := 57453555712
 
  BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
--BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
-+BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
+- BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := ext4
++ BOARD_ODMIMAGE_FILE_SYSTEM_TYPE := erofs
  BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
  BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
  BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
--BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
+- BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
++ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
 
  BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 
@@ -112,10 +112,10 @@ index 7aca90a..685ec84 100644
  system                                       /system                 ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
  system_ext                                   /system_ext             ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
  product                                      /product                ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
--vendor                                       /vendor                 ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
--odm                                          /odm                    ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
-+vendor                                       /vendor                 erofs   ro                                                                                                wait,logical,first_stage_mount
-+odm                                          /odm                    erofs   ro                                                                                                wait,logical,first_stage_mount
+- vendor                                       /vendor                 ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
+- odm                                          /odm                    ext4    ro,barrier=1,discard                                                                              wait,logical,first_stage_mount
++ vendor                                       /vendor                 erofs   ro                                                                                                wait,logical,first_stage_mount
++ odm                                          /odm                    erofs   ro                                                                                                wait,logical,first_stage_mount
  /dev/block/bootdevice/by-name/userdata       /data                   ext4    noatime,nosuid,nodev,barrier=0,noauto_da_alloc                                                    latemount,wait,check,fileencryption=ice,quota
  /dev/block/bootdevice/by-name/modem          /vendor/firmware_mnt    vfat    ro,shortname=lower,uid=0,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0         wait
  /dev/block/bootdevice/by-name/dsp            /vendor/dsp             ext4    ro,nosuid,nodev,barrier=1                                                                         wait

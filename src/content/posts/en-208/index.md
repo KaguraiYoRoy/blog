@@ -73,7 +73,7 @@ protocol kernel kernel_v4{
         import none;
         export filter {
             if source = RTS_STATIC then reject;
-+           if is_valid_dn42_network() then krt_prefsrc = DN42_OWNIP;
++            if is_valid_dn42_network() then krt_prefsrc = DN42_OWNIP;
             accept;
         };
     };
@@ -84,7 +84,7 @@ protocol kernel kernel_v6 {
         import none;
         export filter {
             if source = RTS_STATIC then reject;
-+           if is_valid_dn42_network_v6() then krt_prefsrc = DN42_OWNIPv6;
++            if is_valid_dn42_network_v6() then krt_prefsrc = DN42_OWNIPv6;
             accept;
         };
     };
@@ -101,14 +101,14 @@ Finally, during an unintentional attempt, I added the `krt_prefsrc` rewrite to t
 protocol ospf v3 dn42_ospf_iyoroynet_v4 {
     router id DN42_OWNIP;
     ipv4 {
--       import where is_self_dn42_net() && source != RTS_BGP;
-+       import filter {
-+           if is_self_dn42_net() && source != RTS_BGP then {
-+               krt_prefsrc=DN42_OWNIP;
-+               accept;
-+           }
-+           reject;
-+       };
+-        import where is_self_dn42_net() && source != RTS_BGP;
++        import filter {
++            if is_self_dn42_net() && source != RTS_BGP then {
++                krt_prefsrc=DN42_OWNIP;
++                accept;
++            }
++            reject;
++        };
         export where is_self_dn42_net() && source != RTS_BGP;
     };
 
@@ -118,14 +118,14 @@ protocol ospf v3 dn42_ospf_iyoroynet_v4 {
 protocol ospf v3 dn42_ospf_iyoroynet_v6 {
     router id DN42_OWNIP;
     ipv6 {
--       import where is_self_dn42_net_v6() && source != RTS_BGP;
-+       import filter {
-+           if is_self_dn42_net_v6() && source != RTS_BGP then {
-+               krt_prefsrc=DN42_OWNIPv6;
-+               accept;
-+           }
-+           reject;
-+       };
+-        import where is_self_dn42_net_v6() && source != RTS_BGP;
++        import filter {
++            if is_self_dn42_net_v6() && source != RTS_BGP then {
++                krt_prefsrc=DN42_OWNIPv6;
++                accept;
++            }
++            reject;
++        };
         export where is_self_dn42_net_v6() && source != RTS_BGP;
     };
 

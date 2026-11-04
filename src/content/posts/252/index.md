@@ -171,8 +171,8 @@ reload_service() {
 修改 `BIRD_CONF` 值为 `/etc/bird/bird.conf`:
 
 ```diff
-- BIRD_CONF="/etc/bird.conf"
-+ BIRD_CONF="/etc/bird/bird.conf"
+-BIRD_CONF="/etc/bird.conf"
++BIRD_CONF="/etc/bird/bird.conf"
 ```
 
 然后新建 `/etc/bird`文件夹, 之后的 OSPF 配置文件全都放在这里.

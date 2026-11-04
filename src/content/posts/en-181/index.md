@@ -81,11 +81,11 @@ network:
                 search:
                 - [REDACTED]
             set-name: eth0
-+           routes:
-+             - to: "default"
-+               via: "10.10.0.1"
-+               # Set metric=50 as the backup exit
-+               metric: 50
++            routes:
++              - to: "default"
++                via: "10.10.0.1"
++                # Set metric=50 as the backup exit
++                metric: 50
         eth1:
             addresses:
             - 10.20.1.31/16
@@ -101,11 +101,11 @@ network:
                 search:
                 - [REDACTED]
             set-name: eth1
-+           routes:
-+             - to: "default"
-+               via: "10.20.0.1"
-+               # Set metric=25 as the preferred exit
-+               metric: 25
++            routes:
++              - to: "default"
++                via: "10.20.0.1"
++                # Set metric=25 as the preferred exit
++                metric: 25
 ```
 
 Create the PBR configuration:  

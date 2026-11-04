@@ -43,14 +43,6 @@ Refer to the following two commits:
 * https://github.com/OnlyTomInSecond/android_kernel_xiaomi_sdm845/commit/7862fd2c14b69a1a346b7c699f8370e2de423eef
 
 ```diff
-commit b5853fb7cefdc8a2e160cb73512dc6b51569fa66
-Author: OnlyTomInSecond <q2781273965@gmail.com>
-Date:   Wed Apr 5 11:05:12 2023 +0800
-
-    kernelsu: allow init exec ksud under nosuid
-
-    Change-Id: I8aa6e6d3cbee1addd5da9bb48b4c08ce91f9db81
-
 diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
 index 4abba0e1674d..693f2ac03352 100644
 --- a/security/selinux/hooks.c
@@ -90,14 +82,6 @@ index 4abba0e1674d..693f2ac03352 100644
 * https://github.com/OnlyTomInSecond/android_kernel_xiaomi_sdm845/commit/81d7168f2f01e6aba0932a4787119fbc541eba58
 
 ```diff
-commit 8bfe4d4de25650505798cba0a5a20db4b2ab7dd6
-Author: OnlyTomInSecond <q2781273965@gmail.com>
-Date:   Thu Oct 19 17:55:23 2023 +0800
-
-    Kernelsu: add path_umount implementation.
-
-    Change-Id: I3b0273e9857c51cc3215afab0d2cebe0dff38cfb
-
 diff --git a/fs/namespace.c b/fs/namespace.c
 index 21fd423b19cf..219a501337b0 100644
 --- a/fs/namespace.c
@@ -172,15 +156,7 @@ Download [AnyKernel3](https://github.com/osm0sis/AnyKernel3) and modify anykerne
 **Expand Code**
 
 ```diff
-commit 3b46e03e0ffdd52bbb3f51b45b0ff649a407d1a5
-Author: KaguraiYoRoy <3363384229@qq.com>
-Date:   Sat Sep 9 02:41:54 2023 +0000
-
-    anykernel.sh: modify for equuleus
-
 diff --git a/anykernel.sh b/anykernel.sh
-old mode 100755
-new mode 100644
 index 367d29f..c950ce7
 --- a/anykernel.sh
 +++ b/anykernel.sh

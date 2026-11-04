@@ -228,25 +228,25 @@ zone:
 ```diff
 --- a/knot.conf
 +++ b/knot.conf
- zone:
-   - domain: <DN42 域名>
--    notify: [ <从服务器1ID>, <从服务器2ID> ]
--    acl: [ acl_slave, acl_knsupdate ]
-+    master: <主服务器ID>
-+    zonefile-load: whole
-+    acl: acl_master
-   - domain: <IPv4反向解析域名>
--    notify: [ <从服务器1ID>, <从服务器2ID> ]
--    acl: [ acl_slave, acl_knsupdate ]
-+    master: <主服务器ID>
-+    zonefile-load: whole
-+    acl: acl_master
-   - domain: <IPv6反向解析域名>
--    notify: [ <从服务器1ID>, <从服务器2ID> ]
--    acl: [ acl_slave, acl_knsupdate ]
-+    master: <主服务器ID>
-+    zonefile-load: whole
-+    acl: acl_master
+zone:
+  - domain: <DN42 域名>
+-   notify: [ <从服务器1ID>, <从服务器2ID> ]
+-   acl: [ acl_slave, acl_knsupdate ]
++   master: <主服务器ID>
++   zonefile-load: whole
++   acl: acl_master
+  - domain: <IPv4反向解析域名>
+-   notify: [ <从服务器1ID>, <从服务器2ID> ]
+-   acl: [ acl_slave, acl_knsupdate ]
++   master: <主服务器ID>
++   zonefile-load: whole
++   acl: acl_master
+  - domain: <IPv6反向解析域名>
+-   notify: [ <从服务器1ID>, <从服务器2ID> ]
+-   acl: [ acl_slave, acl_knsupdate ]
++   master: <主服务器ID>
++   zonefile-load: whole
++   acl: acl_master
 ```
 
 * 主服务器ID即`remote`里设置的服务器的ID，你选定哪台机器作为主服务器就填写哪台服务器的ID

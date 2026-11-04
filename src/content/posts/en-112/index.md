@@ -225,25 +225,25 @@ The configuration for slave nodes is largely similar to the master node. Just ch
 ```diff
 --- a/knot.conf
 +++ b/knot.conf
- zone:
-   - domain: <DN42 Domain>
--    notify: [ <Slave_Node_1_ID>, <Slave_Node_2_ID> ]
--    acl: [ acl_slave, acl_knsupdate ]
-+    master: <Master_Node_ID>
-+    zonefile-load: whole
-+    acl: acl_master
-   - domain: <IPv4 Reverse Lookup Domain>
--    notify: [ <Slave_Node_1_ID>, <Slave_Node_2_ID> ]
--    acl: [ acl_slave, acl_knsupdate ]
-+    master: <Master_Node_ID>
-+    zonefile-load: whole
-+    acl: acl_master
-   - domain: <IPv6 Reverse Lookup Domain>
--    notify: [ <Slave_Node_1_ID>, <Slave_Node_2_ID> ]
--    acl: [ acl_slave, acl_knsupdate ]
-+    master: <Master_Node_ID>
-+    zonefile-load: whole
-+    acl: acl_master
+zone:
+  - domain: <DN42 Domain>
+-   notify: [ <Slave_Node_1_ID>, <Slave_Node_2_ID> ]
+-   acl: [ acl_slave, acl_knsupdate ]
++   master: <Master_Node_ID>
++   zonefile-load: whole
++   acl: acl_master
+  - domain: <IPv4 Reverse Lookup Domain>
+-   notify: [ <Slave_Node_1_ID>, <Slave_Node_2_ID> ]
+-   acl: [ acl_slave, acl_knsupdate ]
++   master: <Master_Node_ID>
++   zonefile-load: whole
++   acl: acl_master
+  - domain: <IPv6 Reverse Lookup Domain>
+-   notify: [ <Slave_Node_1_ID>, <Slave_Node_2_ID> ]
+-   acl: [ acl_slave, acl_knsupdate ]
++   master: <Master_Node_ID>
++   zonefile-load: whole
++   acl: acl_master
 ```
 
 * The Master Node ID is the ID set in the remote section for the server you designated as the master node.

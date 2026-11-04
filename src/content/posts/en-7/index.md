@@ -43,14 +43,6 @@ Before picking the commits, you need to resolve conflicts in the lz4 compression
 After picking the changes, enable erofs support in the kernel's defconfig file:  
 Open `$KERNEL_SOURCE/arch/arm64/configs/vendor/xiaomi/mi845_defconfig` and add: `CONFIG_EROFS_FS=y`:
 ```diff
-commit 7ae5caab2c15982b3d3821c97e2f2e6126ca1281 (HEAD -> erofs, refs/published/erofs)
-Author: KaguraiYoRoy <neko@yori.moe>
-Date:   Tue Dec 24 22:49:07 2024 +0800
-
-    arch: arm64: configs: mi845: Enable CONFIG_EROFS_FS
-
-    Change-Id: Ie387b03bde54700d73ccf19f0baf4db62526cc8f
-
 diff --git a/arch/arm64/configs/vendor/xiaomi/mi845_defconfig b/arch/arm64/configs/vendor/xiaomi/mi845_defconfig
 index 7684be360d98..69ea580fdb11 100644
 --- a/arch/arm64/configs/vendor/xiaomi/mi845_defconfig
@@ -66,14 +58,6 @@ index 7684be360d98..69ea580fdb11 100644
 ## Modifying Partition Filesystems and Fstab
 Open the board configuration file in the device tree and change the filesystem type for the partitions you want to convert to `erofs`. The example configuration file is located at `$WORKING_DIR/device/xiaomi/sdm845-common/BoardConfigCommon.mk`:  
 ```diff
-commit 0fce86fb40ca637a8563bef6192afaea1658c881 (HEAD -> erofs, refs/published/erofs)
-Author: KaguraiYoRoy <neko@yori.moe>
-Date:   Tue Dec 24 23:37:50 2024 +0800
-
-    sdm845-common: Switch to erofs
-
-    Change-Id: I9a8d6de4dcb79cd6bc177451ce3cbc4682748501
-
 diff --git a/BoardConfigCommon.mk b/BoardConfigCommon.mk
 index cf73d39..700592f 100644
 --- a/BoardConfigCommon.mk
@@ -96,14 +80,6 @@ index cf73d39..700592f 100644
 
 Modify the device's fstab file, located here at `$WORKING_DIR/device/xiaomi/equuleus/rootdir/fstab.qcom`. Change the filesystem type for the relevant partitions to `erofs`, and reduce the mount parameters to just `ro`:  
 ```diff
-commit d66bfc8fe722f7368ef56835d35fb88b904e10fb (HEAD -> erofs, refs/published/erofs)
-Author: KaguraiYoRoy <neko@yori.moe>
-Date:   Tue Dec 24 23:40:08 2024 +0800
-
-    equuleus: Update fstab for erofs
-
-    Change-Id: I814eab1dd77cf2c184ebd398cc4914785bc37ad6
-
 diff --git a/rootdir/etc/fstab.qcom b/rootdir/etc/fstab.qcom
 index 7aca90a..685ec84 100644
 --- a/rootdir/etc/fstab.qcom

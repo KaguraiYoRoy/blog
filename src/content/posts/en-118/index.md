@@ -47,20 +47,18 @@ define DN42_COUNTRY= 1344; # 1344 represents Hong Kong
 
 Then, modify the export filter in the dnpeers template:  
 ```diff
-         };
-
-         export filter {
--            if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then accept;
-+            if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then{
-+                if (is_self_net()) then {      # Check if it's our own route
-+                    bgp_community.add((64511, DN42_REGION));  # Add continent-level region info
-+                    bgp_community.add((64511, DN42_COUNTRY)); # Add country/region info
-+                }
-+                accept;
-+            }
-             reject;
-         };
-         import limit 1000 action block;
+export filter {
+-    if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then accept;
++    if is_valid_network() && source ~ [RTS_STATIC, RTS_BGP] then{
++        if (is_self_net()) then {      # Check if it's our own route
++            bgp_community.add((64511, DN42_REGION));  # Add continent-level region info
++            bgp_community.add((64511, DN42_COUNTRY)); # Add country/region info
++        }
++        accept;
++    }
+    reject;
+};
+import limit 1000 action block;
 ```
 During export, it checks if it's our own route. If it is, it sets the `bgp_community` according to the defined `DN42_REGION` and `DN42_COUNTRY`. Here, `64511` is the **reserved public AS number identifier specifically for geographic tags (Region/Country)**; you can just copy it. Apply the same method to the IPv6 export rules, but replace `is_self_net()` with `is_self_net_v6()`.
 
@@ -107,7 +105,7 @@ template bgp dnpeers {
                     print "[dn42] ROA check failed for ", net, " ASN ", bgp_path.last;
                     reject;
                 }
-+               bgp_local_pref = ebgp_calculate_priority(); 
++                bgp_local_pref = ebgp_calculate_priority(); 
                 accept;
             }
             reject;
