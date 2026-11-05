@@ -11,6 +11,8 @@ const sortedPostsList = await getSortedPostsList(locale);
 ---
 
 <MainGridLayout title={i18n(I18nKey.archive, locale)} lang={locale}>
-    <ArchivePanel sortedPosts={sortedPostsList} client:only="svelte"></ArchivePanel>
+	<div class="onload-animation">
+		<ArchivePanel sortedPosts={sortedPostsList} client:only="svelte"></ArchivePanel>
+	</div>
 </MainGridLayout>
 

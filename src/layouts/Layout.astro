@@ -87,6 +87,14 @@ const bannerOffset =
 	  data-overlayscrollbars-initialize
 >
 	<head>
+		<script is:inline>
+			document.documentElement.classList.add("animations-pending");
+			const startShellAnimations = () => {
+				document.documentElement.classList.remove("animations-pending");
+			};
+			document.addEventListener("swup:enable", startShellAnimations, { once: true });
+			window.addEventListener("load", () => window.setTimeout(startShellAnimations, 5000), { once: true });
+		</script>
 
 		<title>{pageTitle}</title>
 
@@ -153,6 +161,14 @@ const bannerOffset =
 			'page-width': `${PAGE_WIDTH}rem`,
 		}}></style>  <!-- defines global css variables. This will be applied to <html> <body> and some other elements idk why -->
 
+		<script is:inline>
+			document.addEventListener("animationend", (event) => {
+				const element = event.target;
+				if (element instanceof HTMLElement && event.animationName === "fade-in-up") {
+					element.classList.remove("onload-animation");
+				}
+			}, true);
+		</script>
 
 		<slot name="head"></slot>
 

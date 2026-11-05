@@ -6,5 +6,7 @@ import { getSortedPostsList } from "../../utils/content-utils";
 const sortedPostsList = await getSortedPostsList("en_US");
 ---
 <MainGridLayout title="Archive" lang="en_US">
-	<ArchivePanel sortedPosts={sortedPostsList} client:only="svelte"></ArchivePanel>
+	<div class="onload-animation">
+		<ArchivePanel sortedPosts={sortedPostsList} client:only="svelte"></ArchivePanel>
+	</div>
 </MainGridLayout>
