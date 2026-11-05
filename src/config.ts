@@ -38,8 +38,8 @@ export const siteConfig: SiteConfig = {
 	},
 	favicon: [
 		{
-			src: "/favicon.png",
-			sizes: "640x640",
+			src: "/favicon-128.png",
+			sizes: "128x128",
 		},
 	],
 };

@@ -21,7 +21,7 @@ body {
     pointer-events: none;
     background-image:
         linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.22)),
-        url("/site-background.jpg");
+        url("/site-background.webp");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -41,7 +41,7 @@ body > #top-row {
 .dark .site-background {
     background-image:
         linear-gradient(rgba(19, 14, 18, 0.42), rgba(19, 14, 18, 0.42)),
-        url("/site-background.jpg");
+        url("/site-background.webp");
 }
 
 @media (max-width: 767px) {
