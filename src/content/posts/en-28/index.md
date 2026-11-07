@@ -2,7 +2,7 @@
 title: "Installing 1Panel Using Docker on TrueNAS"
 published: 2025-03-07T05:18:00.000Z
 updated: 2025-11-09T15:03:30.000Z
-description: "Running 1Panel in Docker on TrueNAS to manage the host's Docker service, with notes on directory mappings, registry mirrors, and container startup failures."
+description: " A step-by-step guide on installing the 1Panel control panel using Docker on TrueNAS, covering environment setup, Docker Compose configuration, and solutions for common issues like mirror sources and container startup errors."
 image: ""
 tags: ["Linux", "TrueNAS", "Docker", "Web", "1Panel"]
 category: "NAS"

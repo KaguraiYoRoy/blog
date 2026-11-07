@@ -2,7 +2,7 @@
 title: "DN42 - Ep.3 Registering a Domain and Setting Up Authoritative DNS in DN42"
 published: 2025-08-03T13:22:00.000Z
 updated: 2026-03-15T04:47:13.000Z
-description: "Registering a DN42 domain and setting up primary and secondary Knot DNS servers, including forward zones, IPv4/IPv6 reverse zones, and Registry entries."
+description: "A step-by-step guide on how to register your own domain in the DN42 network and set up authoritative DNS servers using KnotDNS, including configuration for forward and reverse (IPv4/IPv6) lookups."
 image: ""
 tags: ["DNS", "DN42", "BGP", "Network Technology"]
 category: "Network"

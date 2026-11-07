@@ -2,7 +2,7 @@
 title: "DN42&OneManISP - Using VRF to Run Clearnet BGP and DN42 on the Same Machine"
 published: 2025-09-16T14:47:00.000Z
 updated: 2026-01-05T03:23:30.000Z
-description: "Trying VRF to separate DN42 and clearnet routing on one VPS, with interface, WireGuard, and BIRD configuration and notes on access to services on the host."
+description: "A guide on using VRF to isolate DN42 and public BGP routing on a single machine, including configuration steps for Linux network interfaces, WireGuard tunnels, and Bird2."
 image: ""
 tags: ["BGP", "BIRD", "Network Technology", "OSPF", "Interior Gateway Protocol", "VRF"]
 category: "Network"
@@ -21,9 +21,9 @@ Although DN42 uses private IP ranges and internal ASNs, which theoretically shou
 
 VRF (Virtual Routing and Forwarding) allows creating multiple routing tables on a single machine. This means we can isolate DN42 routes into a separate routing table, keeping them apart from the clearnet routing table. The advantages include:  
 
-* **Route and Policy Isolation**: Separate tables reduce the chance of mixing DN42 and clearnet routes. Route leaks still depend on BIRD's import/export filters and any cross-table configuration; VRF alone cannot guarantee security.
+* **Absolute Security and Policy Isolation**: The DN42 routing table is isolated from the clearnet routing table, fundamentally preventing route leaks.
 * **Clear Operation and Management**: Use commands like `birdc show route table t_dn42` and `birdc show route table t_inet` to view and debug two completely independent routing tables, making things clear at a glance.
-* **Reduced Interaction Between Routing Domains**: Changes caused by a flapping DN42 peer can remain in its routing table, but both domains still share the host's CPU, memory, and interfaces. Their performance and failures are not fully isolated.
+* **Fault Domain Isolation**: If a DN42 peer flaps, the impact is confined to the dn42 routing table. It won't consume routing computation resources for the clearnet instance nor affect clearnet forwarding performance.
 * **Alignment with Modern Network Design Principles**: Using VRF for different routing domains (production, testing, customer, partner) is standard practice in modern network engineering. It logically divides your device into multiple virtual routers.
 
 # Configuration

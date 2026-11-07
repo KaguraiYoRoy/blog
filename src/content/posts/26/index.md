@@ -2,7 +2,7 @@
 title: "小米845系列机器类原生调用红外摄像头进行人脸识别"
 published: 2025-03-06T14:57:00.000Z
 updated: 2025-06-27T03:29:14.000Z
-description: "排查小米 845 系列设备在类原生 ROM 下无法使用红外人脸识别的问题，分析 Camera ID、辅助摄像头访问限制和 ParanoidSense 属性配置。"
+description: "使小米845系列机器类原生能够调用红外摄像头以进行人脸识别"
 image: ""
 tags: ["Android", "AOSP", "caf/clo"]
 category: "Android"

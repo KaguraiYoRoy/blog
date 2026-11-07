@@ -2,7 +2,7 @@
 title: "Cross-Platform Service Programming Diary Ep.2 - Inter-Process Communication (IPC)"
 published: 2025-05-19T03:54:00.000Z
 updated: 2025-11-22T09:27:14.000Z
-description: "Adding IPC to a cross-platform C++ service with Windows named pipes and Linux Unix-domain sockets, including listener, sender, cleanup code, and a demo project."
+description: "Learn how to implement cross-platform Inter-Process Communication (IPC) in C++. This guide covers using Named Pipes on Windows and UNIX sockets on Linux for bidirectional messaging, complete with code examples and demonstration screenshots."
 image: ""
 tags: ["C&C++", "Linux", "Windows", "MSVC", "STL", "Services", "IPC"]
 category: "Develop"

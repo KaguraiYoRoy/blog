@@ -2,7 +2,7 @@
 title: "DN42探究日记 - Ep.3 在DN42中注册域名并搭建权威DNS"
 published: 2025-08-03T13:22:00.000Z
 updated: 2026-03-15T04:31:50.000Z
-description: "在 DN42 注册域名并用 Knot DNS 搭建主从权威 DNS，配置正向解析和 IPv4、IPv6 反向解析，记录区域文件与 Registry 条目的写法。"
+description: "本文详细指导如何在DN42网络注册专属域名并搭建高性能Knot DNS权威服务器，涵盖主从同步配置、IPv4/IPv6反向解析设置，以及DN42 Registry提交规范。通过轻量级DNS方案解决服务器资源限制问题，实现节点IP的PTR反向解析，完整展示从区域文件编写到官方注册的全流程操作指南，适合网络技术爱好者实践参考。"
 image: ""
 tags: ["DNS", "DN42", "BGP", "网络技术"]
 category: "网络技术"

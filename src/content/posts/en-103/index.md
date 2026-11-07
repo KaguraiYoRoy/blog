@@ -2,7 +2,7 @@
 title: "DN42 - Ep.2 Building Internal Network with OSPF and Enabling iBGP"
 published: 2025-07-22T05:46:00.000Z
 updated: 2026-01-23T16:18:15.000Z
-description: "Connecting DN42 nodes with WireGuard and dual-stack OSPFv3, then exchanging external routes over full-mesh iBGP, with notes on link-local addressing and BIRD configuration."
+description: "Learn how to configure internal routing with OSPF and iBGP in a DN42 network. This guide covers WireGuard, Bird2, and setting up iBGP to ensure optimal routing between nodes in an autonomous system (AS). Perfect for networking enthusiasts and beginners."
 image: ""
 tags: ["DN42", "Network Technology", "IGP", "OSPF", "Interior Gateway Protocol", "iBGP"]
 category: "Network"
@@ -238,9 +238,9 @@ iBGP ensures that all routers within the AS have complete knowledge of external 
 * Compared to using a default route pointing to the border router within the AS, iBGP provides precise external route information, allowing internal routers to make more intelligent forwarding decisions.
 
 ## Disadvantages and Solutions
-Ordinary iBGP does not readvertise a route learned from one iBGP neighbor to another. Without route reflection, confederations, or a similar mechanism, this requires **a full mesh of iBGP sessions**. For n nodes, that is $\frac{n(n-1)}{2}$ sessions ~~although configuring them is still easier than configuring tunnels once OSPF is set up~~.  
+To prevent uncontrolled propagation of routing information within the AS, which could cause loops, an iBGP router will not readvertise routes learned from one iBGP neighbor to other iBGP neighbors. This necessitates that traditional iBGP requires **a full mesh of iBGP neighbor relationships** between all iBGP-running routers within the same AS. (You still need to establish $\frac{n(n+1)}{2}$ connections ~~, there's no way around it. But configuring iBGP is still easier than configuring tunnels after OSPF is set up~~ ).  
 Solutions include:  
-1. Using a **Route Reflector (RR)** to reflect iBGP routes and reduce the number of sessions. A single RR introduces a failure risk, but multiple RRs can provide redundancy; the impact of an outage also depends on topology and route retention.
+1. Using a **Route Reflector (RR)**: An RR router manages all routing information within the entire AS. The disadvantage is that if the RR router fails, the entire network can be paralyzed (which is not very Decentralized).
 2. Using **BGP Confederation**: This involves virtually dividing the routers within the AS into sub-ASes, treating the connections between routers as eBGP, and finally stripping the internal AS path information when advertising routes externally.  
 
 I haven't tried the latter two solutions. Here are some potentially useful reference articles. This article focuses on the configuration of iBGP.
@@ -269,7 +269,7 @@ include "ibgp/*";
 ```
 
 * The import and export filters ensure that iBGP only processes routes learned via the BGP protocol and filters out IGP routes to prevent loops.
-* This topology does not distribute external neighbors' addresses internally, so it needs `next hop self` to make the border router the next hop reachable through the IGP. It is not mandatory in every iBGP deployment; the requirement is that the next hop can be resolved and reached.
+* `next hop self` is **required**. It instructs BIRD to rewrite the next hop to the border router's own IP address (instead of the original external next hop) when exporting routes to iBGP neighbors. This is because internal routers cannot directly access the external neighbor's address; without rewriting, the address would be considered unreachable. After rewriting, internal routers only need to send traffic to the border router via IGP routing, and the border router handles the final external forwarding.
 * Because I want to use IPv6 addresses to establish MP-BGP and route IPv4 over IPv6, `extended next hop` is enabled for IPv4.
 
 Next, create the `/etc/bird/ibgp` directory. Inside, create an iBGP Peer configuration file for each node:
@@ -295,7 +295,7 @@ protocol bgp 'dn42_ibgp_HKG' from ibgpeers{
 
 Note:
 * Each node needs to establish (n-1) iBGP connections, ensuring connectivity with all other machines within the AS. This is why ULA addresses are used.
-* Using ULA addresses reachable through OSPF allows iBGP to use another path if the direct WireGuard link fails, provided an alternative path remains available. ULA addressing alone does not provide redundancy.
+* Using ULA addresses ensures that even if the WireGuard connection between two nodes goes down, iBGP can still establish connections via the internal routing established by OSPF. Otherwise, it could lead to the collapse of the entire internal network.
 
 Finally, add the inclusion of `ibgp.conf` in `/etc/bird/bird.conf`:
 ```bird2

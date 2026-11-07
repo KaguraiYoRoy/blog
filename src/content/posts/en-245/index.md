@@ -2,7 +2,7 @@
 title: "PolarCTF 2025 Winter Competition Web Polarflag WriteUp  "
 published: 2025-12-06T23:55:00.000Z
 updated: 2025-12-06T23:55:30.000Z
-description: "Solving Polarflag from PolarCTF 2025 Winter through directory scanning, source analysis, password cracking, an MD5 check bypass, and command injection."
+description: "This article details the complete solution process for the PolarCTF 2025 Winter Web challenge \"Polarflag\", covering directory scanning, code analysis, password brute-forcing, MD5 bypass, and command injection techniques to ultimately capture the flag."
 image: ""
 tags: []
 category: "Projects"

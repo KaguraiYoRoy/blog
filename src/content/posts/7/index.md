@@ -2,7 +2,7 @@
 title: "记一次为Android 4.9内核的ROM启用erofs支持"
 published: 2024-12-25T15:26:00.000Z
 updated: 2025-11-05T14:26:49.000Z
-description: "给小米 8 屏幕指纹版的 Linux 4.9 内核移植 EROFS 支持，并修改 LineageOS 设备树中的分区文件系统和 fstab，记录编译与启动时遇到的问题。"
+description: "为Android 4.9内核的ROM启用erofs支持"
 image: ""
 tags: ["Android", "AOSP", "Kernel"]
 category: "Android"

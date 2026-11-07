@@ -2,7 +2,7 @@
 title: "DN42&OneManISP - 联邦, 自动化, IPAM 与 Overlay Network"
 published: 2026-07-24T10:56:00.000Z
 updated: 2026-08-06T23:18:01.000Z
-description: "重构同时承载 DN42 与公网流量的内网，用 BGP 联邦、IPAM 和 Large Community 管理路由，再通过节点元数据与 Ansible 生成 WireGuard、BIRD 配置。"
+description: "本文深入记录了作者如何将复杂的 DN42 与 IANA 多自治域网络进行一次彻底重构：使用 BGP 联邦替代 Full-mesh iBGP，通过 Underlay/Overlay 分离实现地址资源灵活调度，并基于节点元数据（Tier/Region/Token）自动派生出 AS 号、Loopback 与链路本地地址。全文详细展示了如何将高层对等意图用 Ansible 编译为 WireGuard 与 BIRD 配置，利用 BGP Large Community 构建跨域策略隔离体系，是个人 ISP、家庭实验室及网络自动化爱好者不可多得的实战参考。"
 image: ""
 tags: ["DN42", "BGP", "BIRD", "IGP", "iBGP", "Clearnet", "Anycast", "Prefix", "IANA", "ISP", "BGP 联邦", "BGP Community", "WireGuard", "Ansible", "自动化"]
 category: "网络技术"

@@ -2,7 +2,7 @@
 title: "OneManISP - Ep.1 注册一个ASN"
 published: 2025-08-18T09:49:00.000Z
 updated: 2025-08-20T16:01:31.000Z
-description: "记录通过 LIR 申请 RIPE ASN 的经历，包括准备材料、创建 RIPE Database 对象，以及理解 ASN、IP 地址资源和路由对象之间的关系。"
+description: "本文详细介绍了如何通过LIR在RIPE NCC注册ASN，包括准备所需材料、创建RIPE数据库对象（如organisation、role、maintainer）、支付费用及提交证明，并说明如何创建route和route6对象以发布BGP路由。同时梳理了ASN、IP资源与路由对象在RIPE数据库中的关系，适合想要申请个人ASN的读者参考。"
 image: ""
 tags: ["BGP", "BIRD", "网络技术", "Clearnet", "ASN"]
 category: "网络技术"

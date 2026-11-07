@@ -2,7 +2,7 @@
 title: "Docker下中心化部署EasyTier"
 published: 2025-04-14T17:04:00.000Z
 updated: 2025-07-29T02:28:29.000Z
-description: "通过 Docker Compose 部署 EasyTier 的配置服务和 Web 控制台，配合 HTTPS 反向代理，集中管理各个节点的配置。"
+description: "Docker下中心化部署EasyTier"
 image: ""
 tags: ["Linux", "EasyTier", "Docker"]
 category: "运维"

@@ -2,7 +2,7 @@
 title: "Querying DNS Records Using WINAPI in C++"
 published: 2025-03-20T09:33:00.000Z
 updated: 2026-02-21T09:00:38.000Z
-description: "Querying DNS TXT records with Windows DnsQuery in C++ and decoding their Base64 content to discover alternative API endpoints."
+description: "Learn how to query DNS TXT records using C++ and the Windows WINAPI DnsQuery function. This guide includes code examples for retrieving and decoding Base64 encoded DNS data, handling multiple API endpoints via DNS."
 image: ""
 tags: ["C&C++", "Windows", "MSVC"]
 category: "Develop"

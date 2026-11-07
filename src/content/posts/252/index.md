@@ -2,7 +2,7 @@
 title: "[整活向] 跨越 20km 的局域网: 在 OpenWrt 上使用 ZeroTier + OSPF 实现异地内网无感融合"
 published: 2026-02-10T15:36:00.000Z
 updated: 2026-02-11T03:14:31.000Z
-description: "把相隔 20km 的两个家庭网络连起来：OpenWrt 用 ZeroTier 建立链路，BIRD 用 OSPF 交换各自的内网路由，实现不经 NAT 的跨网段访问。"
+description: "本文详细介绍了如何在两台OpenWrt路由器上通过ZeroTier建立虚拟二层网络，并结合Bird2配置OSPF动态路由协议，实现异地家庭网络的直接互通。内容包括ZeroTier自托管Planet部署、Bird2模块化配置、OSPF区域设置，以及最终实现无需NAT的跨网段路由互通。适合对网络互联、动态路由和开源路由器系统有兴趣的技术爱好者参考。"
 image: ""
 tags: ["BIRD", "IGP", "OSPF"]
 category: "网络技术"

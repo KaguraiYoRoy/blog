@@ -2,7 +2,7 @@
 title: "DN42 - Ep.1 Joining the DN42 Network"
 published: 2025-06-28T13:19:00.000Z
 updated: 2025-11-09T14:52:00.000Z
-description: "Joining DN42 by registering an ASN and address space, configuring BIRD, ROA checks, and WireGuard, and establishing BGP sessions with other members."
+description: "A beginner's guide to joining the DN42 experimental network, covering registration, ASN and IP allocation, Bird2 BGP configuration, WireGuard setup, and peering with other members."
 image: ""
 tags: ["DN42", "BGP", "BIRD", "Network Technology"]
 category: "Network"

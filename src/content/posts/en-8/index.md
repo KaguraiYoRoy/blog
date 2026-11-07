@@ -2,7 +2,7 @@
 title: "Adding KernelSU Support to Android 4.9 Kernel"
 published: 2024-12-26T16:18:00.000Z
 updated: 2025-11-05T14:47:04.000Z
-description: "Integrating KernelSU into the Xiaomi Mi 8 Pro's non-GKI 4.9 kernel, with source patches, kprobe settings, AnyKernel3 packaging, and a GitHub Actions build workflow."
+description: "A comprehensive guide on adding KernelSU support to a non-GKI Android 4.9 kernel for the Xiaomi Mi 8, including source modification, compilation steps, and automated GitHub Actions workflow."
 image: ""
 tags: ["C&C++", "Android", "Kernel"]
 category: "Android"

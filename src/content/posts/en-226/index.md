@@ -2,7 +2,7 @@
 title: "Configuring a Simple Multi-language Solution for Typecho"
 published: 2025-11-19T14:10:00.000Z
 updated: 2025-11-19T23:31:33.000Z
-description: "Running Chinese and English blogs as two Typecho instances, synchronizing post IDs with a plugin, and adding language switching, sitemaps, hreflang, and shared views and comments."
+description: "A step-by-step guide on implementing a simple multi-language solution for Typecho blogs using dual instances. Learn how to sync content, configure language switching, modify sitemaps for SEO, add hreflang tags, and synchronize view counts and comments between Chinese and English versions."
 image: ""
 tags: ["Typecho", "Blog", "I18n"]
 category: "Develop"

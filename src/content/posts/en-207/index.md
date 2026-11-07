@@ -2,7 +2,7 @@
 title: "2025 Yangcheng Cup CTF Preliminary WriteUp"
 published: 2025-10-12T02:50:00.000Z
 updated: 2025-11-08T09:05:28.000Z
-description: "Writeups for five challenges from the 2025 Yangcheng Cup preliminaries, including Godot reversing, SM4-OFB keystream reuse, data extraction, and Pickle deserialization."
+description: "Detailed WriteUp of the 2025 Yangcheng Cup preliminary competition, covering challenges in reverse engineering, steganography, cryptography, data processing, and web exploitation, with complete solutions and flag retrieval methods."
 image: ""
 tags: ["CTF", "Cybersecurity"]
 category: "CTF"

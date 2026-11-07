@@ -2,7 +2,7 @@
 title: "DN42&OneManISP - Troubleshooting OSPF Source Address in a Coexistence Environment"
 published: 2025-10-29T12:42:00.000Z
 updated: 2025-11-09T05:57:24.000Z
-description: "Troubleshooting failed pings between DN42 nodes after combining DN42 and clearnet routes, using ip route get to spot the wrong source address and adjusting BIRD's krt_prefsrc."
+description: "Troubleshooting guide for resolving OSPF source address issues when coexisting DN42 and public internet BGP routes in Bird2, covering structure analysis, problem identification, and the solution involving krt_prefsrc."
 image: ""
 tags: ["DN42", "BGP", "BIRD", "OSPF"]
 category: "Network"

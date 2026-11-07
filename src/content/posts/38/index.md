@@ -2,7 +2,7 @@
 title: "C++使用WINAPI查询DNS解析记录"
 published: 2025-03-20T09:33:00.000Z
 updated: 2026-02-21T09:00:47.000Z
-description: "用 C++ 调用 Windows 的 DnsQuery 读取 TXT 记录，并解码其中的 Base64 数据，为客户端获取备用 API 节点地址。"
+description: "C++使用WINAPI查询DNS解析记录"
 image: ""
 tags: ["C&C++", "Windows", "MSVC"]
 category: "开发"

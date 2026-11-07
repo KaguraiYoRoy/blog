@@ -2,7 +2,7 @@
 title: "An Experience of Manually Installing Proxmox VE, Configuring Multipath iSCSI, and NAT Forwarding"
 published: 2025-11-29T09:39:00.000Z
 updated: 2025-12-14T13:25:54.000Z
-description: "Reinstalling a dedicated server with Debian 13 and Proxmox VE, restoring multipath iSCSI storage, and setting up NAT and port forwarding for its VMs."
+description: "A detailed guide on manually installing Proxmox VE on Debian 13, configuring multipath iSCSI storage for data disks, and setting up NAT forwarding & port forwarding for VMs using a single public IP.\r\n"
 image: ""
 tags: ["Network Technology", "iSCSI", "PVE"]
 category: "Ops"

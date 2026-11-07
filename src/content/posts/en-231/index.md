@@ -2,7 +2,7 @@
 title: "2025 Gujianshan Misc Fruit WriteUp"
 published: 2025-11-29T06:02:00.000Z
 updated: 2025-11-29T14:38:50.000Z
-description: "Solving the 2025 Gujianshan Misc challenge Fruit by extracting an appended ZIP, identifying OurSecret steganography, and decoding fruit-themed dialogue to recover the flag."
+description: "A write-up for the 2025 Gujianshan CTF Misc challenge \"Fruit\", involving file analysis with 010 Editor, Base64 decoding, and OurSecret steganography to extract the hidden flag."
 image: ""
 tags: ["CTF", "Misc", "Steganography", "Image steganography"]
 category: "CTF"

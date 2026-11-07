@@ -2,7 +2,7 @@
 title: "DN42&OneManISP – Confederation, Automation, IPAM and Overlay Network"
 published: 2026-07-24T10:56:00.000Z
 updated: 2026-08-06T23:19:00.000Z
-description: "Restructuring a network carrying DN42 and clearnet traffic with BGP Confederation, IPAM, and Large Communities, then generating WireGuard and BIRD configs from node metadata with Ansible."
+description: "This in-depth article reveals how the author completely refactored a multi-AS DN42 and IANA network using BGP Confederation as the internal routing backbone. By separating Underlay and Overlay networks, automating WireGuard and BIRD config generation with Ansible, and managing IP addresses (IPAM) declaratively from node metadata, the design achieves flexible policy isolation via BGP Large Communities. Perfect for homelab operators, network hobbyists, and anyone building their own ISP infrastructure who wants to eliminate manual config drift and embrace \"intent-driven\" networking."
 image: ""
 tags: ["DN42", "BGP", "BIRD", "iBGP", "Clearnet", "Anycast", "Prefix", "IANA", "ISP", "BGP Confederation", "BGP Community", "WireGuard", "Ansible", "Automation"]
 category: "Network"

@@ -2,7 +2,7 @@
 title: "Using Alist to Sync TrueNAS to OneDrive"
 published: 2025-03-12T16:39:00.000Z
 updated: 2025-11-22T05:30:11.000Z
-description: "Using Alist as a WebDAV bridge between TrueNAS cloud sync and OneDrive, replacing a separate OneDrive sync container."
+description: "Learn how to sync TrueNAS to OneDrive using Alist as a WebDAV bridge. This guide covers setting up Alist in Docker, configuring TrueNAS cloud credentials and sync tasks, providing an efficient alternative to direct OneDrive client sync, especially for E5 subscriptions."
 image: ""
 tags: ["Linux", "TrueNAS", "Docker", "Alist", "OneDrive"]
 category: "Ops"

@@ -2,7 +2,7 @@
 title: "通过Alist使TrueNAS同步到OneDrive"
 published: 2025-03-12T16:39:00.000Z
 updated: 2025-06-27T03:28:41.000Z
-description: "用 Alist 将 OneDrive 暴露为 WebDAV，再交给 TrueNAS 的云同步任务上传数据，替代原先单独运行 OneDrive 同步容器的方案。"
+description: "通过Alist使TrueNAS同步到OneDrive"
 image: ""
 tags: ["Linux", "TrueNAS", "Docker", "Alist", "OneDrive"]
 category: "运维"
