@@ -21,7 +21,7 @@ export async function GET(context: APIContext) {
 
 	return rss({
 		title: siteConfig.title,
-		description: siteConfig.subtitle || "No description",
+		description: "No description",
 		site: context.site ?? "https://blog.iyoroy.cn",
 		items: blog.map((post) => {
 			const content =

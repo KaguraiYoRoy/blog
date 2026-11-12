@@ -9,7 +9,6 @@ import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
 	title: "悠笙の开发日记",
-	subtitle: "记录开发、网络与日常折腾",
 	icp: "皖ICP备2025072622号-1", // Leave empty to hide the ICP registration in the footer.
 	umami: {
 		enable: true,
